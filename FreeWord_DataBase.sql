@@ -25,9 +25,11 @@ CREATE TABLE Category
 	cat_id int AUTO_INCREMENT, 
 	cat_name varchar(32) not null, 
 	cat_reached boolean not null, 
+	cat_lng int not null,
 	
 	CONSTRAINT pk_catId primary key(cat_id)
-	
+	CONSTRAINT fk_catId foreign key(cat_lng) references Langage(lng_id)
+
 );
 
 CREATE TABLE Word 
