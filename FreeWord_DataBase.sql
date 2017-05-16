@@ -10,6 +10,17 @@ CREATE TABLE Profile
 	
 );
 
+CREATE TABLE Choice 
+( 
+    chc_id int AUTO_INCREMENT,
+    chc_usr int not null, 
+    chc_langage int not null, 
+    
+    CONSTRAINT pk_chc primary key(chc_id),
+    CONSTRAINT fk_chc1 foreign key(chc_usr) references profile(usr_id),
+    CONSTRAINT fk_chc2 foreign key(chc_langage) references langage(lng_id)
+);
+
 CREATE TABLE Langage 
 (
 	lng_id int AUTO_INCREMENT,
@@ -53,15 +64,4 @@ CREATE TABLE Level
 	CONSTRAINT pk_lvlId primary key(lvl_id),
 	CONSTRAINT fk_lvlId foreign key(lvl_cat) references Category(cat_id)
 	
-);
-
-CREATE TABLE Choice 
-( 
-    chc_id int AUTO_INCREMENT,
-    chc_usr int not null, 
-    chc_langage int not null, 
-    
-    CONSTRAINT pk_chc primary key(chc_id),
-    CONSTRAINT fk_chc1 foreign key(chc_usr) references profile(usr_id),
-    CONSTRAINT fk_chc2 foreign key(chc_langage) references langage(lng_id)
 );
