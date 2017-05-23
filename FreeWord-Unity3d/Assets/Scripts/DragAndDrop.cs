@@ -23,7 +23,7 @@ public class DragAndDrop : MonoBehaviour {
         //print("Dragging");  
     }
 
-    private void OnMouseExit()
+    private void OnMouseUp()
     {
         if (transform.position.z == 5)
         {
@@ -33,4 +33,5 @@ public class DragAndDrop : MonoBehaviour {
             transform.position = originPlace;
         }
     }
+
 }
