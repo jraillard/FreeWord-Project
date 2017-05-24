@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlacedCard : Card
 {
-    private bool placed=false;
+    private bool placed = false; 
 
     /********************************* Methods *********************************/
 

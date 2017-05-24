@@ -18,14 +18,14 @@ public class PlayedCard : Card {
 
     }
     
-    public bool IsSelected()
+    public bool IsSelectable()
     {
         return selection;
     }
 
-    public void SetSelection()
+    public void SetSelectable()
     {
-        if (IsSelected())
+        if (IsSelectable())
         {
             selection = false;
         }
@@ -41,10 +41,13 @@ public class PlayedCard : Card {
     //DragAndDrop
     private void OnMouseDrag()
     {
-        Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
-        Vector3 objPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        transform.position = objPosition;
-        //print("Dragging");  
+        if(IsSelectable())
+        {
+            Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
+            Vector3 objPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+            transform.position = objPosition;
+            //print("Dragging");  
+        }
     }
 
     private void OnMouseUp()

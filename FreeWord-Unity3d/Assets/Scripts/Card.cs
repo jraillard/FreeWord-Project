@@ -5,9 +5,8 @@ using UnityEngine;
 public abstract class Card : MonoBehaviour {
 
     protected char value;
-    protected bool visibility; /*for a played card : you can't reach them if false 
-                                * for a placed card : you can't put another card on it
-                               */
+    protected bool visibility=true; //will set as false for placedCard in GameInitiation
+
     
     public bool IsVisible()
     {
