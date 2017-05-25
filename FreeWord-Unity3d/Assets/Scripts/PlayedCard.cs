@@ -4,20 +4,35 @@ using UnityEngine;
 
 public class PlayedCard : Card {
 
+    /********************************* Variables *********************************/
+
+    private bool placed = false;
     private bool selection = false;
     private float distance = 5f;
     private Vector3 originPlace;
+    private Vector3 destPlace;
 
-    /********************************* Methods *********************************/
+    /********************************* Loops *********************************/
 
     private void Start()
     {
         //store the original place
         originPlace = transform.position;
         //print(originPlace);
-
     }
-    
+
+
+    /********************************* Methods *********************************/
+    public bool IsPlaced() //there is a card on the placedCard
+    {
+        return placed;
+    }
+
+    public void SetPlaced(bool b)
+    {
+        placed = b;
+    }
+
     public bool IsSelectable()
     {
         return selection;
@@ -35,6 +50,11 @@ public class PlayedCard : Card {
         }
     }
 
+    public void SendPosition(Vector3 pos)
+    {
+        destPlace = pos;
+    }
+
 
     /********************************* Events *********************************/
 
@@ -48,18 +68,17 @@ public class PlayedCard : Card {
             transform.position = objPosition;
             //print("Dragging");  
         }
+        print(IsPlaced());
     }
 
     private void OnMouseUp()
     {
-        
-        if (transform.position.z == 5)
+        if (IsPlaced()==true)
         {
-            //== 4 if we're on a PlacedCard 
-
-            //print("Replacing");
+            transform.position = destPlace;        
+        }else
+        {
             transform.position = originPlace;
         }
     }
 }
-

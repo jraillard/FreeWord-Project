@@ -4,9 +4,12 @@ using UnityEngine;
 
 public abstract class Card : MonoBehaviour {
 
+    /********************************* Variables *********************************/
+
     protected char value;
     protected bool visibility=true; //will set as false for placedCard in GameInitiation
 
+    /********************************* Methods *********************************/
     
     public bool IsVisible()
     {
@@ -23,7 +26,7 @@ public abstract class Card : MonoBehaviour {
             visibility = true;
         }
     }
-
+    
     public char GetValue()
     {
         return value;
@@ -37,8 +40,5 @@ public abstract class Card : MonoBehaviour {
             value = c;
         }
     }
-
-
-                                 
 
 }

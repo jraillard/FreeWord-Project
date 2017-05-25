@@ -4,27 +4,19 @@ using UnityEngine;
 
 public class PlacedCard : Card
 {
-    private bool placed = false; 
+    /********************************* Variables *********************************/
+    private bool wellPlaced = false;
 
     /********************************* Methods *********************************/
 
-
-
-    public bool IsPlaced() //there is a card on the placedCard
+    public bool IsWellPlaced()
     {
-        return placed;
+        return wellPlaced;
     }
 
-    public void SetPlaced()
+    public void SetWellPlaced(bool b)
     {
-        if (IsPlaced())
-        {
-            placed = false;
-        }
-        else
-        {
-           placed = true;
-        }
+        wellPlaced = b;
     }
 
 
@@ -37,25 +29,29 @@ public class PlacedCard : Card
 
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("Detect Collision1);
-        if (other.tag == "PlayedCard" && IsPlaced()==false)
+        if (other.tag == "PlayedCard" && GetComponentInParent<PlacingCard>().IsPlaceAvailable() == true)
         {
-            //Debug.Log("Placed1");
-            other.transform.position = new Vector3(transform.position.x, transform.position.y, 4);
+            other.GetComponent<PlayedCard>().SendPosition(new Vector3(transform.position.x, transform.position.y, 4));
+            other.GetComponent<PlayedCard>().SetPlaced(true);
         }
     }
 
-
     private void OnTriggerStay(Collider other)
     {
-        //Debug.Log("Detect Collision2");
-        
-
-        if (other.tag == "PlayedCard" && IsPlaced() == false)
+        if (other.tag == "PlayedCard" && GetComponentInParent<PlacingCard>().IsPlaceAvailable() == true)
         {
-            //Debug.Log("Placed2");
-            other.transform.position = new Vector3(transform.position.x, transform.position.y, 4);
+            other.GetComponent<PlayedCard>().SendPosition(new Vector3(transform.position.x, transform.position.y, 4));
+            other.GetComponent<PlayedCard>().SetPlaced(true);
+        }
+    }
 
+    private void OnTriggerExit(Collider other)
+    {
+        //Debug.Log("Detect Collision1);
+        if (other.tag == "PlayedCard")
+        {
+            //Debug.Log("Placed1");
+            other.GetComponent<PlayedCard>().SetPlaced(false);
         }
     }
 }
