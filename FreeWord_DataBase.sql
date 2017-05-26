@@ -6,7 +6,7 @@ CREATE TABLE Profile
 	usr_gameLangage varchar(32) not null, 
 	
 	CONSTRAINT pk_usrId primary key(usr_id),
-	CONSTRAINT chk_Profile check(usr_gameLangage IN ('English', 'Français'))
+	CONSTRAINT chk_gameLangage check(usr_gameLangage IN ('English', 'Français'))
 	
 );
 

@@ -95,6 +95,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Card.cs" />
     <Compile Include="Assets\Scripts\DragAndDrop.cs" />
+    <Compile Include="Assets\Scripts\GameInitiation.cs" />
     <Compile Include="Assets\Scripts\GameManagement.cs" />
     <Compile Include="Assets\Scripts\PlacedCard.cs" />
     <Compile Include="Assets\Scripts\PlacingCard.cs" />
