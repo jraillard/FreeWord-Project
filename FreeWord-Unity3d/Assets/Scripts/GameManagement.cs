@@ -83,13 +83,23 @@ public class GameManagement : MonoBehaviour
 
     private void InitMysteryCardSet(List<char> letterList)
     {
-        float posX = 0.4f, posY = 0.5f, posZ = 5f;
+        float posX = 0.4f, posY = 0.7f, posZ = 5f;
         int i = 0;
 
         foreach (char c in letterList)
         {
             //Load the right prefab  and Instantiate 
-            tempObj = Resources.Load("PlayedLetter/Letter_" + c) as GameObject;
+            if (c >= 'a' && c <= 'z')
+            {
+                //minuscule
+                tempObj = Resources.Load("PlayedLetter/Letter_" + c) as GameObject;
+            }
+            else if (c >= 'A' && c <= 'Z')
+            {
+                //majuscule
+                tempObj = Resources.Load("PlayedLetter/M_Letter_" + c) as GameObject;
+            }
+
             mysteryCardSet.Add(Instantiate(tempObj, new Vector3(posX, posY, posZ), Quaternion.identity));
 
             //Configure parameters
@@ -99,9 +109,10 @@ public class GameManagement : MonoBehaviour
             //print(mysteryCardSet[i].GetComponent<PlayedCard>().GetValue());
 
             //Make the PlacedCard hidden
-            mysteryCardSet[i].GetComponent<PlayedCard>().SetVisibility();
+            mysteryCardSet[i].GetComponent<PlayedCard>().SetSelectable(false);
+            mysteryCardSet[i].GetComponent<PlayedCard>().SetVisibility(false);
             //print(mysteryCardSet[i].GetComponent<PlayedCard>().IsVisible()+"1");
-            mysteryCardSet[i].GetComponentInChildren<SpriteRenderer>().color = Color.black;
+            mysteryCardSet[i].GetComponent<SpriteRenderer>().color = Color.black;
 
 
             i++;
@@ -112,41 +123,70 @@ public class GameManagement : MonoBehaviour
 
     private void InitPlayedCardSet(List<char> letterList)
     {
-        float posX = 0.4f, posY = 0f, posZ = 5f;
+        float posX = 0.4f, posY = 0.2f, posZ = 5f;
         int i = 0;
 
-        foreach (char c in letterList)
+        for(int j=0; j<6; j++)
         {
+            foreach (char c in letterList)
+            {
 
-            //Load the right prefab and Instantiate
-            tempObj = Resources.Load("PlayedLetter/Letter_" + c) as GameObject;
-            playedCardSet.Add(Instantiate(tempObj, new Vector3(posX, posY, posZ), Quaternion.identity));
+                //Load the right prefab and Instantiate
+                if(c>='a' && c<='z')
+                {
+                    //minuscule
+                    tempObj = Resources.Load("PlayedLetter/Letter_" + c) as GameObject;
+                }
+                else if(c>='A' && c<='Z')
+                {
+                    //majuscule
+                    tempObj = Resources.Load("PlayedLetter/M_Letter_" + c) as GameObject;
+                }
+                
+                playedCardSet.Add(Instantiate(tempObj, new Vector3(posX, posY, posZ), Quaternion.identity));
 
-            //Configure parameters
+                //Configure parameters
 
-            //Set the value of the Card 
-            playedCardSet[i].GetComponent<PlayedCard>().SetValue(c);
-            //print(playedCardSet[i].GetComponent<PlayedCard>().GetValue());
-            //print(playedCardSet[i].GetComponent<PlayedCard>().IsVisible() + "2");
+                //Set the value of the Card 
+                playedCardSet[i].GetComponent<PlayedCard>().SetValue(c);
+                //print(playedCardSet[i].GetComponent<PlayedCard>().GetValue());
+                //print(playedCardSet[i].GetComponent<PlayedCard>().IsVisible() + "2");
 
-            //Make able to DragAndDrop the card
-            playedCardSet[i].GetComponent<PlayedCard>().SetSelectable();
+                //Make able to DragAndDrop the card
+                playedCardSet[i].GetComponent<PlayedCard>().SetSelectable(true);
+                playedCardSet[i].GetComponent<PlayedCard>().SetVisibility(true);
 
-            i++;
-            posX += 0.3f;
+                i++;
+                posX += 0.3f;
 
+            }
+
+            posX = 0.4f;
+            posY -= 0.08f;
+            posZ -= 0.1f;
         }
+        
     }
 
     private void InitPlacedCardSet(List<char> letterList)
     {
-        float posX = 0f, posY = -0.5f, posZ = 4f;
+        float posX = 0f, posY = -0.7f, posZ = 4f;
         int i = 0;
 
         foreach (char c in letterList)
         {
             //Load the right prefab and instantiate
-            tempObj = Resources.Load("PlacedLetter/Letter_" + c) as GameObject;
+            if (c >= 'a' && c <= 'z')
+            {
+                //minuscule
+                tempObj = Resources.Load("PlacedLetter/Letter_" + c) as GameObject;
+            }
+            else if (c >= 'A' && c <= 'Z')
+            {
+                //majuscule
+                tempObj = Resources.Load("PlacedLetter/M_Letter_" + c) as GameObject;
+            }
+
             placedCardSet.Add(Instantiate(tempObj, new Vector3(posX, posY, posZ), Quaternion.identity));
 
             //Configure parameters
@@ -155,11 +195,8 @@ public class GameManagement : MonoBehaviour
             placedCardSet[i].GetComponentInChildren<PlacedCard>().SetValue(c);
             //print(placedCardSet[i].GetComponentInChildren<PlacedCard>().GetValue());
 
-            
-            //Make the PlacedCard hidden
-            placedCardSet[i].GetComponentInChildren<PlacedCard>().SetVisibility();
-            //print(placedCardSet[i].GetComponentInChildren<PlacedCard>().IsVisible() + "3");
-            
+            //placedCardSet[i].GetComponentInChildren<SpriteRenderer>().color = Color.black;
+
             i++;
             posX += 0.3f;
         }

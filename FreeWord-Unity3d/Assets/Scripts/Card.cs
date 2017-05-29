@@ -7,25 +7,8 @@ public abstract class Card : MonoBehaviour {
     /********************************* Variables *********************************/
 
     protected char value;
-    protected bool visibility=true; //will set as false for placedCard in GameInitiation
 
     /********************************* Methods *********************************/
-    
-    public bool IsVisible()
-    {
-        return visibility;
-    }
-
-    public void SetVisibility() //change the visibility on an event
-    {
-        if(IsVisible())
-        {
-            visibility = false;
-        }else
-        {
-            visibility = true;
-        }
-    }
     
     public char GetValue()
     {

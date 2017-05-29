@@ -34,7 +34,7 @@ public class PlacingCard : MonoBehaviour
             myscript = gameObject.GetComponentInChildren<PlacedCard>();
 
             //test value of the PlayedCard
-            if (other.GetComponent<PlayedCard>().GetValue() == this.GetComponentInChildren<PlacedCard>().GetValue())
+            if (other.GetComponent<PlayedCard>().GetValue() == myscript.GetValue())
             {
                 myscript.SetWellPlaced(true);
                 print("well Placed");
