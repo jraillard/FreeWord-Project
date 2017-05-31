@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Card : MonoBehaviour {
+    //All Card have a value which define the character which display on it 
 
     /********************************* Variables *********************************/
 
@@ -10,6 +11,7 @@ public abstract class Card : MonoBehaviour {
 
     /********************************* Methods *********************************/
     
+    //Get and Set basic methods for value
     public char GetValue()
     {
         return value;

@@ -6,7 +6,8 @@ public class GameManagement : MonoBehaviour
 {
     /********************************* Variables *********************************/
 
-    //must be GameObject to be used after
+    //the 3 set of card we needs
+    //they must be GameObject to be used after
     private List<GameObject> mysteryCardSet = new List<GameObject>();
     private List<GameObject> playedCardSet = new List<GameObject>();
     private List<GameObject> placedCardSet = new List<GameObject>();
@@ -14,27 +15,29 @@ public class GameManagement : MonoBehaviour
     //need (almost) to store Prefab before Instantiate 
     private GameObject tempObj;
 
-    private int cpt; 
+    private int cpt; //counter for update loop
     private List<char> splitWord;
 
     /********************************* Loops *********************************/
 
     void Start()
     {
+        //Initiate the game 
 
+        //Receive the letter we need
         splitWord = MySplitter("BRAVO");
 
+        //Instantiate all the Card Sets
         InitMysteryCardSet(splitWord);
         InitPlayedCardSet(splitWord);
         InitPlacedCardSet(splitWord);
 
     }
 
-    // Update is called once per frame
-    
+    // Update is called once per frame    
     void Update()
     {
-        //verify if a word is complete
+        //verify if every PlacedCard have a PlayedCard on it 
         foreach(GameObject obj in placedCardSet)
         {
             if (obj.GetComponent<PlacingCard>().IsPlaceAvailable()==false)
@@ -43,12 +46,13 @@ public class GameManagement : MonoBehaviour
             }
         }
         //print(cpt);
-        if(cpt==placedCardSet.Count)
+
+        if(cpt==placedCardSet.Count) //if it is 
         {
-            if(VerifPlacedWord()==true)
+            if(VerifPlacedWord()==true) 
             {
                 RemovePlacedWord();
-                if(playedCardSet.Count==0)
+                if(playedCardSet.Count==0) //if there's no more PlayedCard 
                 {
                     DiscoverMysteryWord();
                 }
@@ -64,12 +68,7 @@ public class GameManagement : MonoBehaviour
     
     /********************************* Methods *********************************/
 
-    private List<string> ReceivePlayedWords()
-    {
-        // here will be written instruction to the webservice 
-        return null;
-    }
-
+    //Split a word into a list of char 
     private List<char> MySplitter(string word)
     {
         List<char> splitWord = new List<char>();
@@ -81,6 +80,7 @@ public class GameManagement : MonoBehaviour
         return splitWord;
     }
 
+    //Instantiate all the MysteryCard to discover
     private void InitMysteryCardSet(List<char> letterList)
     {
         float posX = 0.4f, posY = 0.7f, posZ = 5f;
@@ -121,6 +121,7 @@ public class GameManagement : MonoBehaviour
 
     }
 
+    //Instantiate all the PlayedCard to discover
     private void InitPlayedCardSet(List<char> letterList)
     {
         float posX = 0.4f, posY = 0.2f, posZ = 5f;
@@ -168,6 +169,7 @@ public class GameManagement : MonoBehaviour
         
     }
 
+    //Instantiate all the PlacedCard to discover
     private void InitPlacedCardSet(List<char> letterList)
     {
         float posX = 0f, posY = -0.7f, posZ = 4f;
@@ -202,6 +204,7 @@ public class GameManagement : MonoBehaviour
         }
     }
 
+    //Verify if the PlacedWord built with the PlayedCard is right or no
     private bool VerifPlacedWord()
     {
         int cptVerif = 0;
@@ -227,6 +230,7 @@ public class GameManagement : MonoBehaviour
 
     }
 
+    //Delete the PlacedCard and the PlayedCard on it
     private void RemovePlacedWord()
     {
         List<GameObject> toRemove = new List<GameObject>();
@@ -265,6 +269,7 @@ public class GameManagement : MonoBehaviour
         toRemove = null;
     }
 
+    //Show the FrontCard of the MysteryCard
     private void DiscoverMysteryWord()
     {
         foreach(GameObject obj in mysteryCardSet)

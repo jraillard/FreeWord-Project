@@ -4,12 +4,21 @@ using UnityEngine;
 
 public class PlacingCard : MonoBehaviour
 {
+    /* 
+     * Script put on the ParentObject from the PlayedCard 
+     * it just contain a collider 
+     * when PlayedCard is drop on a PlacedCard => it is place 
+     * if this ParentObject
+    */
+     
     /********************************* Variables *********************************/
 
     private PlacedCard myscript;
-    private bool placeAvailability = true;
+    private bool placeAvailability = true; //true if there's no PlayedCard on the ParentObject 
 
     /********************************* Methods *********************************/
+    
+    //Get and Set basic methods for placeAvailability
     public bool IsPlaceAvailable()
     {
         return placeAvailability;
@@ -22,7 +31,8 @@ public class PlacingCard : MonoBehaviour
 
     /********************************* Events *********************************/
 
-    private void OnTriggerEnter(Collider other)
+    //Manage the placement(collision) of a PlayedCard on the ParentObject of the PlacedCard
+    private void OnTriggerEnter(Collider other) //PlayedCard Collider enter in the ParentObject Collider
     {
         //Debug.Log("Detect Collision1);
         if (other.tag == "PlayedCard")
@@ -45,7 +55,7 @@ public class PlacingCard : MonoBehaviour
                 print("not well placed");
             }
         }
-    }
+    } 
 
     private void OnTriggerExit(Collider other)
     {
@@ -57,6 +67,6 @@ public class PlacingCard : MonoBehaviour
         myscript.SetWellPlaced(false);
         print(myscript.IsWellPlaced());
 
-    }
+    } //PlayedCard Collider enter in the ParentObject Collider
 
 }

@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class PlacedCard : Card
 {
+    //Card which, together, build the PlacedWord 
+
     /********************************* Variables *********************************/
-    private bool wellPlaced = false;
+    private bool wellPlaced = false; //true if the PlayedCard placed and PlacedCard have the same value
 
     /********************************* Methods *********************************/
-
+    
+    //Get and Set basic methods for wellPlaced
     public bool IsWellPlaced()
     {
         return wellPlaced;
@@ -22,12 +25,17 @@ public class PlacedCard : Card
 
     /********************************* Events *********************************/
 
-    /* first might not be usefull 
-     * only if the user put the card at the precise 
-     * moment where the PlayedCard touch the PlacedCard
-    */
+    //Manage the placement(collision) of a PlayedCard on a PlacedCard
+    private void OnTriggerEnter(Collider other) //PlayedCard Collider enter in the PlacedCard Collider
+    {
+        if (other.tag == "PlayedCard" && GetComponentInParent<PlacingCard>().IsPlaceAvailable() == true)
+        { 
+            other.GetComponent<PlayedCard>().SendPosition(new Vector3(transform.position.x, transform.position.y, 4));
+            other.GetComponent<PlayedCard>().SetPlaced(true);
+        }
+    }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)//PlayedCard Collider stay in the PlacedCard Collider
     {
         if (other.tag == "PlayedCard" && GetComponentInParent<PlacingCard>().IsPlaceAvailable() == true)
         {
@@ -36,16 +44,7 @@ public class PlacedCard : Card
         }
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.tag == "PlayedCard" && GetComponentInParent<PlacingCard>().IsPlaceAvailable() == true)
-        {
-            other.GetComponent<PlayedCard>().SendPosition(new Vector3(transform.position.x, transform.position.y, 4));
-            other.GetComponent<PlayedCard>().SetPlaced(true);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other) //PlayedCard Collider exit from the PlacedCard Collider
     {
         //Debug.Log("Detect Collision1);
         if (other.tag == "PlayedCard")
@@ -54,4 +53,5 @@ public class PlacedCard : Card
             other.GetComponent<PlayedCard>().SetPlaced(false);
         }
     }
+
 }

@@ -57,7 +57,7 @@ Must be done as often as possible
 
 7- MainMenu Scene
 
-2 buttons (3with tutorial if having enough time or made by S.)
+~ 2 buttons (3with tutorial if having enough time or made by S.)
 Play button => load scene 3-
 Achievements button => load scene 4-
 

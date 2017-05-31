@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class FrontCard : MonoBehaviour {
 
+    /*
+     * Script to detect a PlayedCard front of a PlayedCard to set the selectability 
+     * using the OnTrigger method 
+     * not use anymore maybe later ? 
+     * 
+     */
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag=="PlayedCard")

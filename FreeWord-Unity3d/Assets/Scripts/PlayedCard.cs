@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class PlayedCard : Card {
 
+    //Card which we use to construct the "PlacedWord"
+
     /********************************* Variables *********************************/
-    private bool visibility = true; 
-    private bool placed = false;
-    private bool selection = true;
-    private float distance = 5f;
-    private Vector3 originPlace;
-    private Vector3 destPlace;
+
+    private bool visibility = true; //true mean we see the frontCard , false the backCard
+    private bool placed = false; //true if we place a PlayedCard on a PlacedCard
+    private bool selection = true; //true if we can select this card
+    private float distance = 5f; //use for the Drag&Drop management : distance max in (Oz) axis wecan reach with the mouse
+    private Vector3 originPlace; //original Place of the card 
+    private Vector3 destPlace;  //destination Placed which is set when we put a PlayedCard on a PlacedCard
 
     /********************************* Loops *********************************/
 
     private void Start()
     {
-        //store the original place
+        //store the original place of the Card
         originPlace = transform.position;
         //print(originPlace);
     }
@@ -24,6 +27,8 @@ public class PlayedCard : Card {
 
     private void FixedUpdate()
     {
+        /* loop for testing if there's a PlayedCard forward */
+
         if(IsVisible() == true && IsPlaced() == false)
         {
             if (Physics.Raycast(transform.position, new Vector3(0, 0, -1), 0.15f))
@@ -41,7 +46,9 @@ public class PlayedCard : Card {
 
 
     /********************************* Methods *********************************/
-    public bool IsPlaced() //there is a card on the placedCard
+
+    //Get and Set basic methods for placed, selection and visibility
+    public bool IsPlaced()
     {
         return placed;
     }
@@ -61,25 +68,26 @@ public class PlayedCard : Card {
         selection = b;
     }
 
-    public void SendPosition(Vector3 pos)
-    {
-        destPlace = pos;
-    }
-
     public bool IsVisible()
     {
         return visibility;
     }
 
-    public void SetVisibility(bool b) //change the visibility on an event
+    public void SetVisibility(bool b) 
     {
         visibility = b;
+    }
+
+    //Receive the position of the ParentObject of the PlacedCard on which we place the PlayedCard
+    public void SendPosition(Vector3 pos)
+    {
+        destPlace = pos;
     }
 
 
     /********************************* Events *********************************/
 
-    //DragAndDrop
+    //Drag
     private void OnMouseDrag()
     {
         if(IsSelectable() == true && IsVisible() == true)
@@ -91,6 +99,7 @@ public class PlayedCard : Card {
         }
     }
 
+    //Drop
     private void OnMouseUp()
     {
         if (IsPlaced()==true)
