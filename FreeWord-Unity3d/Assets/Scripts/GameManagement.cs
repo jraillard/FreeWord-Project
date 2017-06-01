@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ public class GameManagement : MonoBehaviour
     //the 3 set of card we needs
     //they must be GameObject to be used after
     private List<GameObject> mysteryCardSet = new List<GameObject>();
-    private List<GameObject> playedCardSet = new List<GameObject>();
+    private static List<GameObject> playedCardSet = new List<GameObject>();
     private List<GameObject> placedCardSet = new List<GameObject>();
 
     //need (almost) to store Prefab before Instantiate 
@@ -31,6 +32,7 @@ public class GameManagement : MonoBehaviour
         InitMysteryCardSet(splitWord);
         InitPlayedCardSet(splitWord);
         InitPlacedCardSet(splitWord);
+        InitWordBonusButton();
 
     }
 
@@ -38,34 +40,35 @@ public class GameManagement : MonoBehaviour
     void Update()
     {
         //verify if every PlacedCard have a PlayedCard on it 
-        foreach(GameObject obj in placedCardSet)
+        foreach (GameObject obj in placedCardSet)
         {
-            if (obj.GetComponent<PlacingCard>().IsPlaceAvailable()==false)
+            if (obj.GetComponent<PlacingCard>().IsPlaceAvailable() == false)
             {
                 cpt++;
             }
         }
         //print(cpt);
 
-        if(cpt==placedCardSet.Count) //if it is 
+        if (cpt == placedCardSet.Count) //if it is 
         {
-            if(VerifPlacedWord()==true) 
+            if (VerifPlacedWord() == true)
             {
                 RemovePlacedWord();
-                if(playedCardSet.Count==0) //if there's no more PlayedCard 
+                if (playedCardSet.Count == 0) //if there's no more PlayedCard 
                 {
                     DiscoverMysteryWord();
                 }
                 else
                 {
                     InitPlacedCardSet(splitWord);
-                }   
+                    InitWordBonusButton();
+                }
             }
         }
-          
+
         cpt = 0;
     }
-    
+
     /********************************* Methods *********************************/
 
     //Split a word into a list of char 
@@ -78,6 +81,29 @@ public class GameManagement : MonoBehaviour
         }
 
         return splitWord;
+    }
+
+    //function to receive the CardSet by giving the right cardSetName
+    public List<GameObject> GetCardSet(string cardSetName)
+    {
+        //"break;" not needed because of the "return"
+        switch (cardSetName)
+        {
+            case "played":
+                return playedCardSet;
+
+            case "placed":
+                return placedCardSet;
+
+
+            case "mystery":
+                return mysteryCardSet;
+
+
+            default:
+                print("not a card set");
+                return null;
+        }
     }
 
     //Instantiate all the MysteryCard to discover
@@ -127,23 +153,23 @@ public class GameManagement : MonoBehaviour
         float posX = 0.4f, posY = 0.2f, posZ = 5f;
         int i = 0;
 
-        for(int j=0; j<6; j++)
+        for (int j = 0; j < 5; j++)
         {
             foreach (char c in letterList)
             {
 
                 //Load the right prefab and Instantiate
-                if(c>='a' && c<='z')
+                if (c >= 'a' && c <= 'z')
                 {
                     //minuscule
                     tempObj = Resources.Load("PlayedLetter/Letter_" + c) as GameObject;
                 }
-                else if(c>='A' && c<='Z')
+                else if (c >= 'A' && c <= 'Z')
                 {
                     //majuscule
                     tempObj = Resources.Load("PlayedLetter/M_Letter_" + c) as GameObject;
                 }
-                
+
                 playedCardSet.Add(Instantiate(tempObj, new Vector3(posX, posY, posZ), Quaternion.identity));
 
                 //Configure parameters
@@ -166,7 +192,7 @@ public class GameManagement : MonoBehaviour
             posY -= 0.08f;
             posZ -= 0.1f;
         }
-        
+
     }
 
     //Instantiate all the PlacedCard to discover
@@ -199,9 +225,18 @@ public class GameManagement : MonoBehaviour
 
             //placedCardSet[i].GetComponentInChildren<SpriteRenderer>().color = Color.black;
 
+            //Make the card Hidden (shown only with WordBonus)
+            placedCardSet[i].GetComponentInChildren<PlacedCard>().SetVisibility(false);
+
             i++;
             posX += 0.3f;
         }
+    }
+
+    //Initiate the WordBonus availability (don't need for ReplayBonus)
+    private void InitWordBonusButton()
+    {
+        GameObject.Find("MainCamera").GetComponent<WordBonus>().SetBonusAvailability(true);
     }
 
     //Verify if the PlacedWord built with the PlayedCard is right or no
@@ -236,14 +271,14 @@ public class GameManagement : MonoBehaviour
         List<GameObject> toRemove = new List<GameObject>();
 
         //Remove PlacedCard
-        foreach(GameObject obj in placedCardSet)
+        foreach (GameObject obj in placedCardSet)
         {
             toRemove.Add(obj);
-            Destroy(obj); 
+            Destroy(obj);
         }
 
-        foreach(GameObject obj in toRemove)
-        {            
+        foreach (GameObject obj in toRemove)
+        {
             placedCardSet.Remove(obj);
         }
 
@@ -258,7 +293,7 @@ public class GameManagement : MonoBehaviour
                 toRemove.Add(obj);
                 Destroy(obj);
             }
-            
+
         }
 
         foreach (GameObject obj in toRemove)
@@ -272,7 +307,7 @@ public class GameManagement : MonoBehaviour
     //Show the FrontCard of the MysteryCard
     private void DiscoverMysteryWord()
     {
-        foreach(GameObject obj in mysteryCardSet)
+        foreach (GameObject obj in mysteryCardSet)
         {
             obj.GetComponent<SpriteRenderer>().color = Color.white;
         }

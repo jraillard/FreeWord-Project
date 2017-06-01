@@ -10,14 +10,14 @@ public class PlacingCard : MonoBehaviour
      * when PlayedCard is drop on a PlacedCard => it is place 
      * if this ParentObject
     */
-     
+
     /********************************* Variables *********************************/
 
     private PlacedCard myscript;
     private bool placeAvailability = true; //true if there's no PlayedCard on the ParentObject 
 
     /********************************* Methods *********************************/
-    
+
     //Get and Set basic methods for placeAvailability
     public bool IsPlaceAvailable()
     {
@@ -54,8 +54,11 @@ public class PlacingCard : MonoBehaviour
             {
                 print("not well placed");
             }
+
+            //Allow placed attributes of PlayedCard to be true while it's placed
+            other.GetComponent<PlayedCard>().SetPlaced(true);
         }
-    } 
+    }
 
     private void OnTriggerExit(Collider other)
     {
@@ -66,6 +69,9 @@ public class PlacingCard : MonoBehaviour
         //myscript.SetPlaced();
         myscript.SetWellPlaced(false);
         print(myscript.IsWellPlaced());
+
+        //Allow placed attributes of PlayedCard to be true while it's placed
+        other.GetComponent<PlayedCard>().SetPlaced(false);
 
     } //PlayedCard Collider enter in the ParentObject Collider
 

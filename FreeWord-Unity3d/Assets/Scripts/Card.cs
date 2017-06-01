@@ -9,9 +9,11 @@ public abstract class Card : MonoBehaviour {
 
     protected char value;
 
+    private bool visibility; //true mean for PlayedCard : we see the frontCard , false the backCard
+                             //          for PlacedCard : letter shown or not 
     /********************************* Methods *********************************/
-    
-    //Get and Set basic methods for value
+
+    //Get and Set basic methods for value and visibility
     public char GetValue()
     {
         return value;
@@ -24,6 +26,16 @@ public abstract class Card : MonoBehaviour {
         {
             value = c;
         }
+    }
+
+    public bool IsVisible()
+    {
+        return visibility;
+    }
+
+    public void SetVisibility(bool b)
+    {
+        visibility = b;
     }
 
 }

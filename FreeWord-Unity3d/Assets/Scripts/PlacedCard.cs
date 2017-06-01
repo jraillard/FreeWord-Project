@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlacedCard : Card
 {
-    //Card which, together, build the PlacedWord 
+    //Card which, together, build the PlacedWord
 
     /********************************* Variables *********************************/
     private bool wellPlaced = false; //true if the PlayedCard placed and PlacedCard have the same value

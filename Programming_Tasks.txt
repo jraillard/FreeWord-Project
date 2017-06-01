@@ -1,19 +1,22 @@
 ~ : mean task to do 
 x : mean task done 
 
-~ First of all => comment all methods/properties/attributes 
+x First of all => comment all methods/properties/attributes 
 Must be done as often as possible 
 
 ***********************************************************
 
 1- Main Game : 
 
-~ Resolve the PlayedCard problem => after drag, mustn't be drop on his orginPlace but where there's place! 
+x Resolve the PlayedCard problem => after drag, mustn't be drop on his orginPlace but where there's place! 
+	=> could be improved (for now card return on his orginal Column, maybe can place where the user want) 
+	~ still have some bugs ... for the last Words (wtf)	
+
 ~ For each PlacedCard to discover : must display a photo/definition
-~ Add Bonus button : Word (show 1/3 of PlacedCard letter) & Replay (PlayedCard comes at their originPlace)
+x Add Bonus button : Word (show 1/3 of PlacedCard letter) & Replay (PlayedCard comes at their originPlace)
 ~ Animations : when discover a PlacedWord => short animation to make the card disappear 
 	       when Discover Mysteryword => discover word, zoom to center, plan behind with photo/definition 
-~ Replace replay button by "back button" (at the end)
+x Replace replay button by "back button" (at the end)
 ~ Dimensions : adapt gameObjects size depending on the screen resolution
 ~ Add options button which hide all the gamebackground! 
 
