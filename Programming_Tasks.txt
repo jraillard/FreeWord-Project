@@ -10,7 +10,7 @@ Must be done as often as possible
 
 x Resolve the PlayedCard problem => after drag, mustn't be drop on his orginPlace but where there's place! 
 	=> could be improved (for now card return on his orginal Column, maybe can place where the user want) 
-	~ still have some bugs ... for the last Words (wtf)	
+	x still have some bugs ... for the last Words (wtf)	
 
 ~ For each PlacedCard to discover : must display a photo/definition
 x Add Bonus button : Word (show 1/3 of PlacedCard letter) & Replay (PlayedCard comes at their originPlace)

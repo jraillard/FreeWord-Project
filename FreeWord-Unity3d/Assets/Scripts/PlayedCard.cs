@@ -8,10 +8,9 @@ public class PlayedCard : Card {
 
     /********************************* Variables *********************************/
 
-   
     private bool placed; //true if we place a PlayedCard on a PlacedCard
     private bool selection = true; //true if we can select this card
-    private float distance = 5f; //use for the Drag&Drop management : distance max in (Oz) axis wecan reach with the mouse
+    private float distance = 4f; //use for the Drag&Drop management : distance max in (Oz) axis wecan reach with the mouse
     private Vector3 originPlace; //original Place of the card 
     private Vector3 destPlace;  //destination Placed which is set when we put a PlayedCard on a PlacedCard
     
@@ -98,13 +97,21 @@ public class PlayedCard : Card {
                     zMin = obj.transform.position.z;
                 }
             }
+
         }
 
-        yMin -= yPas;
-        zMin -= zPas;
+        if (flag == 0) //there's no more cards in the playedCardSet
+        {
+            yMin = originPlace.y;
+            zMin = originPlace.z;
+        }
+        else
+        {
+            yMin -= yPas;
+            zMin -= zPas;
+        }
 
         transform.position = new Vector3(originPlace.x, yMin, zMin);
-
     }
 
 
@@ -115,6 +122,7 @@ public class PlayedCard : Card {
     {
         if(IsSelectable() == true && IsVisible() == true)
         {
+            //transform.position.z = distance [camera;card]
             Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
             Vector3 objPosition = Camera.main.ScreenToWorldPoint(mousePosition);
             transform.position = objPosition;
@@ -136,4 +144,5 @@ public class PlayedCard : Card {
             }
         }
     }
+
 }

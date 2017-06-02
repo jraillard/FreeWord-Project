@@ -198,7 +198,7 @@ public class GameManagement : MonoBehaviour
     //Instantiate all the PlacedCard to discover
     private void InitPlacedCardSet(List<char> letterList)
     {
-        float posX = 0f, posY = -0.7f, posZ = 4f;
+        float posX = 0f, posY = -0.7f, posZ = 3f;
         int i = 0;
 
         foreach (char c in letterList)
@@ -288,7 +288,7 @@ public class GameManagement : MonoBehaviour
 
         foreach (GameObject obj in playedCardSet)
         {
-            if (obj.GetComponent<Transform>().position.z == 4)
+            if (obj.GetComponent<PlayedCard>().IsPlaced() == true)
             {
                 toRemove.Add(obj);
                 Destroy(obj);
