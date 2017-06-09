@@ -15,6 +15,8 @@ public class WordBonus : MonoBehaviour
     private int nbLetterShown; 
     private bool indexUsed; //flag for index  
     private bool bonusAvailable = true; //true :  user can you the button
+    private Sprite tempSprite;
+    private char tempLetter;
 
     /********************************* Loops *********************************/
 
@@ -91,7 +93,9 @@ public class WordBonus : MonoBehaviour
                 if (currentCardScript.IsVisible() == false)
                 {
                     //Showing process
-                    tempPlacedCards[index].GetComponentInChildren<SpriteRenderer>().color = Color.white;
+                    tempLetter = tempPlacedCards[index].GetComponentInChildren<PlacedCard>().GetValue();
+                    tempSprite = Resources.Load("Shape/Shape_" + tempLetter, typeof(Sprite)) as Sprite;
+                    tempPlacedCards[index].GetComponentInChildren<SpriteRenderer>().sprite= tempSprite;
                     currentCardScript.SetVisibility(true);
                     indexList.Add(index);
                     nbLetterShown++;

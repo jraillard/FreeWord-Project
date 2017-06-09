@@ -95,6 +95,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\BackToCategoryMenu.cs" />
     <Compile Include="Assets\Scripts\Card.cs" />
+    <Compile Include="Assets\Scripts\ChoiceCategoryManagement.cs" />
     <Compile Include="Assets\Scripts\FrontCard.cs" />
     <Compile Include="Assets\Scripts\GameManagement.cs" />
     <Compile Include="Assets\Scripts\PlacedCard.cs" />
