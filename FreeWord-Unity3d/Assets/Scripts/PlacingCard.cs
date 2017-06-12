@@ -34,7 +34,7 @@ public class PlacingCard : MonoBehaviour
     //Manage the placement(collision) of a PlayedCard on the ParentObject of the PlacedCard
     private void OnTriggerEnter(Collider other) //PlayedCard Collider enter in the ParentObject Collider
     {
-        //Debug.Log("Detect Collision1);
+        //Debug.Log("Detect Collision1");
         if (other.tag == "PlayedCard")
         {
 

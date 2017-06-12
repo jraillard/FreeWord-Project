@@ -25,19 +25,28 @@ public class GameManagement : MonoBehaviour
 
     void Start()
     {
+        /*
         splitWord = MySplitter("bravo");
         InitMysteryCardSet(splitWord);
         InitPlayedCardSet(splitWord);
         InitPlacedCardSet(splitWord);
         InitWordBonusButton();
+        */
 
-        /* Test1
+        //Test1
         listWord = new List<string>();
+        listWord.Add("excellent");
         listWord.Add("bonjour");
-        listWord.Add("coucou");
-        listWord.Add("bonsoir");
-        listWord.Add("légende");
         listWord.Add("respect");
+        listWord.Add("légende");
+        listWord.Add("maison");
+        listWord.Add("jardin");
+        listWord.Add("espagne");
+        listWord.Add("soirée");
+        listWord.Add("tomate");
+        listWord.Add("finlande");
+        listWord.Add("barbecue");
+
 
         //Initiate the game 
 
@@ -48,20 +57,27 @@ public class GameManagement : MonoBehaviour
         splitWord = MySplitter(listWord[0]);
         listWord.RemoveAt(0);
 
+        
         InitMysteryCardSet(splitWord);
-
+        float incY = 0, incZ = 0;      
+               
         foreach (string s in listWord)
         {
+            //print(s);
             splitWord = MySplitter(s);
-            InitPlayedCardSet(splitWord);
+            InitPlayedCardSet(splitWord, incY, incZ);
+            incY -= 0.08f;
+            incZ -= 0.1f;
         }
-
-        splitWord = MySplitter(listWord[0]);
+        
+        splitWord = MySplitter(listWord[listWord.Count - 1]);
         InitPlacedCardSet(splitWord);
         InitWordBonusButton();
-        */
+        
+
     }
 
+    
     // Update is called once per frame    
     void Update()
     {
@@ -86,6 +102,8 @@ public class GameManagement : MonoBehaviour
                 }
                 else
                 {
+                    listWord.RemoveAt(listWord.Count - 1);
+                    splitWord = MySplitter(listWord[listWord.Count - 1]);
                     InitPlacedCardSet(splitWord);
                     InitWordBonusButton();
                 }
@@ -93,7 +111,7 @@ public class GameManagement : MonoBehaviour
         }
 
         cpt = 0;
-    }
+    }    
 
     /********************************* Methods *********************************/
 
@@ -135,7 +153,7 @@ public class GameManagement : MonoBehaviour
     //Instantiate all the MysteryCard to discover
     private void InitMysteryCardSet(List<char> letterList)
     {
-        float posX = 0.4f, posY = 0.7f, posZ = 5f;
+        float posX = 0.8f, posY = 0.75f, posZ = 3f;
         int i = 0;
 
         foreach (char c in letterList)
@@ -153,7 +171,8 @@ public class GameManagement : MonoBehaviour
                 tempSprite = Resources.Load("Letter/Letter_" + c , typeof(Sprite)) as Sprite;
             }
 
-            print(tempSprite);
+            //print(c);
+            //print(tempSprite);
             
             mysteryCardSet.Add(Instantiate(tempObj, new Vector3(posX, posY, posZ), Quaternion.identity));
 
@@ -170,76 +189,70 @@ public class GameManagement : MonoBehaviour
             mysteryCardSet[i].GetComponent<PlayedCard>().SetSelectable(false);
             mysteryCardSet[i].GetComponent<PlayedCard>().SetVisibility(false);
             //print(mysteryCardSet[i].GetComponent<PlayedCard>().IsVisible()+"1");
-            mysteryCardSet[i].GetComponent<SpriteRenderer>().color = Color.black;
+            //mysteryCardSet[i].GetComponent<SpriteRenderer>().color = Color.black;
 
             i++;
-            posX += 0.3f;
+            posZ +=0.1f;
         }
 
     }
 
     //Instantiate all the PlayedCard to discover
-    private void InitPlayedCardSet(List<char> letterList)
+    private void InitPlayedCardSet(List<char> letterList, float newposY, float newposZ)
     {
-        float posX = 0.4f, posY = 0.2f, posZ = 5f;
-        int i = 0;
+        float posX = 0.075f, posY = 0.35f+newposY, posZ = 5f+newposZ;
+        int i = playedCardSet.Count;
 
-        for (int j = 0; j < 5; j++)
+        foreach (char c in letterList)
         {
-            foreach (char c in letterList)
+
+            //Load the right prefab + sprite  and Instantiate 
+            if (c == 'ÿ') //particular case
             {
-
-                //Load the right prefab + sprite  and Instantiate 
-
-                tempObj = Resources.Load("test/PlayedCard") as GameObject;
-
-                if (c == 'ÿ') //particular case
-                {
-                    tempSprite = Resources.Load("Letter/Letter_y¨", typeof(Sprite)) as Sprite;
-                }
-                else
-                {
-                    tempSprite = Resources.Load("Letter/Letter_" + c, typeof(Sprite)) as Sprite;
-                }
-
-                print(tempSprite);
-
-                playedCardSet.Add(Instantiate(tempObj, new Vector3(posX, posY, posZ), Quaternion.identity));
-
-                //Configure parameters
-
-                //Set the sprite
-                playedCardSet[i].GetComponent<SpriteRenderer>().sprite = tempSprite;
-
-                //Set the value of the Card 
-                playedCardSet[i].GetComponent<PlayedCard>().SetValue(c);
-                //print(playedCardSet[i].GetComponent<PlayedCard>().GetValue());
-                //print(playedCardSet[i].GetComponent<PlayedCard>().IsVisible() + "2");
-
-                //Make able to DragAndDrop the card
-                playedCardSet[i].GetComponent<PlayedCard>().SetSelectable(true);
-                playedCardSet[i].GetComponent<PlayedCard>().SetVisibility(true);
-
-                i++;
-                posX += 0.3f;
-
+                tempSprite = Resources.Load("Letter/Letter_y¨", typeof(Sprite)) as Sprite;
+            }
+            else
+            {
+                tempSprite = Resources.Load("Letter/Letter_" + c, typeof(Sprite)) as Sprite;
             }
 
-            posX = 0.4f;
-            posY -= 0.08f;
-            posZ -= 0.1f;
+            //print(c);
+            //print(tempSprite);
+
+            tempObj = Resources.Load("test/PlayedCard") as GameObject;
+
+            playedCardSet.Add(Instantiate(tempObj, new Vector3(posX, posY, posZ), Quaternion.identity));
+
+            //Configure parameters
+
+            //Set the sprite
+            
+
+            playedCardSet[i].GetComponent<SpriteRenderer>().sprite = tempSprite;
+
+            //Set the value of the Card 
+            playedCardSet[i].GetComponent<PlayedCard>().SetValue(c);
+            //print(playedCardSet[i].GetComponent<PlayedCard>().GetValue());
+            //print(playedCardSet[i].GetComponent<PlayedCard>().IsVisible() + "2");
+
+            //Make able to DragAndDrop the card
+            playedCardSet[i].GetComponent<PlayedCard>().SetSelectable(true);
+            playedCardSet[i].GetComponent<PlayedCard>().SetVisibility(true);
+
+            i++;
+            posX += 0.211f;
+
         }
 
     }
 
-    
     //Instantiate all the PlacedCard to discover
     private void InitPlacedCardSet(List<char> letterList)
     {
-        float posX = 0f, posY = -0.7f, posZ = 3f;
+        float posX = 1.55f, posY = -0.8f, posZ = 3f;
         int i = 0;
 
-        foreach (char c in letterList)
+        for(int j=letterList.Count-1; j>=0; j--)
         {
             //Load the right prefab + sprite  and Instantiate 
 
@@ -248,7 +261,8 @@ public class GameManagement : MonoBehaviour
 
             tempSprite = Resources.Load("Shape/Shape", typeof(Sprite)) as Sprite;
 
-            print(tempSprite);
+            //print(c);
+            //print(tempSprite);
 
             placedCardSet.Add(Instantiate(tempObj, new Vector3(posX, posY, posZ), Quaternion.identity));
 
@@ -258,16 +272,16 @@ public class GameManagement : MonoBehaviour
             placedCardSet[i].GetComponentInChildren<SpriteRenderer>().sprite = tempSprite;
 
             //Set the value of the Card 
-            placedCardSet[i].GetComponentInChildren<PlacedCard>().SetValue(c);
+            placedCardSet[i].GetComponentInChildren<PlacedCard>().SetValue(letterList[j]);
             //print(placedCardSet[i].GetComponentInChildren<PlacedCard>().GetValue());
 
-            //placedCardSet[i].GetComponentInChildren<SpriteRenderer>().color = Color.red;
+            //placedCardSet[i].GetComponentInChildren<SpriteRenderer>().color = Color.white;
 
             //Make the card Hidden (shown only with WordBonus)
             placedCardSet[i].GetComponentInChildren<PlacedCard>().SetVisibility(false);
 
             i++;
-            posX += 0.3f;
+            posX -= 0.211f;
         }
     }
 
@@ -342,13 +356,18 @@ public class GameManagement : MonoBehaviour
         toRemove = null;
     }
 
-    //Show the FrontCard of the MysteryCard
+    //Show the FrontCard of the MysteryCard => later make animation
     private void DiscoverMysteryWord()
     {
+        Destroy(GameObject.Find("MysteryWordMask"));
+        float inc = 0;
         foreach (GameObject obj in mysteryCardSet)
         {
-            obj.GetComponent<SpriteRenderer>().color = Color.white;
+            obj.transform.localScale = new Vector3(0.08f, 0.08f, 0);
+            obj.transform.position = new Vector3(-1.3f + inc,  0f, obj.transform.position.z);
+            inc += 0.3f;
         }
+        
     }
 
 }
