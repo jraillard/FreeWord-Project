@@ -10,7 +10,7 @@ public class PlayedCard : Card {
 
     private bool placed; //true if we place a PlayedCard on a PlacedCard
     private bool selection = true; //true if we can select this card
-    private float distance = 4f; //use for the Drag&Drop management : distance max in (Oz) axis wecan reach with the mouse
+    private float distance = 3f; //use for the Drag&Drop management : distance max in (Oz) axis wecan reach with the mouse
     private Vector3 originPlace; //original Place of the card 
     private Vector3 destPlace;  //destination Placed which is set when we put a PlayedCard on a PlacedCard
     
@@ -133,6 +133,7 @@ public class PlayedCard : Card {
     //Drop
     private void OnMouseUp()
     {
+
         if (IsPlaced()==true)
         {
             transform.position = destPlace;        

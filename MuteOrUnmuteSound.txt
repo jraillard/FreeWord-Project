@@ -1,0 +1,24 @@
+using UnityEngine.UI
+
+public void SwitchSound()
+{
+	
+	AudioSource audio = GameObject.Find("SoundManager").GetComponent<AudioSource>();
+	
+	Sprite tempSprite;
+
+	tempSprite = this.GetComponent<Sprite>().sprite;
+	
+	if(tempSprite.name == "Mute")
+	{
+	  tempSprite = Resources.Load("Sprite/Unmute", typeof(sprite)) as sprite;
+	  this.GetComponent<Sprite>().sprite = tempSprite;
+	  audio.Play();
+	}
+	else
+	{	  
+	  tempSprite = Resources.Load("Sprite/Mute", typeof(sprite)) as sprite;
+	  this.GetComponent<Sprite>().sprite = tempSprite;
+	  audio.Stop();	
+	}
+}

@@ -18,8 +18,8 @@ public class ChoiceCategoryManagement : MonoBehaviour
 
     private void Start()
     {
-        float posX = 113;
-        float posY = 358;
+        float posX = 207f;
+        float posY = 495f;
         int i = 0;
 
         tParent = GameObject.Find("Categories").GetComponent<Transform>();
@@ -34,19 +34,19 @@ public class ChoiceCategoryManagement : MonoBehaviour
             catbuttonList[i].GetComponent<RectTransform>().position = new Vector3(posX, posY, 0);
 
             //catbuttonList[i].GetComponent<Image>().sprite = tempSprite;
-            catbuttonList[i].transform.Find("Text_Up").GetComponent<Text>().text = "Legumes";
-            catbuttonList[i].transform.Find("Text_Down").GetComponent<Text>().text = "Vegatables";
+            catbuttonList[i].transform.Find("Text_Up").GetComponent<Text>().text = "Category_"+i;
+            catbuttonList[i].transform.Find("Text_Down").GetComponent<Text>().text = "Categorie_"+i;
 
             i++;
 
             if (i % 4 == 0 && i != 0)
             {
-                posX = 113;
-                posY -= 80;
+                posX = 207f;
+                posY -= 110;
             }
             else
             {
-                posX += 110;
+                posX += 165;
             }
 
         } while (i < 50);

@@ -30,7 +30,7 @@ public class PlacedCard : Card
     {
         if (other.tag == "PlayedCard" && GetComponentInParent<PlacingCard>().IsPlaceAvailable() == true)
         { 
-            other.GetComponent<PlayedCard>().SendPosition(new Vector3(transform.position.x, transform.position.y, 3));
+            other.GetComponent<PlayedCard>().SendPosition(new Vector3(transform.position.x, transform.position.y, 2));
             other.GetComponent<PlayedCard>().SetPlaced(true);
         }
     }
@@ -39,7 +39,7 @@ public class PlacedCard : Card
     {
         if (other.tag == "PlayedCard" && GetComponentInParent<PlacingCard>().IsPlaceAvailable() == true)
         {
-            other.GetComponent<PlayedCard>().SendPosition(new Vector3(transform.position.x, transform.position.y, 3));
+            other.GetComponent<PlayedCard>().SendPosition(new Vector3(transform.position.x, transform.position.y, 2));
             other.GetComponent<PlayedCard>().SetPlaced(true);
         }
     }

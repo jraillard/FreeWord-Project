@@ -37,15 +37,10 @@ public class GameManagement : MonoBehaviour
         listWord = new List<string>();
         listWord.Add("excellent");
         listWord.Add("bonjour");
-        listWord.Add("respect");
-        listWord.Add("légende");
+        listWord.Add("salut");
+        listWord.Add("coucou");
         listWord.Add("maison");
         listWord.Add("jardin");
-        listWord.Add("espagne");
-        listWord.Add("soirée");
-        listWord.Add("tomate");
-        listWord.Add("finlande");
-        listWord.Add("barbecue");
 
 
         //Initiate the game 
@@ -59,15 +54,15 @@ public class GameManagement : MonoBehaviour
 
         
         InitMysteryCardSet(splitWord);
-        float incY = 0, incZ = 0;      
+        //float incY = 0, incZ = 0;      
                
         foreach (string s in listWord)
         {
             //print(s);
             splitWord = MySplitter(s);
-            InitPlayedCardSet(splitWord, incY, incZ);
-            incY -= 0.08f;
-            incZ -= 0.1f;
+            InitPlayedCardSet(splitWord);//, incY, incZ);
+            //incY -= 0.07f;
+            //incZ -= 0.1f;
         }
         
         splitWord = MySplitter(listWord[listWord.Count - 1]);
@@ -198,22 +193,40 @@ public class GameManagement : MonoBehaviour
     }
 
     //Instantiate all the PlayedCard to discover
-    private void InitPlayedCardSet(List<char> letterList, float newposY, float newposZ)
+    private void InitPlayedCardSet(List<char> letterList)//, float newposY, float newposZ)
     {
-        float posX = 0.075f, posY = 0.35f+newposY, posZ = 5f+newposZ;
+        float xTemp = 0f, yTemp = 0.35f, zTemp = 5f; 
+        List<float> columnsPos = new List<float>(); //list containing the xPos of the 8 columns of cards
+        List<int> cardNbInColumns = new List<int>(); //list containing the number of cards in each column
+        List<float> randomList; //list containing the the xPos on cardcolumn with nbCardMin
+        int nbCardMin = 0;        
+        System.Random r = new System.Random();
+        int index = 0;
+        int flag = 0;
         int i = playedCardSet.Count;
 
-        foreach (char c in letterList)
+        columnsPos.Add(0.075f);
+        for (int c = 1; c < 8; c++)
+        {
+            columnsPos.Add(columnsPos[c - 1] + 0.211f);
+        }
+
+        for(int c = 0; c<8; c++)
+        {
+            cardNbInColumns.Add(0);
+        }
+
+        for(int j= letterList.Count-1; j>=0; j--)
         {
 
-            //Load the right prefab + sprite  and Instantiate 
-            if (c == 'ÿ') //particular case
+            //Load the right prefab + sprite   
+            if (letterList[j] == 'ÿ') //particular case
             {
                 tempSprite = Resources.Load("Letter/Letter_y¨", typeof(Sprite)) as Sprite;
             }
             else
             {
-                tempSprite = Resources.Load("Letter/Letter_" + c, typeof(Sprite)) as Sprite;
+                tempSprite = Resources.Load("Letter/Letter_" + letterList[j], typeof(Sprite)) as Sprite;
             }
 
             //print(c);
@@ -221,17 +234,107 @@ public class GameManagement : MonoBehaviour
 
             tempObj = Resources.Load("test/PlayedCard") as GameObject;
 
-            playedCardSet.Add(Instantiate(tempObj, new Vector3(posX, posY, posZ), Quaternion.identity));
+            //Find the random position of the card to instantiate 
+            foreach (GameObject obj in playedCardSet) //initiate number of card in each column
+            {
+                for (int n = 0; n < columnsPos.Count; n++)
+                {
+                    if (obj.transform.position.x == columnsPos[n])
+                    {
+                        cardNbInColumns[n]++;
+                    }
+                }
+            }
 
+            do
+            {
+                flag = 0;
+                randomList = new List<float>();
+                nbCardMin = cardNbInColumns[0]; //by default
+
+                foreach(int k in cardNbInColumns) //set the minimum cardNumber in each column
+                {
+                    if(k<=nbCardMin)
+                    {
+                        nbCardMin = k;
+                    }
+                }
+
+                for (int n = 0; n < cardNbInColumns.Count; n++) //add the column which have the minimum cardNumber in the randomList
+                {
+                    if (cardNbInColumns[n] == nbCardMin)
+                    {
+                        randomList.Add(columnsPos[n]);
+                    }
+                }
+
+                xTemp = randomList[r.Next(0, randomList.Count)]; //random in this list
+
+                for(int n=0; n<columnsPos.Count; n++) //collect the index of the chosen column
+                {
+                    if(columnsPos[n] == xTemp)
+                    {
+                        index = n;
+                        break;
+                    }
+                }
+
+                foreach (GameObject obj in playedCardSet)
+                {
+                    if (obj.transform.position.x == xTemp)
+                    {
+                        //same column 
+                        if (obj.transform.position.y <= -0.48f) //yMax which is the smaller one (yMax=0.49f but in unity => 0.48999999...) 
+                        {
+                            yTemp = 0.35f; //must random again
+                            columnsPos.RemoveAt(index);
+                            cardNbInColumns.RemoveAt(index);
+                            flag = -1;
+                            break;
+                        }
+
+                        if (obj.transform.position.y == 0.35f)
+                        {
+                            flag = 1;
+                        }
+
+                        if (obj.transform.position.y < yTemp) //normal situation
+                        {
+                            yTemp = obj.transform.position.y;
+                            zTemp = obj.transform.position.z;
+                        }
+                    }
+                }
+
+
+                if (flag != -1 || yTemp <= -0.48f) //which means must random againor we're already at the yMax position
+                {
+                    if ((yTemp < 0.35f || (yTemp == 0.35f && flag == 1))) // (if not yMin or 1 card in column) and != to yMax
+                    {
+                        //print(yTemp);
+                        yTemp -= 0.07f;
+                        zTemp -= 0.1f;
+                    }
+                }
+
+
+            } while (flag < 0); // yTemp doesn't change
+
+            //Instantiate
+
+            playedCardSet.Add(Instantiate(tempObj, new Vector3(xTemp, yTemp, zTemp), Quaternion.identity));
+
+            xTemp = 0f; yTemp = 0.35f; zTemp = 5f; // don't forget to put the initial values
+            cardNbInColumns[index]++; //we add on card in this column
             //Configure parameters
 
             //Set the sprite
-            
+
 
             playedCardSet[i].GetComponent<SpriteRenderer>().sprite = tempSprite;
 
             //Set the value of the Card 
-            playedCardSet[i].GetComponent<PlayedCard>().SetValue(c);
+            playedCardSet[i].GetComponent<PlayedCard>().SetValue(letterList[j]);
             //print(playedCardSet[i].GetComponent<PlayedCard>().GetValue());
             //print(playedCardSet[i].GetComponent<PlayedCard>().IsVisible() + "2");
 
@@ -240,7 +343,7 @@ public class GameManagement : MonoBehaviour
             playedCardSet[i].GetComponent<PlayedCard>().SetVisibility(true);
 
             i++;
-            posX += 0.211f;
+            //posX += 0.211f;
 
         }
 
@@ -249,7 +352,7 @@ public class GameManagement : MonoBehaviour
     //Instantiate all the PlacedCard to discover
     private void InitPlacedCardSet(List<char> letterList)
     {
-        float posX = 1.55f, posY = -0.8f, posZ = 3f;
+        float posX = 1.55f, posY = -0.8f, posZ = 2f;
         int i = 0;
 
         for(int j=letterList.Count-1; j>=0; j--)
