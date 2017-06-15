@@ -9,14 +9,21 @@ public class ChoiceCategoryManagement : MonoBehaviour
     //script which manage the category button (instantiation+interaction)
 
     /********************************* Variables *********************************/
-    private List<Button> catbuttonList = new List<Button>();
-    private Transform tParent;
+    private List<Button> catbuttonList = new List<Button>(); //list containing all categorybutton
+    private Transform tParent; //variables needed for loading prefab/sprites
     private Button tempButton;
     private Sprite tempSprite;
 
     /********************************* Loop *********************************/
 
     private void Start()
+    {
+        InitCategoriesButton();
+
+    }
+
+    //Instantiate and set up all category button in scrollList
+    private void InitCategoriesButton()
     {
         float posX = 207f;
         float posY = 495f;
@@ -27,15 +34,15 @@ public class ChoiceCategoryManagement : MonoBehaviour
         do
         {
 
-            tempButton = Resources.Load("test/CategoryButton", typeof(Button)) as Button;
+            tempButton = Resources.Load("CategoryButton", typeof(Button)) as Button;
 
             catbuttonList.Add(Instantiate(tempButton, tParent));
 
             catbuttonList[i].GetComponent<RectTransform>().position = new Vector3(posX, posY, 0);
 
             //catbuttonList[i].GetComponent<Image>().sprite = tempSprite;
-            catbuttonList[i].transform.Find("Text_Up").GetComponent<Text>().text = "Category_"+i;
-            catbuttonList[i].transform.Find("Text_Down").GetComponent<Text>().text = "Categorie_"+i;
+            catbuttonList[i].transform.Find("Text_Up").GetComponent<Text>().text = "Category_" + i;
+            catbuttonList[i].transform.Find("Text_Down").GetComponent<Text>().text = "Categorie_" + i;
 
             i++;
 
@@ -50,7 +57,6 @@ public class ChoiceCategoryManagement : MonoBehaviour
             }
 
         } while (i < 50);
-
     }
 
 }

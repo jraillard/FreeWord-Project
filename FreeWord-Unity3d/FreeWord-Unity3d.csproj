@@ -93,13 +93,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\BackToCategoryMenu.cs" />
+    <Compile Include="Assets\Scripts\BackToLevelSelection.cs" />
     <Compile Include="Assets\Scripts\CameraToDeviceResolution.cs" />
     <Compile Include="Assets\Scripts\Card.cs" />
     <Compile Include="Assets\Scripts\CategoryButton.cs" />
     <Compile Include="Assets\Scripts\ChoiceCategoryManagement.cs" />
+    <Compile Include="Assets\Scripts\Data.cs" />
     <Compile Include="Assets\Scripts\FrontCard.cs" />
     <Compile Include="Assets\Scripts\GameManagement.cs" />
+    <Compile Include="Assets\Scripts\GoToGame.cs" />
     <Compile Include="Assets\Scripts\PlacedCard.cs" />
     <Compile Include="Assets\Scripts\PlacingCard.cs" />
     <Compile Include="Assets\Scripts\PlayedCard.cs" />

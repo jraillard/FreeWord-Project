@@ -18,6 +18,7 @@ public class GameManagement : MonoBehaviour
     private Sprite tempSprite;
 
     private int cpt; //counter for update loop
+    private Data data;
     private List<string> listWord;
     private List<char> splitWord;
 
@@ -25,50 +26,26 @@ public class GameManagement : MonoBehaviour
 
     void Start()
     {
-        /*
-        splitWord = MySplitter("bravo");
-        InitMysteryCardSet(splitWord);
-        InitPlayedCardSet(splitWord);
-        InitPlacedCardSet(splitWord);
-        InitWordBonusButton();
-        */
-
-        //Test1
-        listWord = new List<string>();
-        listWord.Add("excellent");
-        listWord.Add("bonjour");
-        listWord.Add("salut");
-        listWord.Add("coucou");
-        listWord.Add("maison");
-        listWord.Add("jardin");
-
-
-        //Initiate the game 
+        //Get the Word List 
+        data = GameObject.Find("DataObject").GetComponent<Data>();
+        listWord = data.GetWordListFromGame();       
 
 
         //Instantiate all the Card Sets
 
-        //first of list = mysterword
         splitWord = MySplitter(listWord[0]);
-        listWord.RemoveAt(0);
-
-        
+        listWord.RemoveAt(0);        
         InitMysteryCardSet(splitWord);
-        //float incY = 0, incZ = 0;      
-               
+
         foreach (string s in listWord)
         {
-            //print(s);
             splitWord = MySplitter(s);
-            InitPlayedCardSet(splitWord);//, incY, incZ);
-            //incY -= 0.07f;
-            //incZ -= 0.1f;
+            InitPlayedCardSet(splitWord);
         }
         
         splitWord = MySplitter(listWord[listWord.Count - 1]);
         InitPlacedCardSet(splitWord);
-        InitWordBonusButton();
-        
+        InitWordBonusButton();       
 
     }
 
@@ -148,14 +125,14 @@ public class GameManagement : MonoBehaviour
     //Instantiate all the MysteryCard to discover
     private void InitMysteryCardSet(List<char> letterList)
     {
-        float posX = 0.8f, posY = 0.75f, posZ = 3f;
+        float posX = 0.8f, posY = 0.7f, posZ = 3f;
         int i = 0;
 
         foreach (char c in letterList)
         {
             //Load the right prefab + sprite  and Instantiate 
 
-            tempObj = Resources.Load("test/PlayedCard") as GameObject;
+            tempObj = Resources.Load("PlayedCard") as GameObject;
 
             if (c == 'ÿ') //particular case
             {
@@ -232,7 +209,7 @@ public class GameManagement : MonoBehaviour
             //print(c);
             //print(tempSprite);
 
-            tempObj = Resources.Load("test/PlayedCard") as GameObject;
+            tempObj = Resources.Load("PlayedCard") as GameObject;
 
             //Find the random position of the card to instantiate 
             foreach (GameObject obj in playedCardSet) //initiate number of card in each column
@@ -284,7 +261,7 @@ public class GameManagement : MonoBehaviour
                     if (obj.transform.position.x == xTemp)
                     {
                         //same column 
-                        if (obj.transform.position.y <= -0.48f) //yMax which is the smaller one (yMax=0.49f but in unity => 0.48999999...) 
+                        if (obj.transform.position.y <= -0.41f) //yMax which is the smaller one (yMax=0.49f but in unity => 0.41999999..) 
                         {
                             yTemp = 0.35f; //must random again
                             columnsPos.RemoveAt(index);
@@ -307,7 +284,7 @@ public class GameManagement : MonoBehaviour
                 }
 
 
-                if (flag != -1 || yTemp <= -0.48f) //which means must random againor we're already at the yMax position
+                if (flag != -1 || yTemp <= -0.41f) //which means must random againor we're already at the yMax position
                 {
                     if ((yTemp < 0.35f || (yTemp == 0.35f && flag == 1))) // (if not yMin or 1 card in column) and != to yMax
                     {
@@ -352,14 +329,14 @@ public class GameManagement : MonoBehaviour
     //Instantiate all the PlacedCard to discover
     private void InitPlacedCardSet(List<char> letterList)
     {
-        float posX = 1.55f, posY = -0.8f, posZ = 2f;
+        float posX = 1.55f, posY = -0.73f, posZ = 2f;
         int i = 0;
 
         for(int j=letterList.Count-1; j>=0; j--)
         {
             //Load the right prefab + sprite  and Instantiate 
 
-            tempObj = Resources.Load("test/PlacedCard") as GameObject;
+            tempObj = Resources.Load("PlacedCard") as GameObject;
 
 
             tempSprite = Resources.Load("Shape/Shape", typeof(Sprite)) as Sprite;

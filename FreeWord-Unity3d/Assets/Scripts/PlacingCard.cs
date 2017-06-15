@@ -73,8 +73,5 @@ public class PlacingCard : MonoBehaviour
 
             //Allow placed attributes of PlayedCard to be true while it's placed
             other.GetComponent<PlayedCard>().SetPlaced(false);
-
-        
     } 
-
 }

@@ -49,7 +49,7 @@ public class WordBonus : MonoBehaviour
             nbLetterShown = 0;
             index = 0;
             indexList = new List<int>();
-            tempPlacedCards = GameObject.Find("Fond_jeu").GetComponent<GameManagement>().GetCardSet("placed");
+            tempPlacedCards = GameObject.Find("BackGround").GetComponent<GameManagement>().GetCardSet("placed");
 
             //We Show Letter only if there's no PlacedCards
             //mustn't change availability in Update!!! 

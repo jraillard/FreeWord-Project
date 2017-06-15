@@ -79,7 +79,7 @@ public class PlayedCard : Card {
     {
         int flag = 0;
         float yMin = 0, zMin = 0;
-        List<GameObject> otherCards = GameObject.Find("Fond_jeu").GetComponent<GameManagement>().GetCardSet("played");
+        List<GameObject> otherCards = GameObject.Find("BackGround").GetComponent<GameManagement>().GetCardSet("played");
 
         foreach (GameObject obj in otherCards)
         {

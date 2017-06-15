@@ -14,7 +14,7 @@ public class ReplayBonus : MonoBehaviour {
 
     public void ReplacePlayedCard()
     { 
-        tempPlayedCardSet = GameObject.Find("Fond_jeu").GetComponent<GameManagement>().GetCardSet("played");
+        tempPlayedCardSet = GameObject.Find("BackGround").GetComponent<GameManagement>().GetCardSet("played");
 
         foreach (GameObject obj in tempPlayedCardSet)
         {
