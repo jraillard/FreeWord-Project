@@ -1,0 +1,35 @@
+﻿@model IEnumerable<EchoMe.Models.UserList>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Users</h2>
+
+@foreach (var role in Model)
+{
+   int rowNo=0;
+    <table class="ui inverted blue table">
+        <thead>
+        <tr>
+            <th></th>
+            <th>@Html.DisplayNameFor(model => model.Role)</th>
+            <th>@Html.DisplayNameFor(model => model.UserFields[0].Username)</th>
+            <th>@Html.DisplayNameFor(model => model.UserFields[0].CreateDateTime)</th>
+        </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in role.UserFields)
+            {
+                <tr>
+                    <td>@(rowNo+=1)</td>
+                    <td>@Html.DisplayFor(modelItem => role.Role)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Username)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CreateDateTime)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+

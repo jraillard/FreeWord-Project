@@ -1,0 +1,437 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<div id="VideoDiv" class="content-wrapper">
+    @if (Context.User.Identity.IsAuthenticated && (Context.User.IsInRole("Student") || Context.User.IsInRole("Admin")))
+    {
+        <div class="ui divider"></div>
+        <div class="ui huge label">
+            <i class="user icon"></i> Points, @ViewBag.UserName
+        </div><br/><br/>
+        <div id="myPoints" class="ui segment">
+            <table class="ui inverted blue table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Qty</th>
+                    <th>Points</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Videos</td>
+                    <td>@ViewBag.Videos</td>
+                    <td>@(ViewBag.Videos*ViewBag.OneVideoPoint)</td>
+                </tr>
+                <tr>
+                    <td>Comments</td>
+                    <td>@ViewBag.Comments</td>
+                    <td>@(ViewBag.Comments*ViewBag.OneCommentPoint)</td>
+                </tr>
+                <tr>
+                    <td>Likes</td>
+                    <td>@ViewBag.Likes</td>
+                    <td>@(ViewBag.Likes*ViewBag.OneLikePoint)</td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>Total</th>
+                    <th></th>
+                    <th>@(ViewBag.Videos*ViewBag.OneVideoPoint + ViewBag.Comments*ViewBag.OneCommentPoint + ViewBag.Likes*ViewBag.OneLikePoint)</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div><br/><br/>
+
+        <div class="ui divider"></div>
+        <div class="ui huge label">
+            <i class="film icon"></i> My videos
+        </div><br/><br/>
+        <div id="myVideo" class="ui three column grid">
+        </div><br/><br/>
+
+        <div class="ui divider"></div>
+        <div class="ui huge label">
+            <i class="file video outline icon"></i> Upload new video
+        </div><br/><br/>
+        <div class="ui segment">
+            <form class="ui fluid form">
+                <div class="ui big blue message">
+                    The video should be in MP4 format, and less than 200 MB. Use any converter like http://www.online-convert.com to convert your video to MP4 file. You cannot remove or modify your video, title and description. So, upload it when you are done with all modification. In case of any problem, contact administrator.
+                </div><br />
+                <input type="file" id="fileInput" style="color: blue" accept="video/mp4"/><br/>
+                <div class="field">
+                    <div class="ui pointing below blue basic label">
+                        Title
+                    </div>
+                    <input type="text" id="fileTitle" placeholder="Azure...">
+                </div><br/>
+                <div class="field">
+                    <div class="ui pointing below blue basic label">
+                        Description
+                    </div>
+                    <textarea id="fileDescription" placeholder="This presentation provides information about ..."></textarea>
+                </div><br/>
+                <button class="ui primary button" type="button" id="btnUpload">Upload your video</button><br/><br/>
+                <div id="progressbar_container" class="ui active progress" style="display: none">
+                    <div id="progressbar" class="bar" style="background-color: blue">
+                        <div class="progress"></div>
+                    </div>
+                    <div id="progressbar_label" class="label">Uploading Files</div>
+                </div><br/><br/>
+            </form>
+        </div>
+        <br/><br/>
+
+        <div class="ui divider"></div>
+        <div class="ui huge label">
+            <i class="comment icon"></i> Comment Editor
+        </div><br/><br/>
+        <div class="ui segment">
+            <div id="comment_div">
+                <table class="ui inverted blue table">
+                    <thead>
+                    <tr>
+                        <th class="nine wide">Comment</th>
+                        <th class="one wide">Private</th>
+                        <th class="one wide">Anonymous</th>
+                        <th class="five wide"></th>
+                    </tr>
+                    </thead>
+                    <tbody id="comment_body">
+                    <tr id="comment_row_label_number">
+                        <td>
+                            <div id="comment_label_content_number">
+                                my comment, this explain the main reason how to use this technology in context of cloud computing
+                            </div>
+                        </td>
+                        <td>
+                            <div class="ui disabled checkbox">
+                                <input id="comment_label_private_number" type="checkbox" checked="checked">
+                                <label></label>
+                            </div>
+                        </td>
+                        <td>
+                            <div id="comment_label_anonymous_number" class="ui disabled checkbox">
+                                <input type="checkbox" checked="none">
+                                <label></label>
+                            </div>
+                        </td>
+                        <td>
+                            <button id="comment_label_editBtn_number" class="ui basic button">Edit</button>
+                            <button id="comment_label_removeBtn_number" class="ui basic button">Remove</button>
+                        </td>
+                    </tr>
+                    <tr id="comment_row_input_number">
+                        <td>
+                            <div class="ui disabled input">
+                                <input id="comment_input_content_number" type="text" value="my comment, this explain the main reason how to use this technology in context of cloud computing">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="ui checkbox">
+                                <input id="comment_input_private_number" type="checkbox">
+                                <label></label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="ui checkbox">
+                                <input id="comment_input_anonymous_number" type="checkbox" name="example">
+                                <label></label>
+                            </div>
+                        </td>
+                        <td>
+                            <button id="comment_input_cancelBtn_number" class="ui basic button">Cancel</button>
+                            <button id="comment_input_saveBtn_number" class="ui basic button">Save</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function() {
+
+            var commentRowLabel = function(commentId, commentContent, commentPrivate, commentAnonymous) {
+                var cp = commentPrivate ? 'checked="checked"' : '';
+                var ca = commentAnonymous ? 'checked="checked"' : '';
+                return '<tr id="comment_row_label_' + commentId + '"><td><div class="ui input"><input id="comment_input_content_' + commentId + '" type="text"  disabled="disabled" value="' + commentContent + '"></div></td><td><div class="ui checkbox"><input id="comment_label_private_' + commentId + '" type="checkbox" ' + cp + ' disabled="disabled"><label></label></div></td><td><div class="ui checkbox"><input id="comment_label_anonymous_' + commentId + '" type="checkbox" ' + ca + ' disabled="disabled"><label></label></div></td><td><button tag="comment_label_editBtn" id="comment_label_editBtn_' + commentId + '" commentid=' + commentId + ' class="ui basic button">Edit</button><button tag="comment_label_removeBtn" id="comment_label_removeBtn_' + commentId + '" commentid=' + commentId + ' class="ui basic button">Remove</button><button tag="comment_label_cancelBtn" id="comment_label_cancelBtn_' + commentId + '" commentid=' + commentId + ' style="display: none" class="ui basic button">Cancel</button><button tag="comment_label_saveBtn" id="comment_label_saveBtn_' + commentId + '" commentid=' + commentId + ' style="display: none" class="ui basic button">Save</button></td></tr>';
+            };
+
+            var loadUserPoints = function() {
+                document.getElementById("myPoints").innerHTML = '<div class="ui active inverted dimmer"><div class="ui text loader">Loading</div></div><p><br /><br /><br /><br /><br /><br /></p>';
+                var xhrUserPoints = new XMLHttpRequest();
+                xhrUserPoints.onload = function() {
+                    var entry = $.parseJSON(this.responseText);
+                    document.getElementById("myPoints").innerHTML = '<table class="ui inverted blue table"><thead><tr><th></th><th>Qty</th><th>Points</th></tr></thead><tbody><tr><td>Videos</td><td>' + entry.Videos + '</td><td>' + Number(entry.Videos) * Number(entry.OneVideoPoint) + '</td></tr><tr><td>Comments</td><td>' + entry.Comments + '</td><td>' + Number(entry.Comments) * Number(entry.OneCommentPoint) + '</td></tr><tr><td>Likes</td><td>' + entry.Likes + '</td><td>' + Number(entry.Likes) * Number(entry.OneLikePoint) + '</td></tr></tbody><tfoot><tr><th>Total</th><th></th><th>' + (Number(entry.Videos) * Number(entry.OneVideoPoint) + Number(entry.Comments) * Number(entry.OneCommentPoint) + Number(entry.Likes) * Number(entry.OneLikePoint)) + '</th></tr></tfoot></table>';
+                };
+                xhrUserPoints.open("POST", "/User/UserPoints?userId=" + @ViewBag.UserId);
+                xhrUserPoints.send();
+            }
+
+            var loadCommentEditor = function() {
+                var xhrUserComment = new XMLHttpRequest();
+                xhrUserComment.onload = function() {
+                    var resultList = $.parseJSON(this.responseText);
+                    var out = "";
+                    resultList.forEach(function(entry) {
+                        out = out + commentRowLabel(entry.CommentId, entry.Content, entry.IsPrivate, entry.IsAnonymous);
+                    });
+                    document.getElementById("comment_body").innerHTML = out;
+                }
+                xhrUserComment.open("POST", "/Video/UserComments?userId=" + @ViewBag.UserId);
+                xhrUserComment.send();
+            };
+
+            $("#comment_body").on("click", "button[tag='comment_label_removeBtn']", function() {
+                var thisButton = $(this);
+                var thisCommentId = thisButton.attr('commentid');
+                thisButton.removeClass("ui basic button").addClass("ui basic loading button");
+                $("#comment_label_editBtn_" + thisCommentId).removeClass("ui basic button").addClass("ui basic disabled button");
+                var xhrUserCommentRemove = new XMLHttpRequest();
+                xhrUserCommentRemove.onload = function() {
+                    if ($.parseJSON(this.responseText) == 'done') {
+                        $("#comment_row_label_" + thisCommentId).remove();
+                        loadUserPoints();
+                    }
+                    thisButton.removeClass("ui basic loading button").addClass("ui basic button");
+                    $("#comment_label_editBtn_" + thisCommentId).removeClass("ui basic disabled button").addClass("ui basic button");
+                }
+                xhrUserCommentRemove.open("POST", "/Video/UserCommentRemove?commentId=" + thisCommentId);
+                xhrUserCommentRemove.send();
+            });
+
+            $("#comment_body").on("click", "button[tag='comment_label_editBtn']", function() {
+                var thisButton = $(this);
+                var thisCommentId = thisButton.attr('commentid');
+                $("#comment_input_content_" + thisCommentId).removeAttr("disabled");
+                $("#comment_label_private_" + thisCommentId).removeAttr("disabled");
+                $("#comment_label_anonymous_" + thisCommentId).removeAttr("disabled");
+                $("#comment_label_editBtn_" + thisCommentId).css("display", "none");
+                $("#comment_label_removeBtn_" + thisCommentId).css("display", "none");
+                $("#comment_label_cancelBtn_" + thisCommentId).css("display", "inline");
+                $("#comment_label_saveBtn_" + thisCommentId).css("display", "inline");
+                $("#comment_label_cancelBtn_" + thisCommentId).attr("cText", $("#comment_input_content_" + thisCommentId).val());
+                if ($("#comment_label_private_" + thisCommentId).attr("checked") == "checked") {
+                    $("#comment_label_cancelBtn_" + thisCommentId).attr("cPrivate", "yes");
+                } else {
+                    $("#comment_label_cancelBtn_" + thisCommentId).attr("cPrivate", "no");
+                }
+                if ($("#comment_label_anonymous_" + thisCommentId).attr("checked") == "checked") {
+                    $("#comment_label_cancelBtn_" + thisCommentId).attr("cAnonymous","yes");
+                } else {
+                    $("#comment_label_cancelBtn_" + thisCommentId).attr("cAnonymous","no");
+                }
+                
+
+            });
+
+            $("#comment_body").on("click", "button[tag='comment_label_saveBtn']", function() {
+                var thisButton = $(this);
+                var thisCommentId = thisButton.attr('commentid');
+                var commentContent = $("#comment_input_content_" + thisCommentId).val();
+                var commentPrivate = $("#comment_label_private_" + thisCommentId).prop('checked');
+                var commentAnonymous = $("#comment_label_anonymous_" + thisCommentId).prop('checked');
+                thisButton.removeClass("ui basic button").addClass("ui basic loading button");
+                $("#comment_label_cancelBtn_" + thisCommentId).removeClass("ui basic button").addClass("ui basic disabled button");
+                var xhrUserCommentUpdate = new XMLHttpRequest();
+                xhrUserCommentUpdate.onload = function() {
+                    if ($.parseJSON(this.responseText) == 'done') {
+                        $("#comment_input_content_" + thisCommentId).attr("disabled", 'disabled');
+                        $("#comment_label_private_" + thisCommentId).attr("disabled", 'disabled');
+                        $("#comment_label_anonymous_" + thisCommentId).attr("disabled", 'disabled');
+                        $("#comment_label_editBtn_" + thisCommentId).css("display", "inline");
+                        $("#comment_label_removeBtn_" + thisCommentId).css("display", "inline");
+                        $("#comment_label_cancelBtn_" + thisCommentId).css("display", "none");
+                        $("#comment_label_saveBtn_" + thisCommentId).css("display", "none");
+                        if (commentPrivate) {
+                            $("#comment_label_private_" + thisCommentId).attr("checked", "checked");
+                        } else {
+                            $("#comment_label_private_" + thisCommentId).removeAttr("checked");
+                        }
+                        if (commentAnonymous) {
+                            $("#comment_label_anonymous_" + thisCommentId).attr("checked", "checked");
+                        } else {
+                            $("#comment_label_anonymous_" + thisCommentId).removeAttr("checked");
+                        }
+                    }
+                    thisButton.removeClass("ui basic loading button").addClass("ui basic button");
+                    $("#comment_label_cancelBtn_" + thisCommentId).removeClass("ui basic disabled button").addClass("ui basic button");
+                }
+                xhrUserCommentUpdate.open("POST", "/Video/UserCommentUpdate?commentId=" + thisCommentId + "&commentContent=" + commentContent + "&commentPrivate=" + commentPrivate + "&commentAnonymous=" + commentAnonymous);
+                xhrUserCommentUpdate.send();
+            });
+
+            $("#comment_body").on("click", "button[tag='comment_label_cancelBtn']", function() {
+                var thisButton = $(this);
+                var thisCommentId = thisButton.attr('commentid');
+                $("#comment_input_content_" + thisCommentId).attr("disabled", 'disabled');
+                $("#comment_label_private_" + thisCommentId).attr("disabled", 'disabled');
+                $("#comment_label_anonymous_" + thisCommentId).attr("disabled", 'disabled');
+                $("#comment_label_editBtn_" + thisCommentId).css("display", "inline");
+                $("#comment_label_removeBtn_" + thisCommentId).css("display", "inline");
+                $("#comment_label_cancelBtn_" + thisCommentId).css("display", "none");
+                $("#comment_label_saveBtn_" + thisCommentId).css("display", "none");
+                $("#comment_input_content_" + thisCommentId).val($("#comment_label_cancelBtn_" + thisCommentId).attr("cText"));
+                if ($("#comment_label_cancelBtn_" + thisCommentId).attr("cPrivate") == "yes") {
+                    $("#comment_label_private_" + thisCommentId).prop('checked', true);
+                } else {
+                    $("#comment_label_private_" + thisCommentId).prop('checked', false);
+                }
+                if ($("#comment_label_cancelBtn_" + thisCommentId).attr("cAnonymous") == "yes") {
+                    $("#comment_label_anonymous_" + thisCommentId).prop('checked', true);
+                } else {
+                    $("#comment_label_anonymous_" + thisCommentId).prop('checked', false);
+                }
+            });
+
+            var loadVideos = function() {
+                $("#myVideo").removeClass("ui three column grid").addClass("ui segment");
+                var itemToAdd = '<div class="ui active inverted dimmer"><div class="ui text loader">Loading</div></div><p><br /><br /><br /><br /><br /><br /></p>';
+                document.getElementById("myVideo").innerHTML = itemToAdd;
+                document.getElementById("comment_body").innerHTML = '<div class="ui active inverted dimmer"><div class="ui text loader">Loading</div></div><p><br /><br /><br /><br /><br /><br /></p>'
+                var xhrUserVideo = new XMLHttpRequest();
+                xhrUserVideo.onload = function() {
+                    $("#myVideo").removeClass("ui segment").addClass("ui three column grid");
+                    var myArr = $.parseJSON(this.responseText);
+                    var out = "";
+                    var itemToAdd = "";
+                    for (var i = 0; i < myArr.length; i++) {
+                        itemToAdd = '<div class="column"><div class="ui segment" ><video id="my-video" class="video-js" style="position: relative; width: 100%; height: auto;"  controls preload="auto" ><source src="Videos/' + myArr[i].Name + '" type="video/mp4"><p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p></video><br /><div>@Html.ActionLink("More detail on **Title**", "Index", "Video", new {videoId = "##PresentationId##"}, new {@class = "ui right labeled icon button", @style = "width: 100%"})</div></div></div>';
+                        itemToAdd = itemToAdd.replace("**Title**", myArr[i].Title);
+                        itemToAdd = itemToAdd.replace("%23%23PresentationId%23%23", myArr[i].PresentationId);
+                        out += itemToAdd;
+                    }
+                    document.getElementById("myVideo").innerHTML = out;
+                    loadCommentEditor();
+                }
+                xhrUserVideo.open("POST", "/Video/UserVideos?userId=" + @ViewBag.UserId);
+                xhrUserVideo.send();
+            };
+
+            var progressBarStart = function() {
+                $('#progressbar_label').html("0%");
+                $("#progressbar").css("background-color", "blue");
+                $("#progressbar_container").show();
+            };
+
+            var progressBarUpdate = function(percentage) {
+                $('#progressbar_label').html(Math.round(percentage) + "%");
+                $("#progressbar").width(percentage + "%");
+            };
+
+            var progressBarComplete = function(deltaFade, color, success) {
+                if (success === true) {
+                    $("#fileTitle").val("");
+                    $("#fileDescription").val("");
+                    loadVideos();
+                    loadUserPoints();
+                }
+                $("#progressbar").css("background-color", color);
+                $("#progressbar_container").fadeOut(deltaFade);
+            };
+
+            var file = null;
+            var fileTitle = null;
+            var fileDescription = null;
+
+            $('#fileInput').change(function(e) {
+                file = e.target.files[0];
+            });
+
+            var uploadCompleted = function() {
+                var formData = new FormData();
+                var xhr2 = new XMLHttpRequest();
+                xhr2.onload = function() {
+                    if (xhr2.responseText === "error") {
+                        $('#progressbar_label').html("Error in the server!!!");
+                        progressBarComplete(2000, "red", false);
+                    } else {
+                        progressBarUpdate(100);
+                        progressBarComplete(700, "green", true);
+                    }
+                }
+                xhr2.open("POST", "/Upload/UploadComplete?fileName=" + file.name.toLowerCase() + "&complete=" + 1 + "&fileTitle=" + fileTitle + "&fileDescription=" + fileDescription, true);
+                xhr2.send(formData);
+            }
+
+            var multiUpload = function(count, counter, blob, completed, start, end, bytesPerChunk) {
+                counter = counter + 1;
+                if (counter <= count) {
+                    var chunk = blob.slice(start, end);
+                    var xhr = new XMLHttpRequest();
+                    xhr.onload = function() {
+                        if (xhr.responseText === "error") {
+                            $('#progressbar_label').html("Error in the server!!!");
+                            progressBarComplete(2000, "red", false);
+                        } else {
+                            start = end;
+                            end = start + bytesPerChunk;
+                            if (count == counter) {
+                                uploadCompleted();
+                            } else {
+                                var percentage = ((counter / count) * 100);
+                                progressBarUpdate(percentage);
+                                multiUpload(count, counter, blob, completed, start, end, bytesPerChunk);
+                            }
+                        }
+                    }
+                    xhr.open("POST", "/Upload/MultiUpload?id=" + counter.toString() + "&fileName=" + file.name.toLowerCase(), true);
+                    xhr.send(chunk);
+                }
+            };
+
+            $("#VideoDiv").on("click", "#btnUpload", function() {
+                $("#progressbar").width("0%");
+                if (file == null) {
+                    progressBarStart();
+                    $('#progressbar_label').html("Select a file");
+                    progressBarComplete(2000, "red", false);
+                } else if (file.name.toLowerCase().split('.')[file.name.toLowerCase().split('.').length - 1] != "mp4") {
+                    progressBarStart();
+                    $('#progressbar_label').html("You can only select MP4 files");
+                    progressBarComplete(2000, "red", false);
+                } else if (file.size > 219060735) {
+                    progressBarStart();
+                    $('#progressbar_label').html("File size should be smaller that 200Mb");
+                    progressBarComplete(2000, "red", false);
+                } else {
+                    fileTitle = $("#fileTitle").val();
+                    fileDescription = $("#fileDescription").val();
+                    var xhrFileExist = new XMLHttpRequest();
+                    xhrFileExist.onload = function() {
+                        if (xhrFileExist.responseText == "error") {
+                            progressBarStart();
+                            $('#progressbar_label').html("A file with the same name exist");
+                            progressBarComplete(2000, "red", false);
+                        } else {
+                            var blob = file;
+                            var bytesPerChunk = 3757000;
+                            var size = blob.size;
+
+                            var start = 0;
+                            var end = bytesPerChunk;
+                            var completed = 0;
+                            var count = size % bytesPerChunk == 0 ? size / bytesPerChunk : Math.floor(size / bytesPerChunk) + 1;
+                            var counter = 0;
+                            progressBarStart();
+                            multiUpload(count, counter, blob, completed, start, end, bytesPerChunk);
+                        }
+                    }
+                    xhrFileExist.open("POST", "/Upload/FileExist?fileName=" + file.name.toLowerCase(), true);
+                    xhrFileExist.send();
+                }
+            });
+
+
+            loadVideos();
+        });
+    </script>
+}
+

@@ -1,0 +1,169 @@
+﻿@model IEnumerable<EchoMe.Models.Leader>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="content-wrapper">
+    @if (Context.User.Identity.IsAuthenticated && Context.User.IsInRole("Admin"))
+    {
+        <div id="point_segment" class="ui segment">
+
+            <h2>Point Editor</h2><br/>
+            <div id="point_editor_loader">
+                <table class="ui inverted blue table">
+                    <thead>
+                    <tr>
+                        <th class="two wide">Video</th>
+                        <th class="two wide">Comment</th>
+                        <th class="two wide">Like</th>
+                        <th class="two wide">Watched</th>
+                        <th class="two wide">Rating</th>
+                        <th class="six wide"></th>
+                    </tr>
+                    </thead>
+                    <tbody id="comment_body">
+                    <tr>
+                        <td>
+                            <div class="ui input">
+                                <input tag="point" disabled="disabled" style="width: 10%" id="videoField" type="text" value="">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="ui input">
+                                <input tag="point" disabled="disabled" style="width: 10%" id="commentField" type="text" value="">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="ui input">
+                                <input tag="point" disabled="disabled" style="width: 10%" id="likeField" type="text" value="">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="ui input">
+                                <input tag="point" disabled="disabled" style="width: 10%" id="watchedField" type="text" value="">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="ui input">
+                                <input tag="point" disabled="disabled" style="width: 10%" id="ratingField" type="text" value="">
+                            </div>
+                        </td>
+                        <td>
+                            <button id="editBtn" tag="edit" class="ui basic button">Edit</button>
+                            <button id="saveBtn" tag="save" style="display: none" class="ui basic button">Save</button>
+                            <button id="cancelBtn" tag="cancel" style="display: none" class="ui basic button">Cancel</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <div class="ui divider"></div>
+    }
+    <div class="ui segment">
+        <h2>Users - Points</h2><br/>
+        <div>
+            <table class="ui inverted blue table">
+                <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Username)</th>
+                    <th>@Html.DisplayNameFor(model => model.Videos)</th>
+                    <th>@Html.DisplayNameFor(model => model.Comments)</th>
+                    <th>@Html.DisplayNameFor(model => model.Likes)</th>
+                    <th>@Html.DisplayNameFor(model => model.Watched)</th>
+                    <th>@Html.DisplayNameFor(model => model.VideosRate)</th>
+                    <th>@Html.DisplayNameFor(model => model.Points)</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Username)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Videos)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Comments)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Likes)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Watched)</td>
+                        <td>@Html.DisplayFor(modelItem => item.VideosRate)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Points)</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function() {
+            var VideoPoint = 0;
+            var CommentPoint = 0;
+            var LikePoint = 0;
+            var WatchedPoint = 0;
+            var RatingPoint = 0;
+
+            var loadPointEditor = function() {
+                if ($("#point_editor_loader").length) {
+                    document.getElementById("point_editor_loader").innerHTML = '<div class="ui active inverted dimmer"><div class="ui text loader">Loading</div></div><p><br /><br /><br /><br /><br /><br /></p>';
+                    var loadPointEditorRequest = new XMLHttpRequest();
+                    loadPointEditorRequest.onload = function() {
+                        var resultList = $.parseJSON(this.responseText);
+                        document.getElementById("point_editor_loader").innerHTML = '<table class="ui inverted blue table"><thead><tr><th class="two wide">Video</th><th class="two wide">Comment</th><th class="two wide">Like</th><th class="two wide">Watched</th><th class="two wide">Rating</th><th class="six wide"></th></tr></thead><tbody id="comment_body"><tr><td><div class="ui input"><input tag="point" disabled="disabled" style="width: 10%" id="videoField" type="text" value=' + resultList.VideoPoint + ' ></div></td><td><div class="ui input"><input tag="point" disabled="disabled" style="width: 10%" id="commentField" type="text" value=' + resultList.CommentPoint + ' ></div></td><td><div class="ui input"><input tag="point" disabled="disabled" style="width: 10%" id="likeField" type="text" value=' + resultList.LikePoint + ' ></div></td><td><div class="ui input"><input tag="point" disabled="disabled" style="width: 10%" id="watchedField" type="text" value=' + resultList.WatchedPoint + ' ></div></td><td><div class="ui input"><input tag="point" disabled="disabled" style="width: 10%" id="ratingField" type="text" value=' + resultList.RatingPoint + ' ></div></td><td><button id="editBtn" tag="edit" class="ui basic button">Edit</button><button id="saveBtn" tag="save" style="display: none" class="ui basic button">Save</button><button id="cancelBtn" tag="cancel" style="display: none" class="ui basic button">Cancel</button></td></tr></tbody></table>';
+                    }
+                    loadPointEditorRequest.open("POST", "/Leader/ReadPointValue");
+                    loadPointEditorRequest.send();
+                }
+            }
+
+            $("#point_segment").on("click", "button[tag='edit']", function() {
+                $("#editBtn").css("display", "none");
+                $("#saveBtn").css("display", "inline");
+                $("#cancelBtn").css("display", "inline");
+                $("input[tag='point']").removeAttr("disabled");
+                VideoPoint = $("#videoField").val();
+                CommentPoint = $("#commentField").val();
+                LikePoint = $("#likeField").val();
+                WatchedPoint = $("#watchedField").val();
+                RatingPoint = $("#ratingField").val();
+            });
+
+            $("#point_segment").on("click", "button[tag='cancel']", function() {
+                $("#editBtn").css("display", "inline");
+                $("#saveBtn").css("display", "none");
+                $("#cancelBtn").css("display", "none");
+                $("input[tag='point']").attr("disabled", 'disabled');
+                $("#videoField").val(VideoPoint);
+                $("#commentField").val(CommentPoint);
+                $("#likeField").val(LikePoint);
+                $("#watchedField").val(WatchedPoint);
+                $("#ratingField").val(RatingPoint);
+            });
+
+            $("#point_segment").on("click", "button[tag='save']", function() {
+                var thisButton = $(this);
+                VideoPoint = $("#videoField").val();
+                CommentPoint = $("#commentField").val();
+                LikePoint = $("#likeField").val();
+                WatchedPoint = $("#watchedField").val();
+                RatingPoint = $("#ratingField").val();
+                thisButton.removeClass("ui basic button").addClass("ui basic loading button");
+                var saveLoadPointEditorRequest = new XMLHttpRequest();
+                saveLoadPointEditorRequest.onload = function() {
+                    if ($.parseJSON(this.responseText) == 'done') {
+                        thisButton.removeClass("ui basic loading button").addClass("ui basic button");
+                        $("#editBtn").css("display", "inline");
+                        $("#saveBtn").css("display", "none");
+                        $("#cancelBtn").css("display", "none");
+                        $("input[tag='point']").attr("disabled", 'disabled');
+                    }
+                }
+                saveLoadPointEditorRequest.open("POST", "/Leader/SetPointValue?videoPoint=" + VideoPoint + "&commentPoint=" + CommentPoint + "&likePoint=" + LikePoint + "&watchedPoint=" + WatchedPoint + "&ratingPoint=" + RatingPoint);
+                saveLoadPointEditorRequest.send();
+            });
+
+            loadPointEditor();
+        })
+    </script>
+}

@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Crowd Multilogue</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+
+@*        <script type="text/javascript" src="~/Scripts/jquery-3.1.1.min.js"></script>
+        <script type="text/javascript" src="~/Scripts/rating.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="~/Content/Semantic-UI-CSS-master/rating.min.css">*@
+
+        <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
+
+        <link rel="stylesheet" type="text/css" href="~/Content/Semantic-UI-CSS-master/semantic.min.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/Semantic-UI-CSS-master/transition.min.css">
+        
+        <meta name="viewport" content="width=device-width" />
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+    </head>
+    <body>
+        <header>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <a href="@Url.Action("Index","Home")"><img src="~/Images/Logo.png" /></a>
+                </div>
+                <div class="float-right">
+                    <section id="login" class="ui label">
+                        @Html.Partial("_LoginPartial")
+                    </section>
+                    <nav>
+                        <div class="ui secondary menu" id="menu">
+                            @Html.ActionLink("Home", "Index", "Home", null, new { @class = "item" })
+                            @Html.ActionLink("About", "About", "Home", null, new{@class="item"})
+                            @Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "item" })
+                            @if(Context.User.Identity.IsAuthenticated && (Context.User.IsInRole("Student") || Context.User.IsInRole("Admin"))){
+                            @Html.ActionLink("My Page", "Index", "User", new { username = @Context.User.Identity.Name }, new { @class = "item"})
+                            @Html.ActionLink("Echo Me", "Index", "Echo", null, new { @class = "item"})
+                            }
+                            @Html.ActionLink("Leader", "Index", "Leader", null, new { @class = "item" })
+                            @if(Context.User.Identity.IsAuthenticated && Context.User.IsInRole("Admin")){
+                            @Html.ActionLink("Admin", "Index", "Admin", null, new { @class = "item" })
+                            }
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <div id="body">
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper clear-fix">
+                @RenderBody()
+                <div class="ui divider"></div>
+            </section>
+        </div>
+    <footer>
+        <div class="content-wrapper">
+            <div class="float-left">
+                <p class="ui basic label" style="background-color: transparent">&copy; This page developed as a student project in @DateTime.Now.Year - OASIS Group</p>
+            </div>
+        </div>
+    </footer>
+
+        
+        @Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)
+
+        <script src="~/Content/Semantic-UI-CSS-master/semantic.min.js"></script>
+        <script src="~/Content/Semantic-UI-CSS-master/transition.min.js"></script>
+        <script src="http://vjs.zencdn.net/5.8.8/video.js"></script>
+    </body>
+</html>

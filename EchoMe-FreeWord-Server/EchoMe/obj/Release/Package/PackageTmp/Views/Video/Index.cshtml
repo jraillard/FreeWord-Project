@@ -1,0 +1,321 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@if (Context.User.Identity.IsAuthenticated && (Context.User.IsInRole("Student") || Context.User.IsInRole("Admin")))
+{
+    <div class="ui divider"></div>
+    <div class="ui grid">
+        <div id="showRating" class="sixteen wide column">
+
+        </div>
+        <div id="showDescription" class="sixteen wide column">
+            <div class="ui segment"></div>
+        </div>
+        <div class="ten wide column">
+            <div id="showVideo" class="ui segment"></div>
+            <div id="makeComment" class="ui segment">
+                <div class="ui grid">
+                    <div class="sixteen wide column">
+                        <div class="ui">
+                            <button id="btnVideoTime" class="ui mini compact labeled icon button">
+                                <i class="pause icon"></i>
+                                Comment &#64;
+                            </button>
+                            <span id="videoTime">00:00</span>
+                        </div>
+                        <textarea class="ui small" id="videoComment" style="position: relative; max-width: 100%; height: auto;" placeholder="Do not leave it blank ..."></textarea>
+                    </div>
+                    <div class="six wide column">
+                        <div class="ui form">
+                            <div class="field">
+                                <div class="ui radio checkbox">
+                                    <input type="radio" name="Privacy" checked="checked">
+                                    <label>Non-private</label>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui radio checkbox">
+                                    <input id="privateCheckbox" type="radio" name="Privacy">
+                                    <label>Private</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="five wide column">
+                        <div class="ui form">
+                            <div class="field">
+                                <div class="ui radio checkbox">
+                                    <input type="radio" name="Author" checked="checked">
+                                    <label>@ViewBag.UserName</label>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui radio checkbox">
+                                    <input id="anonymousCheckbox" type="radio" name="Author">
+                                    <label>Anonymous</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="btnColumn" class="five wide column">
+                        <button id="btnSubmit" style="width: 90%" class="ui basic blue button">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="six wide column">
+            <div id="reviewComment"></div>
+        </div>
+    </div>
+}
+else
+{
+
+}
+
+
+@section Scripts{
+    @* ReSharper disable once PossiblyUnassignedProperty *@
+    <script>
+        $(document).ready(function() {
+
+            var commentDurationTime = 4;
+            var canSubmit = true;
+            var myPlayer = null;
+            var videoTimeNotFormat = 0;
+            var listComment = [];
+            var visibleListComment = [];
+            var commentTime = null;
+            var commentText = null;
+            var isPrivate = null;
+            var isAnonymous = null;
+
+            var loadRating = function() {
+                if ((@ViewBag.VideoCreatorId) != (@ViewBag.UserId)) {
+                    document.getElementById("showRating").innerHTML = '<h3 class="ui header"><div class="content">Rate this presentation</div></h3><div class="ui massive star rating"></div>';
+                    var getRateHttpRequest = new XMLHttpRequest();
+                    getRateHttpRequest.onload = function() {
+                        var submitResponse = $.parseJSON(this.responseText);
+                        var initRate = 0;
+                        if (!isNaN(submitResponse)) {
+                            initRate = Number(submitResponse);
+                            $('.rating')
+                                .rating({
+                                    initialRating: initRate,
+                                    maxRating: 5,
+                                    onRate: function(value) {
+                                        var rateHttpRequest = new XMLHttpRequest();
+                                        rateHttpRequest.open("POST", "/Video/RateVideo?videoId=" + @ViewBag.VideoId + "&userId=" + @ViewBag.UserId + "&rate=" + value + "&videoCreatorId=" + @ViewBag.VideoCreatorId);
+                                        rateHttpRequest.send();
+                                    }
+                                });
+                        }
+                    }
+                    getRateHttpRequest.open("POST", "/Video/GetRateVideo?videoId=" + @ViewBag.VideoId + "&userId=" + @ViewBag.UserId);
+                    getRateHttpRequest.send();
+                }
+            }
+
+            var videoTimeToSecMin = function(videoTime) {
+                var minutes = Math.floor(videoTime / 60);
+                var seconds = Math.floor(videoTime - minutes * 60);
+                var min = minutes > 9 ? "" + minutes : "0" + minutes;
+                var sec = seconds > 9 ? "" + seconds : "0" + seconds;
+                return min + ":" + sec;
+            };
+
+            var updateCommentBlock = function(currentTime) {
+                $("#testConsole").text(currentTime);
+
+                visibleListComment.forEach(function(item) {
+                    if (item.commentTime < currentTime - commentDurationTime || item.commentTime > currentTime) {
+                        var index = visibleListComment.indexOf(item);
+                        visibleListComment.splice(index, 1);
+                        $("#comment_" + item.commentId).remove();
+                        /*                        $("#comment_" + item.commentId).transition({
+                                                animation: 'horizontal flip',
+                                                duration: '50ms',
+                                                onComplete: function() {
+                                                    $("#comment_" + item.commentId).remove();
+                                                }
+                                            });*/
+
+                    }
+                });
+                listComment.forEach(function(item) {
+                    if (visibleListComment.indexOf(item) === -1 && item.commentTime <= currentTime && item.commentTime >= currentTime - commentDurationTime) {
+                        visibleListComment.push(item);
+                        document.getElementById("reviewComment").innerHTML = item.commentHTML + document.getElementById("reviewComment").innerHTML;
+                        $("#comment_" + item.commentId).transition('shake', '200ms');
+                    }
+                });
+            };
+
+            function comment() {
+                this.commentId = 0;
+                this.commentUserName = "";
+                this.commentTime = 0;
+                this.commentContent = "";
+                this.commentIsPrivate = false;
+                this.commentIsAnonymous = false;
+                this.commentHTML = "";
+            };
+
+            var loadComment = function() {
+                var xhrLoadComment = new XMLHttpRequest();
+                xhrLoadComment.onload = function() {
+                    var resultList = $.parseJSON(this.responseText);
+                    resultList.forEach(function(entry) {
+                        var newComment = new comment();
+                        newComment.commentId = entry.CommentId;
+                        newComment.commentUserName = entry.UserName;
+                        newComment.commentTime = parseFloat(entry.Time);
+                        newComment.commentContent = entry.Content;
+                        newComment.commentIsPrivate = entry.IsPrivate;
+                        newComment.commentIsAnonymous = entry.IsAnonymous;
+                        if (entry.IsPrivate) {
+                            newComment.commentHTML = '<div id="comment_' + entry.CommentId + '" class="ui comments"><div class="comment"><a class="avatar"><img src="/images/jenny.jpg"></a><div class="content"><div><span class="author">' + entry.UserName + '</span><div class="metadata"><div class="date">' + videoTimeToSecMin(entry.Time) + '</div></div></div><div class="text">' + entry.Content + '</div></div></div></div>';
+                        } else if (!entry.UpVoteButton) {
+                            newComment.commentHTML = '<div id="comment_' + entry.CommentId + '" class="ui comments"><div class="comment"><a class="avatar"><img src="/images/jenny.jpg"></a><div class="content"><div><span class="author">' + entry.UserName + '</span><div class="metadata"><div class="date">' + videoTimeToSecMin(entry.Time) + '</div><i tag="like_button" comment_id="' + entry.CommentId + '" id="comment_thumbUp_' + entry.CommentId + '" class="thumbs outline up gray icon"></i><span comment_id="' + entry.CommentId + '">' + entry.UpVote + '</span></div></div><div class="text">' + entry.Content + '</div></div></div></div>';
+                        } else if (!entry.UpVoted) {
+                            newComment.commentHTML = '<div id="comment_' + entry.CommentId + '" class="ui comments"><div class="comment"><a class="avatar"><img src="/images/jenny.jpg"></a><div class="content"><div><span class="author">' + entry.UserName + '</span><div class="metadata"><div class="date">' + videoTimeToSecMin(entry.Time) + '</div><i style="cursor: pointer" tag="like_button" comment_id="' + entry.CommentId + '" id="comment_thumbUp_' + entry.CommentId + '" class="thumbs outline up blue icon"></i><span comment_id="' + entry.CommentId + '">' + entry.UpVote + '</span></div></div><div class="text">' + entry.Content + '</div></div></div></div>';
+                        } else {
+                            newComment.commentHTML = '<div id="comment_' + entry.CommentId + '" class="ui comments"><div class="comment"><a class="avatar"><img src="/images/jenny.jpg"></a><div class="content"><div><span class="author">' + entry.UserName + '</span><div class="metadata"><div class="date">' + videoTimeToSecMin(entry.Time) + '</div><i style="cursor: pointer" tag="like_button" comment_id="' + entry.CommentId + '" id="comment_thumbUp_' + entry.CommentId + '" class="thumbs up blue icon"></i><span comment_id="' + entry.CommentId + '">' + entry.UpVote + '</span></div></div><div class="text">' + entry.Content + '</div></div></div></div>';
+                        }
+                        listComment.push(newComment);
+                    });
+                    document.getElementById("reviewComment").innerHTML = "";
+                    updateCommentBlock(0);
+                }
+                xhrLoadComment.open("POST", "/Video/LoadComment?videoId=" + @ViewBag.VideoId);
+                xhrLoadComment.send();
+            };
+
+            var loadVideo = function() {
+                var commentAfterLoad = document.getElementById("makeComment").innerHTML;
+                var commentReviewLoading = '<div class="ui active inverted dimmer"><div class="ui text loader">Loading</div></div><p><br /><br /><br /><br /><br /><br /></p>';
+                var commentLoading = '<div class="ui active inverted dimmer"><div class="ui text loader">Loading</div></div><p><br /><br /><br /><br /><br /><br /></p>';
+                var videoLoading = '<div class="ui active inverted dimmer"><div class="ui text loader">Loading</div></div><p><br /><br /><br /><br /><br /><br /></p>';
+                var descriptionLoading = '<div class="ui active inverted dimmer"><div class="ui text loader">Loading</div></div><p><br /><br /><br /><br /><br /><br /></p>';
+                document.getElementById("showVideo").innerHTML = videoLoading;
+                document.getElementById("reviewComment").innerHTML = commentReviewLoading;
+                document.getElementById("makeComment").innerHTML = commentLoading;
+                document.getElementById("showDescription").innerHTML = descriptionLoading;
+                var xhrLoadVideo = new XMLHttpRequest();
+                xhrLoadVideo.onload = function() {
+                    var myItem = $.parseJSON(this.responseText);
+                    var videoToAdd = '<video id="my-video" class="video-js" style="position: relative; width: 100%; height: auto;" controls preload="auto" ><source src="Videos/' + myItem.Name + '" type="video/mp4"><p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p></video>';
+                    var descriptionToAdd = '<div class="ui raised segment"><h3 class="ui large blue ribbon label">' + myItem.Title + '</h3><p class="ui"><br><br>' + myItem.Description + '<br><br></p></div>';
+                    document.getElementById("showVideo").innerHTML = videoToAdd;
+                    document.getElementById("makeComment").innerHTML = commentAfterLoad;
+                    document.getElementById("showDescription").innerHTML = descriptionToAdd;
+                    myPlayer = window.videojs('my-video');
+                    myPlayer.ready(function() {
+                        this.on('timeupdate', function() {
+                            var currentTime = this.currentTime();
+                            updateCommentBlock(currentTime);
+                        });
+                        this.on('pause', function() {
+                            var currentTime = this.currentTime();
+                            videoTimeNotFormat = currentTime;
+                            $('#videoTime').text(videoTimeToSecMin(currentTime));
+                        });
+                    });
+                    loadComment();
+                }
+                xhrLoadVideo.open("POST", "/Video/OneVideo?videoId=" + @ViewBag.VideoId);
+                xhrLoadVideo.send();
+            };
+
+            $("#makeComment").on("click", "#btnVideoTime", function() {
+                videoTimeNotFormat = myPlayer.currentTime();
+                $('#videoTime').text(videoTimeToSecMin(myPlayer.currentTime()));
+            });
+
+            $("#makeComment").on("click", "#btnSubmit", function() {
+                if ($('#videoComment').val() !== "" && $('#videoComment').val() !== null && canSubmit === true) {
+                    var buttonSubmitHtml = '<button id="btnSubmit" style="width: 90%" class="ui basic blue button">Submit</button>';
+                    var buttonSubmitDoneHtml = '<button id="btnSubmit" style="width: 90%" class="ui basic green button"><i class="icon checkmark"></i>Done</button>';
+                    var buttonSubmitErrorHtml = '<button id="btnSubmit" style="width: 90%" class="ui basic red button"><i class="icon remove"></i>Error</button>';
+                    var buttonSubmittingHtml = '<button id="btnSubmit" style="width: 90%" class="ui basic loading blue button">Submiting</button>';
+                    document.getElementById("btnColumn").innerHTML = buttonSubmittingHtml;
+                    canSubmit = false;
+                    var xhrCommentSubmit = new XMLHttpRequest();
+                    xhrCommentSubmit.onload = function() {
+                        var submitResponse = $.parseJSON(this.responseText);
+                        if (submitResponse != "error") {
+                            var newComment = new comment();
+                            newComment.commentId = submitResponse;
+                            newComment.commentUserName = "@ViewBag.UserName";
+                            newComment.commentTime = parseFloat(commentTime);
+                            newComment.commentContent = commentText;
+                            newComment.commentIsPrivate = isPrivate;
+                            newComment.commentIsAnonymous = isAnonymous;
+
+                            if (isPrivate && isAnonymous) {
+                                newComment.commentHTML = '<div id="comment_' + submitResponse + '" class="ui comments"><div class="comment"><a class="avatar"><img src="/images/jenny.jpg"></a><div class="content"><div><span class="author">Anonymous</span><div class="metadata"><div class="date">' + videoTimeToSecMin(commentTime) + '</div></div></div><div class="text">' + commentText + '</div></div></div></div>';
+                            } else if (isPrivate) {
+                                newComment.commentHTML = '<div id="comment_' + submitResponse + '" class="ui comments"><div class="comment"><a class="avatar"><img src="/images/jenny.jpg"></a><div class="content"><div><span class="author">' + newComment.commentUserName + '</span><div class="metadata"><div class="date">' + videoTimeToSecMin(commentTime) + '</div></div></div><div class="text">' + commentText + '</div></div></div></div>';
+                            } else if (isAnonymous) {
+                                newComment.commentHTML = '<div id="comment_' + submitResponse + '" class="ui comments"><div class="comment"><a class="avatar"><img src="/images/jenny.jpg"></a><div class="content"><div><span class="author">Anonymous</span><div class="metadata"><div class="date">' + videoTimeToSecMin(commentTime) + '</div><i tag="like_button" comment_id="' + submitResponse + '" id="comment_thumbUp_' + submitResponse + '" class="thumbs outline up gray icon"></i><span comment_id="' + submitResponse + '">0</span></div></div><div class="text">' + commentText + '</div></div></div></div>';
+                            } else {
+                                newComment.commentHTML = '<div id="comment_' + submitResponse + '" class="ui comments"><div class="comment"><a class="avatar"><img src="/images/jenny.jpg"></a><div class="content"><div><span class="author">' + newComment.commentUserName + '</span><div class="metadata"><div class="date">' + videoTimeToSecMin(commentTime) + '</div><i tag="like_button" comment_id="' + submitResponse + '" id="comment_thumbUp_' + submitResponse + '" class="thumbs outline up gray icon"></i><span comment_id="' + submitResponse + '">0</span></div></div><div class="text">' + commentText + '</div></div></div></div>';
+                            }
+                            listComment.push(newComment);
+                            document.getElementById("btnColumn").innerHTML = buttonSubmitDoneHtml;
+                            $("#btnSubmit").fadeOut(400, function() {
+                                $("#btnColumn").html(buttonSubmitHtml).fadeIn(200);
+                            });
+                        } else {
+                            document.getElementById("btnColumn").innerHTML = buttonSubmitErrorHtml;
+                            $("#btnSubmit").fadeOut(400, function() {
+                                $("#btnColumn").html(buttonSubmitHtml).fadeIn(200);
+                            });
+                        }
+                        canSubmit = true;
+                    }
+                    commentTime = videoTimeNotFormat;
+                    commentText = $("#videoComment").val();
+                    isPrivate = $("#privateCheckbox").prop('checked');
+                    isAnonymous = $("#anonymousCheckbox").prop('checked');
+                    xhrCommentSubmit.open("POST", "/Video/SubmitComment?videoId=" + @ViewBag.VideoId + "&commentTime=" + commentTime + "&commentText=" + commentText + "&isPrivate=" + isPrivate + "&isAnonymous=" + isAnonymous);
+                    xhrCommentSubmit.send();
+                }
+            });
+
+            $("#reviewComment").on("click", "i[tag='like_button']", function() {
+                var thisLike = $(this);
+                var commentId = $(this).attr('comment_id');
+                
+                if ($(this).attr('class') === 'thumbs outline up blue icon') {
+                    var xhrPlusUpvote = new XMLHttpRequest();
+                    xhrPlusUpvote.onload = function() {
+                        var result = $.parseJSON(this.responseText);
+                        if (result !== 'error') {
+                            thisLike.attr('class', 'thumbs up blue icon');
+                            $("span[comment_id=" + commentId + "]").text(result);
+                        }
+                    }
+                    xhrPlusUpvote.open("POST", "/Video/PlusUpvote?commentId=" + commentId + "&userId=" + @ViewBag.UserId);
+                    xhrPlusUpvote.send();
+                } else if ($(this).attr('class') === 'thumbs up blue icon') {
+                    var xhrMinusUpvote = new XMLHttpRequest();
+                    xhrMinusUpvote.onload = function() {
+                        var result = $.parseJSON(this.responseText);
+                        if (result !== 'error') {
+                            thisLike.attr('class', 'thumbs outline up blue icon');
+                            $("span[comment_id=" + commentId + "]").text(result);
+                        }
+                    }
+                    xhrMinusUpvote.open("POST", "/Video/MinusUpvote?commentId=" + commentId + "&userId=" + @ViewBag.UserId);
+                    xhrMinusUpvote.send();
+                }
+            });
+
+            loadRating();
+            loadVideo();
+        });
+    </script>
+}
+

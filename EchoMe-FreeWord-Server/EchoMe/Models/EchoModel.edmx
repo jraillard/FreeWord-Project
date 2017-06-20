@@ -1,0 +1,752 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EchoDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PresentationId" Type="int" Nullable="false" />
+          <Property Name="UsesrId" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Time" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsPrivate" Type="bit" Nullable="false" />
+          <Property Name="IsAnonymous" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FREECOMMENT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AUTHOR" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="COMMENT" Type="nvarchar" MaxLength="512" Nullable="false" />
+          <Property Name="FREEURL" Type="nvarchar" MaxLength="2112" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FREEUSERNAME">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FREEVOTE">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CommentId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Presentation">
+          <Key>
+            <PropertyRef Name="PresentationId" />
+          </Key>
+          <Property Name="PresentationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RateVideo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PresentationId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Rate" Type="int" Nullable="false" />
+          <Property Name="VideoCreatorId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UpVote">
+          <Key>
+            <PropertyRef Name="UpVoteId" />
+          </Key>
+          <Property Name="UpVoteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="CommentId" Type="int" />
+        </EntityType>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="56" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WatchedPresentation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="PresentationId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="webpages_Membership">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ConfirmationToken" Type="nvarchar" MaxLength="128" />
+          <Property Name="IsConfirmed" Type="bit" />
+          <Property Name="LastPasswordFailureDate" Type="datetime" />
+          <Property Name="PasswordFailuresSinceLastSuccess" Type="int" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="PasswordChangedDate" Type="datetime" />
+          <Property Name="PasswordSalt" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="PasswordVerificationToken" Type="nvarchar" MaxLength="128" />
+          <Property Name="PasswordVerificationTokenExpirationDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="webpages_OAuthMembership">
+          <Key>
+            <PropertyRef Name="Provider" />
+            <PropertyRef Name="ProviderUserId" />
+          </Key>
+          <Property Name="Provider" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="ProviderUserId" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="webpages_Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="webpages_UsersInRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WoGamCategory">
+          <Key>
+            <PropertyRef Name="cat_id" />
+          </Key>
+          <Property Name="cat_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cat_name" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="cat_reached" Type="bit" Nullable="false" />
+          <Property Name="cat_lng" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WoGamChoice">
+          <Key>
+            <PropertyRef Name="chc_id" />
+          </Key>
+          <Property Name="chc_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="chc_usr" Type="int" Nullable="false" />
+          <Property Name="chc_langage" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WoGamLangage">
+          <Key>
+            <PropertyRef Name="lng_id" />
+          </Key>
+          <Property Name="lng_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="lng_langage" Type="varchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WoGamProfile">
+          <Key>
+            <PropertyRef Name="usr_id" />
+          </Key>
+          <Property Name="usr_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="usr_name" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="usr_pwd" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="usr_gameLangage" Type="varchar" MaxLength="32" />
+        </EntityType>
+        <EntityType Name="WoGamWord">
+          <Key>
+            <PropertyRef Name="wd_id" />
+          </Key>
+          <Property Name="wd_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="wd_value" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="wd_nbtime" Type="int" Nullable="false" />
+          <Property Name="wd_cat" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_catId">
+          <End Role="WoGamLangage" Type="Self.WoGamLangage" Multiplicity="1" />
+          <End Role="WoGamCategory" Type="Self.WoGamCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WoGamLangage">
+              <PropertyRef Name="lng_id" />
+            </Principal>
+            <Dependent Role="WoGamCategory">
+              <PropertyRef Name="cat_lng" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_chc1">
+          <End Role="WoGamProfile" Type="Self.WoGamProfile" Multiplicity="1" />
+          <End Role="WoGamChoice" Type="Self.WoGamChoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WoGamProfile">
+              <PropertyRef Name="usr_id" />
+            </Principal>
+            <Dependent Role="WoGamChoice">
+              <PropertyRef Name="chc_usr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_chc2">
+          <End Role="WoGamLangage" Type="Self.WoGamLangage" Multiplicity="1" />
+          <End Role="WoGamChoice" Type="Self.WoGamChoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WoGamLangage">
+              <PropertyRef Name="lng_id" />
+            </Principal>
+            <Dependent Role="WoGamChoice">
+              <PropertyRef Name="chc_langage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_RoleId">
+          <End Role="webpages_Roles" Type="Self.webpages_Roles" Multiplicity="1" />
+          <End Role="webpages_UsersInRoles" Type="Self.webpages_UsersInRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="webpages_Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="webpages_UsersInRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserId">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
+          <End Role="webpages_UsersInRoles" Type="Self.webpages_UsersInRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="webpages_UsersInRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_wdId">
+          <End Role="WoGamCategory" Type="Self.WoGamCategory" Multiplicity="1" />
+          <End Role="WoGamWord" Type="Self.WoGamWord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WoGamCategory">
+              <PropertyRef Name="cat_id" />
+            </Principal>
+            <Dependent Role="WoGamWord">
+              <PropertyRef Name="wd_cat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EchoDBModelStoreContainer">
+          <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FREECOMMENT" EntityType="Self.FREECOMMENT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FREEUSERNAME" EntityType="Self.FREEUSERNAME" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FREEVOTE" EntityType="Self.FREEVOTE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Presentation" EntityType="Self.Presentation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RateVideo" EntityType="Self.RateVideo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UpVote" EntityType="Self.UpVote" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WatchedPresentation" EntityType="Self.WatchedPresentation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="webpages_Membership" EntityType="Self.webpages_Membership" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="webpages_OAuthMembership" EntityType="Self.webpages_OAuthMembership" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="webpages_Roles" EntityType="Self.webpages_Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="webpages_UsersInRoles" EntityType="Self.webpages_UsersInRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WoGamCategory" EntityType="Self.WoGamCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WoGamChoice" EntityType="Self.WoGamChoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WoGamLangage" EntityType="Self.WoGamLangage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WoGamProfile" EntityType="Self.WoGamProfile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WoGamWord" EntityType="Self.WoGamWord" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_catId" Association="Self.fk_catId">
+            <End Role="WoGamLangage" EntitySet="WoGamLangage" />
+            <End Role="WoGamCategory" EntitySet="WoGamCategory" />
+          </AssociationSet>
+          <AssociationSet Name="fk_chc1" Association="Self.fk_chc1">
+            <End Role="WoGamProfile" EntitySet="WoGamProfile" />
+            <End Role="WoGamChoice" EntitySet="WoGamChoice" />
+          </AssociationSet>
+          <AssociationSet Name="fk_chc2" Association="Self.fk_chc2">
+            <End Role="WoGamLangage" EntitySet="WoGamLangage" />
+            <End Role="WoGamChoice" EntitySet="WoGamChoice" />
+          </AssociationSet>
+          <AssociationSet Name="fk_RoleId" Association="Self.fk_RoleId">
+            <End Role="webpages_Roles" EntitySet="webpages_Roles" />
+            <End Role="webpages_UsersInRoles" EntitySet="webpages_UsersInRoles" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserId" Association="Self.fk_UserId">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="webpages_UsersInRoles" EntitySet="webpages_UsersInRoles" />
+          </AssociationSet>
+          <AssociationSet Name="fk_wdId" Association="Self.fk_wdId">
+            <End Role="WoGamCategory" EntitySet="WoGamCategory" />
+            <End Role="WoGamWord" EntitySet="WoGamWord" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EchoDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Presentation">
+          <Key>
+            <PropertyRef Name="PresentationId" />
+          </Key>
+          <Property Name="PresentationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="UpVote">
+          <Key>
+            <PropertyRef Name="UpVoteId" />
+          </Key>
+          <Property Name="UpVoteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="CommentId" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="EchoDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Presentations" EntityType="Self.Presentation" />
+          <EntitySet Name="UpVotes" EntityType="Self.UpVote" />
+          <EntitySet Name="Comments" EntityType="EchoDBModel.Comment" />
+          <EntitySet Name="FREECOMMENTs" EntityType="EchoDBModel.FREECOMMENT" />
+          <EntitySet Name="FREEUSERNAMEs" EntityType="EchoDBModel.FREEUSERNAME" />
+          <EntitySet Name="FREEVOTEs" EntityType="EchoDBModel.FREEVOTE" />
+          <EntitySet Name="RateVideos" EntityType="EchoDBModel.RateVideo" />
+          <EntitySet Name="WatchedPresentations" EntityType="EchoDBModel.WatchedPresentation" />
+          <EntitySet Name="WoGamCategories" EntityType="EchoDBModel.WoGamCategory" />
+          <EntitySet Name="WoGamChoices" EntityType="EchoDBModel.WoGamChoice" />
+          <EntitySet Name="WoGamLangages" EntityType="EchoDBModel.WoGamLangage" />
+          <EntitySet Name="WoGamProfiles" EntityType="EchoDBModel.WoGamProfile" />
+          <EntitySet Name="WoGamWords" EntityType="EchoDBModel.WoGamWord" />
+          <AssociationSet Name="fk_catId" Association="EchoDBModel.fk_catId">
+            <End Role="WoGamLangage" EntitySet="WoGamLangages" />
+            <End Role="WoGamCategory" EntitySet="WoGamCategories" />
+          </AssociationSet>
+          <AssociationSet Name="fk_wdId" Association="EchoDBModel.fk_wdId">
+            <End Role="WoGamCategory" EntitySet="WoGamCategories" />
+            <End Role="WoGamWord" EntitySet="WoGamWords" />
+          </AssociationSet>
+          <AssociationSet Name="fk_chc1" Association="EchoDBModel.fk_chc1">
+            <End Role="WoGamProfile" EntitySet="WoGamProfiles" />
+            <End Role="WoGamChoice" EntitySet="WoGamChoices" />
+          </AssociationSet>
+          <AssociationSet Name="fk_chc2" Association="EchoDBModel.fk_chc2">
+            <End Role="WoGamLangage" EntitySet="WoGamLangages" />
+            <End Role="WoGamChoice" EntitySet="WoGamChoices" />
+          </AssociationSet>
+          <EntitySet Name="UserProfiles" EntityType="EchoDBModel.UserProfile" />
+          <EntitySet Name="webpages_Membership" EntityType="EchoDBModel.webpages_Membership" />
+          <EntitySet Name="webpages_OAuthMembership" EntityType="EchoDBModel.webpages_OAuthMembership" />
+          <EntitySet Name="webpages_Roles" EntityType="EchoDBModel.webpages_Roles" />
+          <AssociationSet Name="webpages_UsersInRoles" Association="EchoDBModel.webpages_UsersInRoles">
+            <End Role="webpages_Roles" EntitySet="webpages_Roles" />
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PresentationId" Type="Int32" Nullable="false" />
+          <Property Name="UsesrId" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Time" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsPrivate" Type="Boolean" Nullable="false" />
+          <Property Name="IsAnonymous" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FREECOMMENT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AUTHOR" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="COMMENT" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="FREEURL" Type="String" Nullable="false" MaxLength="2112" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="FREEUSERNAME">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="FREEVOTE">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CommentId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RateVideo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PresentationId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Rate" Type="Int32" Nullable="false" />
+          <Property Name="VideoCreatorId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WatchedPresentation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="PresentationId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WoGamCategory">
+          <Key>
+            <PropertyRef Name="cat_id" />
+          </Key>
+          <Property Name="cat_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cat_name" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="cat_reached" Type="Boolean" Nullable="false" />
+          <Property Name="cat_lng" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="WoGamLangage" Relationship="EchoDBModel.fk_catId" FromRole="WoGamCategory" ToRole="WoGamLangage" />
+          <NavigationProperty Name="WoGamWords" Relationship="EchoDBModel.fk_wdId" FromRole="WoGamCategory" ToRole="WoGamWord" />
+        </EntityType>
+        <EntityType Name="WoGamChoice">
+          <Key>
+            <PropertyRef Name="chc_id" />
+          </Key>
+          <Property Name="chc_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="chc_usr" Type="Int32" Nullable="false" />
+          <Property Name="chc_langage" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="WoGamProfile" Relationship="EchoDBModel.fk_chc1" FromRole="WoGamChoice" ToRole="WoGamProfile" />
+          <NavigationProperty Name="WoGamLangage" Relationship="EchoDBModel.fk_chc2" FromRole="WoGamChoice" ToRole="WoGamLangage" />
+        </EntityType>
+        <EntityType Name="WoGamLangage">
+          <Key>
+            <PropertyRef Name="lng_id" />
+          </Key>
+          <Property Name="lng_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="lng_langage" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="WoGamCategories" Relationship="EchoDBModel.fk_catId" FromRole="WoGamLangage" ToRole="WoGamCategory" />
+          <NavigationProperty Name="WoGamChoices" Relationship="EchoDBModel.fk_chc2" FromRole="WoGamLangage" ToRole="WoGamChoice" />
+        </EntityType>
+        <EntityType Name="WoGamProfile">
+          <Key>
+            <PropertyRef Name="usr_id" />
+          </Key>
+          <Property Name="usr_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="usr_name" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="usr_pwd" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="usr_gameLangage" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="WoGamChoices" Relationship="EchoDBModel.fk_chc1" FromRole="WoGamProfile" ToRole="WoGamChoice" />
+        </EntityType>
+        <EntityType Name="WoGamWord">
+          <Key>
+            <PropertyRef Name="wd_id" />
+          </Key>
+          <Property Name="wd_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="wd_value" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="wd_nbtime" Type="Int32" Nullable="false" />
+          <Property Name="wd_cat" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="WoGamCategory" Relationship="EchoDBModel.fk_wdId" FromRole="WoGamWord" ToRole="WoGamCategory" />
+        </EntityType>
+        <Association Name="fk_catId">
+          <End Type="EchoDBModel.WoGamLangage" Role="WoGamLangage" Multiplicity="1" />
+          <End Type="EchoDBModel.WoGamCategory" Role="WoGamCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WoGamLangage">
+              <PropertyRef Name="lng_id" />
+            </Principal>
+            <Dependent Role="WoGamCategory">
+              <PropertyRef Name="cat_lng" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_wdId">
+          <End Type="EchoDBModel.WoGamCategory" Role="WoGamCategory" Multiplicity="1" />
+          <End Type="EchoDBModel.WoGamWord" Role="WoGamWord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WoGamCategory">
+              <PropertyRef Name="cat_id" />
+            </Principal>
+            <Dependent Role="WoGamWord">
+              <PropertyRef Name="wd_cat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_chc1">
+          <End Type="EchoDBModel.WoGamProfile" Role="WoGamProfile" Multiplicity="1" />
+          <End Type="EchoDBModel.WoGamChoice" Role="WoGamChoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WoGamProfile">
+              <PropertyRef Name="usr_id" />
+            </Principal>
+            <Dependent Role="WoGamChoice">
+              <PropertyRef Name="chc_usr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_chc2">
+          <End Type="EchoDBModel.WoGamLangage" Role="WoGamLangage" Multiplicity="1" />
+          <End Type="EchoDBModel.WoGamChoice" Role="WoGamChoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WoGamLangage">
+              <PropertyRef Name="lng_id" />
+            </Principal>
+            <Dependent Role="WoGamChoice">
+              <PropertyRef Name="chc_langage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="56" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="webpages_Roles" Relationship="EchoDBModel.webpages_UsersInRoles" FromRole="UserProfile" ToRole="webpages_Roles" />
+        </EntityType>
+        <EntityType Name="webpages_Membership">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ConfirmationToken" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="IsConfirmed" Type="Boolean" />
+          <Property Name="LastPasswordFailureDate" Type="DateTime" Precision="3" />
+          <Property Name="PasswordFailuresSinceLastSuccess" Type="Int32" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordChangedDate" Type="DateTime" Precision="3" />
+          <Property Name="PasswordSalt" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordVerificationToken" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordVerificationTokenExpirationDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="webpages_OAuthMembership">
+          <Key>
+            <PropertyRef Name="Provider" />
+            <PropertyRef Name="ProviderUserId" />
+          </Key>
+          <Property Name="Provider" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderUserId" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="webpages_Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserProfiles" Relationship="EchoDBModel.webpages_UsersInRoles" FromRole="webpages_Roles" ToRole="UserProfile" />
+        </EntityType>
+        <Association Name="webpages_UsersInRoles">
+          <End Type="EchoDBModel.webpages_Roles" Role="webpages_Roles" Multiplicity="*" />
+          <End Type="EchoDBModel.UserProfile" Role="UserProfile" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EchoDBModelStoreContainer" CdmEntityContainer="EchoDBEntities">
+          <EntitySetMapping Name="Presentations">
+            <EntityTypeMapping TypeName="EchoDBModel.Presentation">
+              <MappingFragment StoreEntitySet="Presentation">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="PresentationId" ColumnName="PresentationId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UpVotes">
+            <EntityTypeMapping TypeName="EchoDBModel.UpVote">
+              <MappingFragment StoreEntitySet="UpVote">
+                <ScalarProperty Name="UpVoteId" ColumnName="UpVoteId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="EchoDBModel.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="IsAnonymous" ColumnName="IsAnonymous" />
+                <ScalarProperty Name="IsPrivate" ColumnName="IsPrivate" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UsesrId" ColumnName="UsesrId" />
+                <ScalarProperty Name="PresentationId" ColumnName="PresentationId" />
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FREECOMMENTs">
+            <EntityTypeMapping TypeName="EchoDBModel.FREECOMMENT">
+              <MappingFragment StoreEntitySet="FREECOMMENT">
+                <ScalarProperty Name="FREEURL" ColumnName="FREEURL" />
+                <ScalarProperty Name="COMMENT" ColumnName="COMMENT" />
+                <ScalarProperty Name="AUTHOR" ColumnName="AUTHOR" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FREEUSERNAMEs">
+            <EntityTypeMapping TypeName="EchoDBModel.FREEUSERNAME">
+              <MappingFragment StoreEntitySet="FREEUSERNAME">
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FREEVOTEs">
+            <EntityTypeMapping TypeName="EchoDBModel.FREEVOTE">
+              <MappingFragment StoreEntitySet="FREEVOTE">
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RateVideos">
+            <EntityTypeMapping TypeName="EchoDBModel.RateVideo">
+              <MappingFragment StoreEntitySet="RateVideo">
+                <ScalarProperty Name="VideoCreatorId" ColumnName="VideoCreatorId" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="PresentationId" ColumnName="PresentationId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WatchedPresentations">
+            <EntityTypeMapping TypeName="EchoDBModel.WatchedPresentation">
+              <MappingFragment StoreEntitySet="WatchedPresentation">
+                <ScalarProperty Name="PresentationId" ColumnName="PresentationId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WoGamCategories">
+            <EntityTypeMapping TypeName="EchoDBModel.WoGamCategory">
+              <MappingFragment StoreEntitySet="WoGamCategory">
+                <ScalarProperty Name="cat_lng" ColumnName="cat_lng" />
+                <ScalarProperty Name="cat_reached" ColumnName="cat_reached" />
+                <ScalarProperty Name="cat_name" ColumnName="cat_name" />
+                <ScalarProperty Name="cat_id" ColumnName="cat_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WoGamChoices">
+            <EntityTypeMapping TypeName="EchoDBModel.WoGamChoice">
+              <MappingFragment StoreEntitySet="WoGamChoice">
+                <ScalarProperty Name="chc_langage" ColumnName="chc_langage" />
+                <ScalarProperty Name="chc_usr" ColumnName="chc_usr" />
+                <ScalarProperty Name="chc_id" ColumnName="chc_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WoGamLangages">
+            <EntityTypeMapping TypeName="EchoDBModel.WoGamLangage">
+              <MappingFragment StoreEntitySet="WoGamLangage">
+                <ScalarProperty Name="lng_langage" ColumnName="lng_langage" />
+                <ScalarProperty Name="lng_id" ColumnName="lng_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WoGamProfiles">
+            <EntityTypeMapping TypeName="EchoDBModel.WoGamProfile">
+              <MappingFragment StoreEntitySet="WoGamProfile">
+                <ScalarProperty Name="usr_gameLangage" ColumnName="usr_gameLangage" />
+                <ScalarProperty Name="usr_pwd" ColumnName="usr_pwd" />
+                <ScalarProperty Name="usr_name" ColumnName="usr_name" />
+                <ScalarProperty Name="usr_id" ColumnName="usr_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WoGamWords">
+            <EntityTypeMapping TypeName="EchoDBModel.WoGamWord">
+              <MappingFragment StoreEntitySet="WoGamWord">
+                <ScalarProperty Name="wd_cat" ColumnName="wd_cat" />
+                <ScalarProperty Name="wd_nbtime" ColumnName="wd_nbtime" />
+                <ScalarProperty Name="wd_value" ColumnName="wd_value" />
+                <ScalarProperty Name="wd_id" ColumnName="wd_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserProfiles">
+            <EntityTypeMapping TypeName="EchoDBModel.UserProfile">
+              <MappingFragment StoreEntitySet="UserProfile">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="webpages_Membership">
+            <EntityTypeMapping TypeName="EchoDBModel.webpages_Membership">
+              <MappingFragment StoreEntitySet="webpages_Membership">
+                <ScalarProperty Name="PasswordVerificationTokenExpirationDate" ColumnName="PasswordVerificationTokenExpirationDate" />
+                <ScalarProperty Name="PasswordVerificationToken" ColumnName="PasswordVerificationToken" />
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+                <ScalarProperty Name="PasswordChangedDate" ColumnName="PasswordChangedDate" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="PasswordFailuresSinceLastSuccess" ColumnName="PasswordFailuresSinceLastSuccess" />
+                <ScalarProperty Name="LastPasswordFailureDate" ColumnName="LastPasswordFailureDate" />
+                <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+                <ScalarProperty Name="ConfirmationToken" ColumnName="ConfirmationToken" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="webpages_OAuthMembership">
+            <EntityTypeMapping TypeName="EchoDBModel.webpages_OAuthMembership">
+              <MappingFragment StoreEntitySet="webpages_OAuthMembership">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderUserId" ColumnName="ProviderUserId" />
+                <ScalarProperty Name="Provider" ColumnName="Provider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="webpages_Roles">
+            <EntityTypeMapping TypeName="EchoDBModel.webpages_Roles">
+              <MappingFragment StoreEntitySet="webpages_Roles">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="webpages_UsersInRoles" TypeName="EchoDBModel.webpages_UsersInRoles" StoreEntitySet="webpages_UsersInRoles">
+            <EndProperty Name="UserProfile">
+              <ScalarProperty Name="UserId" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="webpages_Roles">
+              <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

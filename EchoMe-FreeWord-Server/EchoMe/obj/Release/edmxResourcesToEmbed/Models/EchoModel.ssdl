@@ -1,0 +1,281 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EchoDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Comment">
+    <Key>
+      <PropertyRef Name="CommentId" />
+    </Key>
+    <Property Name="CommentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PresentationId" Type="int" Nullable="false" />
+    <Property Name="UsesrId" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Time" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsPrivate" Type="bit" Nullable="false" />
+    <Property Name="IsAnonymous" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FREECOMMENT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AUTHOR" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="COMMENT" Type="nvarchar" MaxLength="512" Nullable="false" />
+    <Property Name="FREEURL" Type="nvarchar" MaxLength="2112" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FREEUSERNAME">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FREEVOTE">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="CommentId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Presentation">
+    <Key>
+      <PropertyRef Name="PresentationId" />
+    </Key>
+    <Property Name="PresentationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="50" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RateVideo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PresentationId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="Rate" Type="int" Nullable="false" />
+    <Property Name="VideoCreatorId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UpVote">
+    <Key>
+      <PropertyRef Name="UpVoteId" />
+    </Key>
+    <Property Name="UpVoteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="CommentId" Type="int" />
+  </EntityType>
+  <EntityType Name="UserProfile">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="56" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WatchedPresentation">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="PresentationId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="webpages_Membership">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="ConfirmationToken" Type="nvarchar" MaxLength="128" />
+    <Property Name="IsConfirmed" Type="bit" />
+    <Property Name="LastPasswordFailureDate" Type="datetime" />
+    <Property Name="PasswordFailuresSinceLastSuccess" Type="int" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="PasswordChangedDate" Type="datetime" />
+    <Property Name="PasswordSalt" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="PasswordVerificationToken" Type="nvarchar" MaxLength="128" />
+    <Property Name="PasswordVerificationTokenExpirationDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="webpages_OAuthMembership">
+    <Key>
+      <PropertyRef Name="Provider" />
+      <PropertyRef Name="ProviderUserId" />
+    </Key>
+    <Property Name="Provider" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="ProviderUserId" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="webpages_Roles">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleName" Type="nvarchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="webpages_UsersInRoles">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="RoleId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WoGamCategory">
+    <Key>
+      <PropertyRef Name="cat_id" />
+    </Key>
+    <Property Name="cat_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="cat_name" Type="varchar" MaxLength="32" Nullable="false" />
+    <Property Name="cat_reached" Type="bit" Nullable="false" />
+    <Property Name="cat_lng" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WoGamChoice">
+    <Key>
+      <PropertyRef Name="chc_id" />
+    </Key>
+    <Property Name="chc_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="chc_usr" Type="int" Nullable="false" />
+    <Property Name="chc_langage" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WoGamLangage">
+    <Key>
+      <PropertyRef Name="lng_id" />
+    </Key>
+    <Property Name="lng_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="lng_langage" Type="varchar" MaxLength="32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WoGamProfile">
+    <Key>
+      <PropertyRef Name="usr_id" />
+    </Key>
+    <Property Name="usr_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="usr_name" Type="varchar" MaxLength="32" Nullable="false" />
+    <Property Name="usr_pwd" Type="varchar" MaxLength="32" Nullable="false" />
+    <Property Name="usr_gameLangage" Type="varchar" MaxLength="32" />
+  </EntityType>
+  <EntityType Name="WoGamWord">
+    <Key>
+      <PropertyRef Name="wd_id" />
+    </Key>
+    <Property Name="wd_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="wd_value" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="wd_nbtime" Type="int" Nullable="false" />
+    <Property Name="wd_cat" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="fk_catId">
+    <End Role="WoGamLangage" Type="Self.WoGamLangage" Multiplicity="1" />
+    <End Role="WoGamCategory" Type="Self.WoGamCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WoGamLangage">
+        <PropertyRef Name="lng_id" />
+      </Principal>
+      <Dependent Role="WoGamCategory">
+        <PropertyRef Name="cat_lng" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_chc1">
+    <End Role="WoGamProfile" Type="Self.WoGamProfile" Multiplicity="1" />
+    <End Role="WoGamChoice" Type="Self.WoGamChoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WoGamProfile">
+        <PropertyRef Name="usr_id" />
+      </Principal>
+      <Dependent Role="WoGamChoice">
+        <PropertyRef Name="chc_usr" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_chc2">
+    <End Role="WoGamLangage" Type="Self.WoGamLangage" Multiplicity="1" />
+    <End Role="WoGamChoice" Type="Self.WoGamChoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WoGamLangage">
+        <PropertyRef Name="lng_id" />
+      </Principal>
+      <Dependent Role="WoGamChoice">
+        <PropertyRef Name="chc_langage" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_RoleId">
+    <End Role="webpages_Roles" Type="Self.webpages_Roles" Multiplicity="1" />
+    <End Role="webpages_UsersInRoles" Type="Self.webpages_UsersInRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="webpages_Roles">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="webpages_UsersInRoles">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_UserId">
+    <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
+    <End Role="webpages_UsersInRoles" Type="Self.webpages_UsersInRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="webpages_UsersInRoles">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_wdId">
+    <End Role="WoGamCategory" Type="Self.WoGamCategory" Multiplicity="1" />
+    <End Role="WoGamWord" Type="Self.WoGamWord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WoGamCategory">
+        <PropertyRef Name="cat_id" />
+      </Principal>
+      <Dependent Role="WoGamWord">
+        <PropertyRef Name="wd_cat" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="EchoDBModelStoreContainer">
+    <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FREECOMMENT" EntityType="Self.FREECOMMENT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FREEUSERNAME" EntityType="Self.FREEUSERNAME" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FREEVOTE" EntityType="Self.FREEVOTE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Presentation" EntityType="Self.Presentation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RateVideo" EntityType="Self.RateVideo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UpVote" EntityType="Self.UpVote" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WatchedPresentation" EntityType="Self.WatchedPresentation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="webpages_Membership" EntityType="Self.webpages_Membership" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="webpages_OAuthMembership" EntityType="Self.webpages_OAuthMembership" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="webpages_Roles" EntityType="Self.webpages_Roles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="webpages_UsersInRoles" EntityType="Self.webpages_UsersInRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WoGamCategory" EntityType="Self.WoGamCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WoGamChoice" EntityType="Self.WoGamChoice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WoGamLangage" EntityType="Self.WoGamLangage" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WoGamProfile" EntityType="Self.WoGamProfile" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WoGamWord" EntityType="Self.WoGamWord" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="fk_catId" Association="Self.fk_catId">
+      <End Role="WoGamLangage" EntitySet="WoGamLangage" />
+      <End Role="WoGamCategory" EntitySet="WoGamCategory" />
+    </AssociationSet>
+    <AssociationSet Name="fk_chc1" Association="Self.fk_chc1">
+      <End Role="WoGamProfile" EntitySet="WoGamProfile" />
+      <End Role="WoGamChoice" EntitySet="WoGamChoice" />
+    </AssociationSet>
+    <AssociationSet Name="fk_chc2" Association="Self.fk_chc2">
+      <End Role="WoGamLangage" EntitySet="WoGamLangage" />
+      <End Role="WoGamChoice" EntitySet="WoGamChoice" />
+    </AssociationSet>
+    <AssociationSet Name="fk_RoleId" Association="Self.fk_RoleId">
+      <End Role="webpages_Roles" EntitySet="webpages_Roles" />
+      <End Role="webpages_UsersInRoles" EntitySet="webpages_UsersInRoles" />
+    </AssociationSet>
+    <AssociationSet Name="fk_UserId" Association="Self.fk_UserId">
+      <End Role="UserProfile" EntitySet="UserProfile" />
+      <End Role="webpages_UsersInRoles" EntitySet="webpages_UsersInRoles" />
+    </AssociationSet>
+    <AssociationSet Name="fk_wdId" Association="Self.fk_wdId">
+      <End Role="WoGamCategory" EntitySet="WoGamCategory" />
+      <End Role="WoGamWord" EntitySet="WoGamWord" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

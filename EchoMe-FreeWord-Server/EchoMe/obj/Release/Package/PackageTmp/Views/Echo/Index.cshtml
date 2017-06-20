@@ -1,0 +1,98 @@
+﻿
+<div class="ui divider"></div>
+<div id="ViewDiv" class="content-wrapper">
+    @if (Context.User.Identity.IsAuthenticated && (Context.User.IsInRole("Student") || Context.User.IsInRole("Admin")))
+    {
+        <div class="ui big blue message">
+            Click below to navigate to My Page, and review your points or upload a video, or modify previously made comments. 
+        </div>
+        <div>
+            @Html.ActionLink("Go to My Page", "Index", "User", new {username = @Context.User.Identity.Name}, new {@class = "ui right labeled icon button", @id = "linkToUserProfile"})
+        </div>
+        <div class="ui divider"></div>
+        <div class="ui raised segment">
+            <h3 class="ui large blue ribbon label">Overview</h3>
+            <p class="ui">
+                <br><br>This project is a website designed for students who want to improve their presentation skills.<br><br>
+                The website allows users to stream and upload videos of their own presentations.<br><br>
+                Users may browse other presentations and leave feedback in the form of comments at specific timestamps to provide targeted feedback to the presenter.<br><br>
+                A crowd-sourcing web application, which allows users to upload, comment, and parse through videos with the intent of receiving feedback on their presentation skills.<br><br>
+            </p>
+        </div>
+        <div class="ui divider"></div>
+        <div class="ui huge label">
+            <i class="film icon"></i> videos
+        </div>
+        <br/>
+        <br/>
+        <div id="searchBtnContainer" class="ui action input">
+            <input id="searchInput" type="text" placeholder="Search all...">
+            <button id="searchBtn" class="ui icon button">
+                <i class="search icon"></i>
+            </button>
+        </div>
+        <br/>
+        <br/>
+        <div id="myVideo" class="ui three column grid">
+        </div>
+        <br/>
+        <br/>
+    }
+    else
+    {
+        <div class="ui raised segment">
+            <h3 class="ui large blue ribbon label">Overview</h3>
+            <p class="ui">
+                <br><br>
+                <h2> Please Login or use Registration Code ...</h2><br><br><br><br>
+                This project is a website designed for students who want to improve their presentation skills.<br><br>
+                The website allows users to stream and upload videos of their own presentations.<br><br>
+                Users may browse other presentations and leave feedback in the form of comments at specific timestamps to provide targeted feedback to the presenter.<br><br>
+                A crowd-sourcing web application, which allows users to upload, comment, and parse through videos with the intent of receiving feedback on their presentation skills.<br><br>
+            </p>
+        </div>
+    }
+</div>
+
+<div>
+    
+</div>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+
+            var searchVideo = "";
+            var loadVideos = function() {
+                $("#myVideo").removeClass("ui three column grid").addClass("ui segment");
+                var itemToAdd = '<div class="ui active inverted dimmer"><div class="ui text loader">Loading</div></div><p><br /><br /><br /><br /><br /><br /></p>';
+                document.getElementById("myVideo").innerHTML = itemToAdd;
+                var xhrUserVideo = new XMLHttpRequest();
+                xhrUserVideo.onload = function() {
+                    $("#myVideo").removeClass("ui segment").addClass("ui three column grid");
+                    var myArr = $.parseJSON(this.responseText);
+                    var out = "";
+                    var itemToAdd = "";
+                    for (var i = 0; i < myArr.length; i++) {
+                        itemToAdd = '<div class="column"><div class="ui segment" ><video id="my-video" class="video-js" style="position: relative; width: 100%; height: auto;"  controls preload="auto" ><source src="Videos/' + myArr[i].Name + '" type="video/mp4"><p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p></video><br /><div>@Html.ActionLink("More detail on **Title**", "Index", "Video", new {videoId = "##PresentationId##"}, new {@class = "ui right labeled icon button", @style = "width: 100%"})</div></div></div>';
+                        itemToAdd = itemToAdd.replace("**Title**", myArr[i].Title);
+                        itemToAdd = itemToAdd.replace("%23%23PresentationId%23%23", myArr[i].PresentationId);
+                        out += itemToAdd;
+                    }
+                    document.getElementById("myVideo").innerHTML = out;
+                }
+                xhrUserVideo.open("POST", "/Video/SearchVideos?searchVideo=" + searchVideo);
+                xhrUserVideo.send();
+            }
+
+            $("#searchBtnContainer").on("click", "#searchBtn", function() {
+                searchVideo = $("#searchInput").val();
+                loadVideos();
+            });
+
+            loadVideos();
+        });
+    </script>
+}
+

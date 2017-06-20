@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="ui divider"></div>
+<div class="content-wrapper">
+    <div class="ui divided items">
+        <div class="item">
+            <div class="ui small image">
+                <img src="/images/wireframeBlue.png">
+            </div>
+            <div class="middle aligned content">
+                <div class="header">
+                    Echo Me
+                </div>
+                <div class="description">
+                    <p>This project is a website designed for students who want to improve their presentation skills.<br>
+                        A crowd-sourcing web application, which allows users to upload, comment, and parse through videos with the intent of receiving feedback on their video presentation.</p>
+                </div>
+                <div class="extra">
+                    @Html.ActionLink("Echo Me", "Index", "Echo", null, new { @class = "ui right floated button", @id = "linkToEchoMe" })
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <div class="ui small image">
+                <img src="/images/wireframeGreen.png">
+            </div>
+            <div class="middle aligned content">
+                <div class="header">
+                    Crowd-multilogue
+                </div>
+                <div class="description">
+                    <p></p>
+                </div>
+                <div class="extra">
+                    <div class="ui right floated button">
+                        Disabled
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <div class="ui small image">
+                <img src="/images/wireframeYellow.png">
+            </div>
+            <div class="middle aligned content">
+                <div class="header">
+                    Free Speech
+                </div>
+                <div class="description">
+                    <p></p>
+                </div>
+                <div class="extra">
+                    <div class="ui right floated button">
+                        Disabled
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hgroup class="title" style="visibility: hidden">
+        <h1>@ViewBag.Title</h1>
+        <h2>@ViewBag.Message</h2>
+    </hgroup>
+</div>

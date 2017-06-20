@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="WoGamModelStoreContainer" CdmEntityContainer="WoGamEntities">
+    <EntitySetMapping Name="WoGamCategories">
+      <EntityTypeMapping TypeName="WoGamModel.WoGamCategory">
+        <MappingFragment StoreEntitySet="WoGamCategory">
+          <ScalarProperty Name="cat_id" ColumnName="cat_id" />
+          <ScalarProperty Name="cat_name" ColumnName="cat_name" />
+          <ScalarProperty Name="cat_reached" ColumnName="cat_reached" />
+          <ScalarProperty Name="cat_lng" ColumnName="cat_lng" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WoGamChoices">
+      <EntityTypeMapping TypeName="WoGamModel.WoGamChoice">
+        <MappingFragment StoreEntitySet="WoGamChoice">
+          <ScalarProperty Name="chc_id" ColumnName="chc_id" />
+          <ScalarProperty Name="chc_usr" ColumnName="chc_usr" />
+          <ScalarProperty Name="chc_langage" ColumnName="chc_langage" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WoGamLangages">
+      <EntityTypeMapping TypeName="WoGamModel.WoGamLangage">
+        <MappingFragment StoreEntitySet="WoGamLangage">
+          <ScalarProperty Name="lng_id" ColumnName="lng_id" />
+          <ScalarProperty Name="lng_langage" ColumnName="lng_langage" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WoGamProfiles">
+      <EntityTypeMapping TypeName="WoGamModel.WoGamProfile">
+        <MappingFragment StoreEntitySet="WoGamProfile">
+          <ScalarProperty Name="usr_id" ColumnName="usr_id" />
+          <ScalarProperty Name="usr_name" ColumnName="usr_name" />
+          <ScalarProperty Name="usr_pwd" ColumnName="usr_pwd" />
+          <ScalarProperty Name="usr_gameLangage" ColumnName="usr_gameLangage" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WoGamWords">
+      <EntityTypeMapping TypeName="WoGamModel.WoGamWord">
+        <MappingFragment StoreEntitySet="WoGamWord">
+          <ScalarProperty Name="wd_id" ColumnName="wd_id" />
+          <ScalarProperty Name="wd_value" ColumnName="wd_value" />
+          <ScalarProperty Name="wd_nbtime" ColumnName="wd_nbtime" />
+          <ScalarProperty Name="wd_cat" ColumnName="wd_cat" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

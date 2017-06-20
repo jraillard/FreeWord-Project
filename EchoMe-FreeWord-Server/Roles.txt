@@ -1,0 +1,9 @@
+Code = "IT-Infra-2017"
+Role = "Student"
+
+
+Code = "Manimehri"
+Role = "Admin"
+Role = "Student"
+
+Role = "NoRole"

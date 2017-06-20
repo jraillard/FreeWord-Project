@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c260f41f76a0463f9ee83767d483ec1a" Name="Diagram1" ZoomLevel="72">
+        <EntityTypeShape EntityType="EchoDBModel.Presentation" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EchoDBModel.UpVote" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EchoDBModel.Comment" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EchoDBModel.FREECOMMENT" Width="1.5" PointX="3.375" PointY="3.75" />
+        <EntityTypeShape EntityType="EchoDBModel.FREEUSERNAME" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EchoDBModel.FREEVOTE" Width="1.5" PointX="5.375" PointY="3.75" />
+        <EntityTypeShape EntityType="EchoDBModel.RateVideo" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="EchoDBModel.WatchedPresentation" Width="1.5" PointX="2.75" PointY="6.75" />
+        <EntityTypeShape EntityType="EchoDBModel.WoGamCategory" Width="1.5" PointX="7.625" PointY="10.75" />
+        <EntityTypeShape EntityType="EchoDBModel.WoGamChoice" Width="1.5" PointX="7.625" PointY="7.375" />
+        <EntityTypeShape EntityType="EchoDBModel.WoGamLangage" Width="1.5" PointX="5.375" PointY="8.5" />
+        <EntityTypeShape EntityType="EchoDBModel.WoGamProfile" Width="1.5" PointX="5.375" PointY="11.375" />
+        <EntityTypeShape EntityType="EchoDBModel.WoGamWord" Width="1.5" PointX="9.875" PointY="10.875" />
+        <AssociationConnector Association="EchoDBModel.fk_catId" />
+        <AssociationConnector Association="EchoDBModel.fk_wdId" />
+        <AssociationConnector Association="EchoDBModel.fk_chc1" />
+        <AssociationConnector Association="EchoDBModel.fk_chc2" />
+        <EntityTypeShape EntityType="EchoDBModel.UserProfile" Width="1.5" PointX="10" PointY="0.875" />
+        <EntityTypeShape EntityType="EchoDBModel.webpages_Membership" Width="1.5" PointX="7.75" PointY="3.75" />
+        <EntityTypeShape EntityType="EchoDBModel.webpages_OAuthMembership" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="EchoDBModel.webpages_Roles" Width="1.5" PointX="7.75" PointY="0.875" />
+        <AssociationConnector Association="EchoDBModel.webpages_UsersInRoles" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
