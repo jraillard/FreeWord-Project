@@ -65,18 +65,7 @@ namespace EchoMe.Controllers
             return "Error_3";
         }
 
-        public ActionResult GetUserList()
-        {
-            try
-            {
-                List<WoGamProfile> userList = woGameDb.WoGamProfiles.ToList();
-                return Json(userList);
-            }
-            catch (Exception)
-            {
-                return Json("Error_1");
-            }
-        }
+
 
     }
 }
