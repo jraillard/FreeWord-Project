@@ -9,7 +9,6 @@ namespace EchoMe.Controllers
 {
     public class WoGamUserController : Controller
     {
-        //
         // GET: /WoGamUser/
         private EchoDBEntities woGameDb = new EchoDBEntities();
 

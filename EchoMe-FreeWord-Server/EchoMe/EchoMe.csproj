@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -585,6 +586,11 @@
     <Content Include="Views\Video\Index.cshtml" />
     <Content Include="Views\Leader\Index.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="WoGam_CSV_Files\1.csv" />
+    <Content Include="WoGam_CSV_Files\2.csv" />
+    <Content Include="WoGam_CSV_Files\3.csv" />
+    <Content Include="WoGam_CSV_Files\4.csv" />
+    <Content Include="WoGam_CSV_Files\5.csv" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

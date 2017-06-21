@@ -102,6 +102,7 @@
     <Compile Include="Assets\Scripts\FrontCard.cs" />
     <Compile Include="Assets\Scripts\GameManagement.cs" />
     <Compile Include="Assets\Scripts\GoToGame.cs" />
+    <Compile Include="Assets\Scripts\ImageDownLoader.cs" />
     <Compile Include="Assets\Scripts\PlacedCard.cs" />
     <Compile Include="Assets\Scripts\PlacingCard.cs" />
     <Compile Include="Assets\Scripts\PlayedCard.cs" />

@@ -11,6 +11,7 @@ public class BackToLevelSelection : MonoBehaviour {
 
     public void ComeBack()
     {
+        Destroy(GameObject.Find("DataObject"));
         SceneManager.LoadSceneAsync("LevelSelection", LoadSceneMode.Single);
     }
 }
