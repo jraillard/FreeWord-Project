@@ -108,46 +108,6 @@ NavMeshSettings:
     tileSize: 256
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &67491958
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 67491960}
-  - component: {fileID: 67491959}
-  m_Layer: 0
-  m_Name: DataObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &67491959
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 67491958}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbea6ff1c3105db4b8e2976f1f1cec2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &67491960
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 67491958}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 745.48926, y: 293.9016, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &74401570
 GameObject:
   m_ObjectHideFlags: 0
@@ -997,6 +957,7 @@ GameObject:
   - component: {fileID: 967686865}
   - component: {fileID: 967686864}
   - component: {fileID: 967686863}
+  - component: {fileID: 967686866}
   m_Layer: 5
   m_Name: Back
   m_TagString: Untagged
@@ -1061,7 +1022,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 967686864}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 967686866}
+        m_MethodName: Load
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &967686864
@@ -1097,6 +1069,21 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 967686861}
+--- !u!114 &967686866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 967686861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e918e509e5e13a54aa00a28681ef6b30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  start: 0
+  fadeDamp: 3
+  alpha: 0
+  isFadeIn: 0
 --- !u!1 &974393900
 GameObject:
   m_ObjectHideFlags: 0
@@ -1493,7 +1480,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1201326554}
-        m_MethodName: PlayGame
+        m_MethodName: Load
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1546,9 +1533,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1201326549}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 307049957f4807948bb970fa055cce44, type: 3}
+  m_Script: {fileID: 11500000, guid: ae982716d80d2ee41960ca05714fcaec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  start: 0
+  fadeDamp: 3
+  alpha: 0
+  isFadeIn: 0
 --- !u!1 &1229885545
 GameObject:
   m_ObjectHideFlags: 0

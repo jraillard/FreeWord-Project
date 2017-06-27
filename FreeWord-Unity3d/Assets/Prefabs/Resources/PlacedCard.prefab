@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212410602562775140}
   - component: {fileID: 65428320713845650}
   - component: {fileID: 54204307340698732}
-  - component: {fileID: 114895950427688550}
+  - component: {fileID: 114194497880239310}
   m_Layer: 0
   m_Name: Card
   m_TagString: Untagged
@@ -39,8 +39,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4698711691451402}
   - component: {fileID: 54541536850157928}
-  - component: {fileID: 114584855498939000}
   - component: {fileID: 65354165802183930}
+  - component: {fileID: 114068996026450880}
   m_Layer: 0
   m_Name: PlacedCard
   m_TagString: Untagged
@@ -129,7 +129,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.6228328, y: 6, z: 0}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114584855498939000
+--- !u!114 &114068996026450880
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -137,10 +137,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1813535673395580}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d22ba0320977cf428721763839fe0bd, type: 3}
+  m_Script: {fileID: 11500000, guid: 6fc1cfb7da0bcda479317e70aa3a91c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114895950427688550
+--- !u!114 &114194497880239310
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1795459452955436}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b748fdf510bb6fe4197d00f3a06259af, type: 3}
+  m_Script: {fileID: 11500000, guid: 7379b976ad72303418e47a1e5a811bfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &212410602562775140
@@ -183,8 +183,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: fc6178e92b009db488974ecdb82ede12, type: 3}
-  m_Color: {r: 0.99264705, g: 0.014597764, b: 0.014597764, a: 1}
+  m_Sprite: {fileID: 21300000, guid: cfc89eb8e48af0849ba955aaf90c6ff1, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
