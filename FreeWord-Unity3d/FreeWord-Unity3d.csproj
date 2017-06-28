@@ -108,13 +108,6 @@
     <Compile Include="Assets\Scripts\Game\PlayedCard.cs" />
     <Compile Include="Assets\Scripts\Game\ReplayBonus.cs" />
     <Compile Include="Assets\Scripts\Game\WordBonus.cs" />
-    <Compile Include="Assets\Scripts\GameTuto\GameManagementTuto.cs" />
-    <Compile Include="Assets\Scripts\GameTuto\ImageDownLoaderTuto.cs" />
-    <Compile Include="Assets\Scripts\GameTuto\PlacedCardTuto.cs" />
-    <Compile Include="Assets\Scripts\GameTuto\PlacingCardTuto.cs" />
-    <Compile Include="Assets\Scripts\GameTuto\PlayedCardTuto.cs" />
-    <Compile Include="Assets\Scripts\GameTuto\ReplayBonusTuto.cs" />
-    <Compile Include="Assets\Scripts\GameTuto\WordBonusTuto.cs" />
     <Compile Include="Assets\Scripts\GoToScene\FadeIn.cs" />
     <Compile Include="Assets\Scripts\GoToScene\GoToAchievements.cs" />
     <Compile Include="Assets\Scripts\GoToScene\GoToBonusExplainations.cs" />
@@ -146,6 +139,17 @@
     <Compile Include="Assets\Scripts\Sound\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Sound\UnMute_ML.cs" />
     <Compile Include="Assets\Scripts\Sound\UnMute_MR.cs" />
+    <Compile Include="Assets\Scripts\Tuto\Bonus_Explainations.cs" />
+    <Compile Include="Assets\Scripts\Tuto\Drag_Drop.cs" />
+    <Compile Include="Assets\Scripts\Tuto\EndTuto.cs" />
+    <Compile Include="Assets\Scripts\Tuto\GameTuto\GameManagementTuto.cs" />
+    <Compile Include="Assets\Scripts\Tuto\GameTuto\ImageDownLoaderTuto.cs" />
+    <Compile Include="Assets\Scripts\Tuto\GameTuto\PlacedCardTuto.cs" />
+    <Compile Include="Assets\Scripts\Tuto\GameTuto\PlacingCardTuto.cs" />
+    <Compile Include="Assets\Scripts\Tuto\GameTuto\PlayedCardTuto.cs" />
+    <Compile Include="Assets\Scripts\Tuto\GameTuto\ReplayBonusTuto.cs" />
+    <Compile Include="Assets\Scripts\Tuto\GameTuto\WordBonusTuto.cs" />
+    <Compile Include="Assets\Scripts\Tuto\Word_Creation.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

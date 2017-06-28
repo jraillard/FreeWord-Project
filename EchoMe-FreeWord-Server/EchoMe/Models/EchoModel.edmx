@@ -133,6 +133,7 @@
           <Property Name="cat_name" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="cat_reached" Type="bit" Nullable="false" />
           <Property Name="cat_lng" Type="int" Nullable="false" />
+          <Property Name="cat_url" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <EntityType Name="WoGamChoice">
           <Key>
@@ -166,6 +167,7 @@
           <Property Name="wd_value" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="wd_nbtime" Type="int" Nullable="false" />
           <Property Name="wd_cat" Type="int" Nullable="false" />
+          <Property Name="wd_url" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <Association Name="fk_catId">
           <End Role="WoGamLangage" Type="Self.WoGamLangage" Multiplicity="1" />
@@ -409,6 +411,7 @@
           <Property Name="cat_lng" Type="Int32" Nullable="false" />
           <NavigationProperty Name="WoGamLangage" Relationship="EchoDBModel.fk_catId" FromRole="WoGamCategory" ToRole="WoGamLangage" />
           <NavigationProperty Name="WoGamWords" Relationship="EchoDBModel.fk_wdId" FromRole="WoGamCategory" ToRole="WoGamWord" />
+          <Property Name="cat_url" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="WoGamChoice">
           <Key>
@@ -448,6 +451,7 @@
           <Property Name="wd_nbtime" Type="Int32" Nullable="false" />
           <Property Name="wd_cat" Type="Int32" Nullable="false" />
           <NavigationProperty Name="WoGamCategory" Relationship="EchoDBModel.fk_wdId" FromRole="WoGamWord" ToRole="WoGamCategory" />
+          <Property Name="wd_url" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="fk_catId">
           <End Type="EchoDBModel.WoGamLangage" Role="WoGamLangage" Multiplicity="1" />
@@ -632,6 +636,7 @@
           <EntitySetMapping Name="WoGamCategories">
             <EntityTypeMapping TypeName="EchoDBModel.WoGamCategory">
               <MappingFragment StoreEntitySet="WoGamCategory">
+                <ScalarProperty Name="cat_url" ColumnName="cat_url" />
                 <ScalarProperty Name="cat_lng" ColumnName="cat_lng" />
                 <ScalarProperty Name="cat_reached" ColumnName="cat_reached" />
                 <ScalarProperty Name="cat_name" ColumnName="cat_name" />
@@ -669,6 +674,7 @@
           <EntitySetMapping Name="WoGamWords">
             <EntityTypeMapping TypeName="EchoDBModel.WoGamWord">
               <MappingFragment StoreEntitySet="WoGamWord">
+                <ScalarProperty Name="wd_url" ColumnName="wd_url" />
                 <ScalarProperty Name="wd_cat" ColumnName="wd_cat" />
                 <ScalarProperty Name="wd_nbtime" ColumnName="wd_nbtime" />
                 <ScalarProperty Name="wd_value" ColumnName="wd_value" />

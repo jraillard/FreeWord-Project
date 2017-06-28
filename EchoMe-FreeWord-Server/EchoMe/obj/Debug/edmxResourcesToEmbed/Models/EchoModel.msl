@@ -85,6 +85,7 @@
     <EntitySetMapping Name="WoGamCategories">
       <EntityTypeMapping TypeName="EchoDBModel.WoGamCategory">
         <MappingFragment StoreEntitySet="WoGamCategory">
+          <ScalarProperty Name="cat_url" ColumnName="cat_url" />
           <ScalarProperty Name="cat_lng" ColumnName="cat_lng" />
           <ScalarProperty Name="cat_reached" ColumnName="cat_reached" />
           <ScalarProperty Name="cat_name" ColumnName="cat_name" />
@@ -122,6 +123,7 @@
     <EntitySetMapping Name="WoGamWords">
       <EntityTypeMapping TypeName="EchoDBModel.WoGamWord">
         <MappingFragment StoreEntitySet="WoGamWord">
+          <ScalarProperty Name="wd_url" ColumnName="wd_url" />
           <ScalarProperty Name="wd_cat" ColumnName="wd_cat" />
           <ScalarProperty Name="wd_nbtime" ColumnName="wd_nbtime" />
           <ScalarProperty Name="wd_value" ColumnName="wd_value" />

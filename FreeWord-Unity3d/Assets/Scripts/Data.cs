@@ -111,13 +111,13 @@ public class Data : MonoBehaviour {
             nbTimeWordDiscover.Add(0);
             wordList.Add("bonjour");
             nbTimeWordDiscover.Add(2);
-            wordList.Add("salut");
+            wordList.Add("mot clé");
             nbTimeWordDiscover.Add(1);
-            wordList.Add("coucou");
+            wordList.Add("tir-à-l'arc");
             nbTimeWordDiscover.Add(3);
-            wordList.Add("maison");
+            wordList.Add("l'oeil");
             nbTimeWordDiscover.Add(4);
-            wordList.Add("jardin");
+            wordList.Add("aujourd'hui");
             nbTimeWordDiscover.Add(5);
         }
         else if (catName == "Category_1")

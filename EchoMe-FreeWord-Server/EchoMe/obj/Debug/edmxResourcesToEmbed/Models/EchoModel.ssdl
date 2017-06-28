@@ -128,6 +128,7 @@
     <Property Name="cat_name" Type="varchar" MaxLength="32" Nullable="false" />
     <Property Name="cat_reached" Type="bit" Nullable="false" />
     <Property Name="cat_lng" Type="int" Nullable="false" />
+    <Property Name="cat_url" Type="varchar" MaxLength="200" Nullable="false" />
   </EntityType>
   <EntityType Name="WoGamChoice">
     <Key>
@@ -161,6 +162,7 @@
     <Property Name="wd_value" Type="varchar" MaxLength="30" Nullable="false" />
     <Property Name="wd_nbtime" Type="int" Nullable="false" />
     <Property Name="wd_cat" Type="int" Nullable="false" />
+    <Property Name="wd_url" Type="varchar" MaxLength="200" Nullable="false" />
   </EntityType>
   <Association Name="fk_catId">
     <End Role="WoGamLangage" Type="Self.WoGamLangage" Multiplicity="1" />

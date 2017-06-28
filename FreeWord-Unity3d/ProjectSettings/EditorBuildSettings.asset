@@ -37,7 +37,7 @@ EditorBuildSettings:
     guid: c92312bd2036e2543a6f70f30815925b
   - enabled: 1
     path: Assets/Scenes/TutoDone.unity
-    guid: aa544935c31b452418f1143058830e03
+    guid: 629e4ce88fb6dfe48a479b03e190f348
   - enabled: 1
     path: Assets/Scenes/Achievements.unity
     guid: c3b57a695fa1bc644893c3c3305861fb
