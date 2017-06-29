@@ -22,7 +22,7 @@ public partial class WoGamWord
 
     public string wd_value { get; set; }
 
-    public int wd_nbtime { get; set; }
+    public int s { get; set; }
 
     public int wd_cat { get; set; }
 

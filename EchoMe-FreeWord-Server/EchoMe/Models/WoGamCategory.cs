@@ -12,10 +12,10 @@
 namespace EchoMe.Models
 {
 
-using System;
+    using System;
     using System.Collections.Generic;
-    
-public partial class WoGamCategory
+
+    public partial class WoGamCategory
 {
 
     public WoGamCategory()
@@ -32,15 +32,18 @@ public partial class WoGamCategory
 
     public bool cat_reached { get; set; }
 
-    public int cat_lng { get; set; }
 
     public string cat_url { get; set; }
 
+    public int cat_usr { get; set; }
+
+    public string cat_langage { get; set; }
 
 
-    public virtual WoGamLangage WoGamLangage { get; set; }
 
     public virtual ICollection<WoGamWord> WoGamWords { get; set; }
+
+    public virtual WoGamProfile WoGamProfile { get; set; }
 
 }
 

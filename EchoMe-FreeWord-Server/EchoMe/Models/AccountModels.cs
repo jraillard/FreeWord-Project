@@ -15,11 +15,11 @@ namespace EchoMe.Models
         {
         }
 
-        public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<UserProfileOriginal> UserProfileOriginals { get; set; }
     }
 
-    [Table("UserProfile")]
-    public partial class UserProfile
+    [Table("UserProfileOriginal")]
+    public  class UserProfileOriginal
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]

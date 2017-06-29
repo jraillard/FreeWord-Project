@@ -28,25 +28,11 @@
     <EntitySet Name="RateVideos" EntityType="EchoDBModel.RateVideo" />
     <EntitySet Name="WatchedPresentations" EntityType="EchoDBModel.WatchedPresentation" />
     <EntitySet Name="WoGamCategories" EntityType="EchoDBModel.WoGamCategory" />
-    <EntitySet Name="WoGamChoices" EntityType="EchoDBModel.WoGamChoice" />
-    <EntitySet Name="WoGamLangages" EntityType="EchoDBModel.WoGamLangage" />
     <EntitySet Name="WoGamProfiles" EntityType="EchoDBModel.WoGamProfile" />
     <EntitySet Name="WoGamWords" EntityType="EchoDBModel.WoGamWord" />
-    <AssociationSet Name="fk_catId" Association="EchoDBModel.fk_catId">
-      <End Role="WoGamLangage" EntitySet="WoGamLangages" />
-      <End Role="WoGamCategory" EntitySet="WoGamCategories" />
-    </AssociationSet>
     <AssociationSet Name="fk_wdId" Association="EchoDBModel.fk_wdId">
       <End Role="WoGamCategory" EntitySet="WoGamCategories" />
       <End Role="WoGamWord" EntitySet="WoGamWords" />
-    </AssociationSet>
-    <AssociationSet Name="fk_chc1" Association="EchoDBModel.fk_chc1">
-      <End Role="WoGamProfile" EntitySet="WoGamProfiles" />
-      <End Role="WoGamChoice" EntitySet="WoGamChoices" />
-    </AssociationSet>
-    <AssociationSet Name="fk_chc2" Association="EchoDBModel.fk_chc2">
-      <End Role="WoGamLangage" EntitySet="WoGamLangages" />
-      <End Role="WoGamChoice" EntitySet="WoGamChoices" />
     </AssociationSet>
     <EntitySet Name="UserProfiles" EntityType="EchoDBModel.UserProfile" />
     <EntitySet Name="webpages_Membership" EntityType="EchoDBModel.webpages_Membership" />
@@ -55,6 +41,10 @@
     <AssociationSet Name="webpages_UsersInRoles" Association="EchoDBModel.webpages_UsersInRoles">
       <End Role="webpages_Roles" EntitySet="webpages_Roles" />
       <End Role="UserProfile" EntitySet="UserProfiles" />
+    </AssociationSet>
+    <AssociationSet Name="fk_chc11" Association="EchoDBModel.fk_chc11">
+      <End Role="WoGamProfile" EntitySet="WoGamProfiles" />
+      <End Role="WoGamCategory" EntitySet="WoGamCategories" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Comment">
@@ -117,65 +107,35 @@
       <PropertyRef Name="cat_id" />
     </Key>
     <Property Name="cat_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="cat_name" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="cat_name" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
     <Property Name="cat_reached" Type="Boolean" Nullable="false" />
-    <Property Name="cat_lng" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="WoGamLangage" Relationship="EchoDBModel.fk_catId" FromRole="WoGamCategory" ToRole="WoGamLangage" />
     <NavigationProperty Name="WoGamWords" Relationship="EchoDBModel.fk_wdId" FromRole="WoGamCategory" ToRole="WoGamWord" />
-    <Property Name="cat_url" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-  </EntityType>
-  <EntityType Name="WoGamChoice">
-    <Key>
-      <PropertyRef Name="chc_id" />
-    </Key>
-    <Property Name="chc_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="chc_usr" Type="Int32" Nullable="false" />
-    <Property Name="chc_langage" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="WoGamProfile" Relationship="EchoDBModel.fk_chc1" FromRole="WoGamChoice" ToRole="WoGamProfile" />
-    <NavigationProperty Name="WoGamLangage" Relationship="EchoDBModel.fk_chc2" FromRole="WoGamChoice" ToRole="WoGamLangage" />
-  </EntityType>
-  <EntityType Name="WoGamLangage">
-    <Key>
-      <PropertyRef Name="lng_id" />
-    </Key>
-    <Property Name="lng_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="lng_langage" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="WoGamCategories" Relationship="EchoDBModel.fk_catId" FromRole="WoGamLangage" ToRole="WoGamCategory" />
-    <NavigationProperty Name="WoGamChoices" Relationship="EchoDBModel.fk_chc2" FromRole="WoGamLangage" ToRole="WoGamChoice" />
+    <Property Name="cat_url" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="cat_usr" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="WoGamProfile" Relationship="EchoDBModel.fk_chc11" FromRole="WoGamCategory" ToRole="WoGamProfile" />
+    <Property Name="cat_langage" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="WoGamProfile">
     <Key>
       <PropertyRef Name="usr_id" />
     </Key>
     <Property Name="usr_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="usr_name" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
-    <Property Name="usr_pwd" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
-    <Property Name="usr_gameLangage" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="WoGamChoices" Relationship="EchoDBModel.fk_chc1" FromRole="WoGamProfile" ToRole="WoGamChoice" />
+    <Property Name="usr_name" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+    <Property Name="usr_pwd" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+    <Property Name="usr_gameLangage" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="WoGamCategories" Relationship="EchoDBModel.fk_chc11" FromRole="WoGamProfile" ToRole="WoGamCategory" />
   </EntityType>
   <EntityType Name="WoGamWord">
     <Key>
       <PropertyRef Name="wd_id" />
     </Key>
     <Property Name="wd_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="wd_value" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="wd_nbtime" Type="Int32" Nullable="false" />
+    <Property Name="wd_value" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="s" Type="Int32" Nullable="false" />
     <Property Name="wd_cat" Type="Int32" Nullable="false" />
     <NavigationProperty Name="WoGamCategory" Relationship="EchoDBModel.fk_wdId" FromRole="WoGamWord" ToRole="WoGamCategory" />
-    <Property Name="wd_url" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="wd_url" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
   </EntityType>
-  <Association Name="fk_catId">
-    <End Type="EchoDBModel.WoGamLangage" Role="WoGamLangage" Multiplicity="1" />
-    <End Type="EchoDBModel.WoGamCategory" Role="WoGamCategory" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="WoGamLangage">
-        <PropertyRef Name="lng_id" />
-      </Principal>
-      <Dependent Role="WoGamCategory">
-        <PropertyRef Name="cat_lng" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="fk_wdId">
     <End Type="EchoDBModel.WoGamCategory" Role="WoGamCategory" Multiplicity="1" />
     <End Type="EchoDBModel.WoGamWord" Role="WoGamWord" Multiplicity="*" />
@@ -185,30 +145,6 @@
       </Principal>
       <Dependent Role="WoGamWord">
         <PropertyRef Name="wd_cat" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_chc1">
-    <End Type="EchoDBModel.WoGamProfile" Role="WoGamProfile" Multiplicity="1" />
-    <End Type="EchoDBModel.WoGamChoice" Role="WoGamChoice" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="WoGamProfile">
-        <PropertyRef Name="usr_id" />
-      </Principal>
-      <Dependent Role="WoGamChoice">
-        <PropertyRef Name="chc_usr" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_chc2">
-    <End Type="EchoDBModel.WoGamLangage" Role="WoGamLangage" Multiplicity="1" />
-    <End Type="EchoDBModel.WoGamChoice" Role="WoGamChoice" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="WoGamLangage">
-        <PropertyRef Name="lng_id" />
-      </Principal>
-      <Dependent Role="WoGamChoice">
-        <PropertyRef Name="chc_langage" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -256,5 +192,17 @@
   <Association Name="webpages_UsersInRoles">
     <End Type="EchoDBModel.webpages_Roles" Role="webpages_Roles" Multiplicity="*" />
     <End Type="EchoDBModel.UserProfile" Role="UserProfile" Multiplicity="*" />
+  </Association>
+  <Association Name="fk_chc11">
+    <End Type="EchoDBModel.WoGamProfile" Role="WoGamProfile" Multiplicity="1" />
+    <End Type="EchoDBModel.WoGamCategory" Role="WoGamCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WoGamProfile">
+        <PropertyRef Name="usr_id" />
+      </Principal>
+      <Dependent Role="WoGamCategory">
+        <PropertyRef Name="cat_usr" />
+      </Dependent>
+    </ReferentialConstraint>
   </Association>
 </Schema>

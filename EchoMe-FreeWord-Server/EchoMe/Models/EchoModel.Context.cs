@@ -50,10 +50,6 @@ public partial class EchoDBEntities : DbContext
 
     public DbSet<WoGamCategory> WoGamCategories { get; set; }
 
-    public DbSet<WoGamChoice> WoGamChoices { get; set; }
-
-    public DbSet<WoGamLangage> WoGamLangages { get; set; }
-
     public DbSet<WoGamProfile> WoGamProfiles { get; set; }
 
     public DbSet<WoGamWord> WoGamWords { get; set; }

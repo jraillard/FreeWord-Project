@@ -21,7 +21,7 @@ public partial class WoGamProfile
     public WoGamProfile()
     {
 
-        this.WoGamChoices = new HashSet<WoGamChoice>();
+        this.WoGamCategories = new HashSet<WoGamCategory>();
 
     }
 
@@ -36,7 +36,7 @@ public partial class WoGamProfile
 
 
 
-    public virtual ICollection<WoGamChoice> WoGamChoices { get; set; }
+    public virtual ICollection<WoGamCategory> WoGamCategories { get; set; }
 
 }
 
