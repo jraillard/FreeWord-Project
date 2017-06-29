@@ -30,7 +30,7 @@ namespace EchoMe.Controllers
         {
             if (!woGameDb.WoGamProfiles.Any(p => p.usr_name == username)) //if doesn't exist
             {
-                string csvFilePath = "C:/Users/jurai/Documents/GitHub/FreeWord-Project/EchoMe-FreeWord-Server/EchoMe/WoGam_CSV_Files/";
+                string csvFilePath = Server.MapPath("~/WoGam_CSV_Files/");
                 String[] tempString;                
 
                 //create pofile
