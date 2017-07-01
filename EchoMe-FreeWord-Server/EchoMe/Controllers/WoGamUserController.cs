@@ -1,10 +1,12 @@
 ﻿using EchoMe.Models;
 using System;
-using System.Data;
-using System.Data.SqlClient;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 
 
 namespace EchoMe.Controllers
@@ -13,24 +15,12 @@ namespace EchoMe.Controllers
     {
         // GET: /WoGamUser/
         private EchoDBEntities woGameDb = new EchoDBEntities();
-
-        public string CreateUserT()
-        {
-            WoGamProfile woGamProfile = new WoGamProfile
-            {
-                usr_name = "julien",
-                usr_pwd = "123456"
-            };
-            woGameDb.WoGamProfiles.Add(woGamProfile);
-            woGameDb.SaveChanges();
-            return "Done";
-        }
-
+        
         public string CreateUser(string username, string password)
         {
             if (!woGameDb.WoGamProfiles.Any(p => p.usr_name == username)) //if doesn't exist
             {
-                string csvFilePath = "C:/Users/jurai/Documents/GitHub/FreeWord-Project/EchoMe-FreeWord-Server/EchoMe/WoGam_CSV_Files/";
+                string csvFilePath = Server.MapPath("~/WoGam_CSV_Files/");
                 String[] tempString;                
 
                 //create pofile
@@ -51,12 +41,12 @@ namespace EchoMe.Controllers
                     {
 
                         //Create Category read first Line => using System.Linq 
-                        tempString = System.IO.File.ReadLines(fileName).First().Split(';'); //filename contain the path
+                        Encoding enc = Encoding.GetEncoding("iso-8859-1"); //encoding for west EU letters
+                        tempString = System.IO.File.ReadLines(fileName, enc).First().Split(';'); //filename contain the path
+                        //string tempString2 = System.IO.File.ReadLines(fileName).First();
                         // [0] = french cat / [1] = english cat / [2] = url cat
 
-                        SqlParameter catFR = new SqlParameter(tempString[0], SqlDbType.NVarChar, 32);
-                        SqlParameter catEN = new SqlParameter(tempString[1], SqlDbType.NVarChar, 32);
-
+                        Debug.WriteLine(tempString[0]);
                         WoGamCategory woGamCategoryFR = new WoGamCategory
                         {
                             cat_name = tempString[0],//catFR,
@@ -80,8 +70,8 @@ namespace EchoMe.Controllers
                         woGameDb.WoGamCategories.Add(woGamCategoryEN);
                         woGameDb.SaveChanges();
 
-                        /*
-                        foreach (string s in System.IO.File.ReadAllLines(fileName).Skip(1)) //skip the FirstLine
+                        
+                        foreach (string s in System.IO.File.ReadAllLines(fileName,enc).Skip(1)) //skip the FirstLine
                         {
                             //split
                             tempString = s.Split(';');
@@ -108,7 +98,7 @@ namespace EchoMe.Controllers
                             woGameDb.WoGamWords.Add(woGamWordEN);
                             woGameDb.SaveChanges();
                         }//foreach
-                        */
+                        
                     }//endif
 
                 }//end foreach
@@ -118,23 +108,6 @@ namespace EchoMe.Controllers
 
             return "error_3";
            
-        }
-
-        public string CreateUserTest(string username, string password)
-        {
-            if (!woGameDb.WoGamProfiles.Any(p => p.usr_name == username))
-            {
-                WoGamProfile woGamProfile = new WoGamProfile
-                {
-                    usr_name = username,
-                    usr_pwd = password
-                };
-                woGameDb.WoGamProfiles.Add(woGamProfile);
-                woGameDb.SaveChanges();
-                return "Done";
-            }
-            // user already exist
-            return "Error_0";
         }
 
         public string LoginUser(string username, string password)
@@ -169,6 +142,23 @@ namespace EchoMe.Controllers
             }
             // user doesnt exist
             return "Error_3";
+        }
+
+
+        public List<string> GetCategories(string username, string langage)
+        {
+            List<string> catList = new List<string>();
+
+            if (woGameDb.WoGamProfiles.Any(p => p.usr_name == username))
+            {
+                catList = woGameDb.WoGamCategories.Where(p => p.cat_usr == p.WoGamProfile.usr_id && p.cat_langage == langage).Select(p => p.cat_name).ToList();
+            }
+
+             var jsonString= JsonConvert.SerializeObject(catList);      
+            Debug.WriteLine( jsonString);
+            catList = JsonConvert.DeserializeObject<List<string>>(jsonString); //catList == null => don't work
+            
+            return null;
         }
 
     }

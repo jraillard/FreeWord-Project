@@ -22,6 +22,7 @@ public class GameManagementTuto: MonoBehaviour
     private Data data;
     private List<string> listWord;
     private List<char> splitWord;
+    private bool launchTutoDone = false;
 
     /********************************* Loops *********************************/
 
@@ -67,12 +68,12 @@ public class GameManagementTuto: MonoBehaviour
 
         if (cpt == placedCardSet.Count) //if it is 
         {
-            if (VerifPlacedWord() == true)
+            if (VerifPlacedWord() == true && !launchTutoDone)
             {
                 RemovePlacedWord();
                 if (playedCardSet.Count == 0) //if there's no more PlayedCard 
                 {
-                    SceneManager.LoadSceneAsync("TutoDone", LoadSceneMode.Single);
+                    LaunchTutoDone();
                 }
                 else
                 {
@@ -445,18 +446,15 @@ public class GameManagementTuto: MonoBehaviour
         toRemove = null;
     }
 
-    //Show the FrontCard of the MysteryCard => later make animation
-    private void DiscoverMysteryWord()
+    private void LaunchTutoDone()
     {
-        Destroy(GameObject.Find("MysteryWordMask"));
-        float inc = 0;
-        foreach (GameObject obj in mysteryCardSet)
+        if (!launchTutoDone)
         {
-            obj.transform.localScale = new Vector3(0.08f, 0.08f, 0);
-            obj.transform.position = new Vector3(-1.3f + inc,  0f, obj.transform.position.z);
-            inc += 0.3f;
+            print("coucou");
+            SceneManager.LoadSceneAsync("TutoDone", LoadSceneMode.Single);
+            launchTutoDone = true;
         }
-        
+
     }
 
 }

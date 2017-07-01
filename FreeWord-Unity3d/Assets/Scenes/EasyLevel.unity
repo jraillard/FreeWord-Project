@@ -1268,6 +1268,8 @@ GameObject:
   - component: {fileID: 1117303566}
   - component: {fileID: 1117303565}
   - component: {fileID: 1117303564}
+  - component: {fileID: 1117303569}
+  - component: {fileID: 1117303570}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -1345,6 +1347,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1117303569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1117303563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b73d8b1de86d364d9c1fa69bbe79371, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1117303570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1117303563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b80afafae718624190a337f463eff53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1178224851
 GameObject:
   m_ObjectHideFlags: 0
@@ -1975,7 +1999,7 @@ GameObject:
   - component: {fileID: 1930395130}
   - component: {fileID: 1930395129}
   m_Layer: 5
-  m_Name: Back
+  m_Name: Pause
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2054,8 +2078,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1930395129}
+      - m_Target: {fileID: 1117303570}
         m_MethodName: Load
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1117303569}
+        m_MethodName: SoundEffect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2167,7 +2202,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Back
+  m_Text: 'Pause
 
 
 '

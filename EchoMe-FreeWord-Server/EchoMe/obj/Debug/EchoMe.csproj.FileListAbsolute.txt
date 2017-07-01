@@ -152,6 +152,6 @@ C:\Users\jurai\Documents\GitHub\FreeWord-Project\EchoMe-FreeWord-Server\EchoMe\b
 C:\Users\jurai\Documents\GitHub\FreeWord-Project\EchoMe-FreeWord-Server\EchoMe\bin\DotNetOpenAuth.OAuth.xml
 C:\Users\jurai\Documents\GitHub\FreeWord-Project\EchoMe-FreeWord-Server\EchoMe\bin\DotNetOpenAuth.OpenId.xml
 C:\Users\jurai\Documents\GitHub\FreeWord-Project\EchoMe-FreeWord-Server\EchoMe\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
-C:\Users\jurai\Documents\GitHub\FreeWord-Project\EchoMe-FreeWord-Server\EchoMe\obj\Debug\EchoMe.csprojResolveAssemblyReference.cache
 C:\Users\jurai\Documents\GitHub\FreeWord-Project\EchoMe-FreeWord-Server\EchoMe\obj\Debug\EchoMe.dll
 C:\Users\jurai\Documents\GitHub\FreeWord-Project\EchoMe-FreeWord-Server\EchoMe\obj\Debug\EchoMe.pdb
+C:\Users\jurai\Documents\GitHub\FreeWord-Project\EchoMe-FreeWord-Server\EchoMe\obj\Debug\EchoMe.csprojResolveAssemblyReference.cache

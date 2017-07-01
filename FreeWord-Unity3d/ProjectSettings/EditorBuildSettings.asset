@@ -41,8 +41,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Achievements.unity
     guid: c3b57a695fa1bc644893c3c3305861fb
-  - enabled: 1
-    path: Assets/Scenes/WordInformation.unity
+  - enabled: 0
+    path: 
     guid: 127314baac7e17f448d5415d229a5035
   - enabled: 1
     path: Assets/Scenes/LanguageToLearn.unity
@@ -54,5 +54,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Game.unity
     guid: b4ea2d8d548a00344bf499c5918cd290
   - enabled: 1
+    path: Assets/Scenes/Pause.unity
+    guid: aa16a6dd3dca8b241a966dc2f251a7be
+  - enabled: 1
     path: Assets/Scenes/LevelDone.unity
     guid: 9d3da9ff2223ddb439b05d4f0d13becf
+  - enabled: 1
+    path: Assets/Scenes/Exit.unity
+    guid: 19640a458ac7c6b40981e15c68440cb0

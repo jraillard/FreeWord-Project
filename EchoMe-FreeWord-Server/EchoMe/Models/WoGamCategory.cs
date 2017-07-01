@@ -12,10 +12,10 @@
 namespace EchoMe.Models
 {
 
-    using System;
+using System;
     using System.Collections.Generic;
-
-    public partial class WoGamCategory
+    
+public partial class WoGamCategory
 {
 
     public WoGamCategory()
@@ -31,7 +31,6 @@ namespace EchoMe.Models
     public string cat_name { get; set; }
 
     public bool cat_reached { get; set; }
-
 
     public string cat_url { get; set; }
 

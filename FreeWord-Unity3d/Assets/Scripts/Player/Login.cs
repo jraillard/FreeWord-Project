@@ -12,7 +12,9 @@ public class Login : MonoBehaviour
     public GameObject username;
     public GameObject password;
     public GameObject informations;
+    public bool Smute;
 
+    private SoundManager theSM;
     private string Username;
     private string Password;
     private string[] Lines;
@@ -76,12 +78,17 @@ public class Login : MonoBehaviour
         if(UN==true && PW == true){
             int lng;
             lng = Lines.Length;
+            theSM = FindObjectOfType<SoundManager>();
             if (GameObject.Find("Toggle_Remember").GetComponent<Toggle>().isOn){
                 remember = (Username + Environment.NewLine + EncryptedPass);
                 System.IO.File.WriteAllText(Application.persistentDataPath + "/ID/RM.txt", remember);
                 System.IO.File.WriteAllText(Application.persistentDataPath + "/ID/JA.txt", Username);
                 username.GetComponent<InputField>().text = "";
                 password.GetComponent<InputField>().text = "";
+                if (Smute == false)
+                {
+                    theSM.PlaySound();
+                }
                 informations.GetComponent<Text>().text = "Login Sucessfull";
                 if(Lines[lng-1]=="English" || Lines[lng - 1] == "Français")
                 {
@@ -93,6 +100,10 @@ public class Login : MonoBehaviour
                 System.IO.File.WriteAllText(Application.persistentDataPath + "/ID/JA.txt", Username);
                 username.GetComponent<InputField>().text = "";
                 password.GetComponent<InputField>().text = "";
+                if (Smute == false)
+                {
+                    theSM.PlaySound();
+                }
                 informations.GetComponent<Text>().text = "Login Sucessfull";
                 if (Lines[lng - 1] == "English" || Lines[lng - 1] == "Français")
                 {
@@ -101,6 +112,11 @@ public class Login : MonoBehaviour
                 else { GameObject.Find("Main Camera").GetComponent<GoToLanguageToPlay>().Load(); }
             }
         }
+    }
+
+    public void SetMute(bool b)
+    {
+        Smute = b;
     }
 
     public void FillLoginAfterRegister(string usr)

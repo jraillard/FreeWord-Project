@@ -77,6 +77,7 @@ public class Register : MonoBehaviour {
             }
             form = (Username +Environment.NewLine + Password);
             File.WriteAllText(Application.persistentDataPath+"/ID/" + Username + ".txt", form);
+            GameObject.Find("Register_button").GetComponent<AudioSource>().Play();
             username.GetComponent<InputField>().text="";
             password.GetComponent<InputField>().text="";
             confPassword.GetComponent<InputField>().text="";

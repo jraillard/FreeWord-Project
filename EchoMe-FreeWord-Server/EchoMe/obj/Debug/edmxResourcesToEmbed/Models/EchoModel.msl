@@ -109,7 +109,7 @@
         <MappingFragment StoreEntitySet="WoGamWord">
           <ScalarProperty Name="wd_url" ColumnName="wd_url" />
           <ScalarProperty Name="wd_cat" ColumnName="wd_cat" />
-          <ScalarProperty Name="s" ColumnName="wd_nbtime" />
+          <ScalarProperty Name="wd_nbtime" ColumnName="wd_nbtime" />
           <ScalarProperty Name="wd_value" ColumnName="wd_value" />
           <ScalarProperty Name="wd_id" ColumnName="wd_id" />
         </MappingFragment>

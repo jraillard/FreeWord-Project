@@ -26,10 +26,17 @@ public class Tempo : MonoBehaviour
             int lng;
             lng = Line.Length;
             if (Line[lng - 1] == "English" || Line[lng - 1] == "Français"){
+                GameObject.Find("AudioManager").GetComponent<AudioSource>().Play();
                 GameObject.Find("Main Camera").GetComponent<GoToHomepage>().Load();
             }
-            else { GameObject.Find("Main Camera").GetComponent<GoToLanguageToPlay>().Load(); }
+            else {
+                GameObject.Find("Main Camera").GetComponent<GoToLanguageToPlay>().Load();
+                GameObject.Find("AudioManager").GetComponent<AudioSource>().Play();
+            }
         }
-        else { GameObject.Find("Main Camera").GetComponent<GoToLogIn>().Load(); }
+        else {
+            GameObject.Find("Main Camera").GetComponent<GoToLogIn>().Load();
+            GameObject.Find("AudioManager").GetComponent<AudioSource>().Play();
+        }
     }
 }

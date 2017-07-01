@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1332,6 +1332,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1175712393}
+        m_MethodName: SoundEffect
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &822977648
@@ -1582,7 +1593,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 9e6ff02b00ffb164692f279b9dd1409a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 56420fa3ee23c434ebebd1e484615f8a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1722,6 +1733,7 @@ GameObject:
   - component: {fileID: 1175712390}
   - component: {fileID: 1175712391}
   - component: {fileID: 1175712392}
+  - component: {fileID: 1175712393}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1842,6 +1854,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   infos: {fileID: 1935422394}
   next: {fileID: 1703916560}
+--- !u!114 &1175712393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1175712384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b73d8b1de86d364d9c1fa69bbe79371, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1320818126
 GameObject:
   m_ObjectHideFlags: 0
@@ -2414,7 +2437,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 9e6ff02b00ffb164692f279b9dd1409a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 56420fa3ee23c434ebebd1e484615f8a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2745,6 +2768,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1175712390}
         m_MethodName: Load
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1175712393}
+        m_MethodName: SoundEffect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

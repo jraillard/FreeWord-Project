@@ -1,42 +1,41 @@
-﻿using System.Collections;
+﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class SoundManager : MonoBehaviour {
 
-    public AudioSource efxSource;
-    public AudioSource musicSource;
+public class SoundManager : MonoBehaviour
+{
+
+    public AudioSource BS;
     public static SoundManager instance = null;
+    public AudioClip button1;
+    public AudioClip button2;
+    public AudioClip button3;
+    public bool mute = false;
 
-    public float lowPitchRange = 0.95f;
-    public float highPitchRange = 1.05f;
+    //private bool Smute = false;
 
-
-	// Use this for initialization
-	void Awake () {
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(gameObject);
-
-        DontDestroyOnLoad(gameObject);
-	}
-	
-    public void PlaySingle (AudioClip clip)
+    void Awake()
     {
-        efxSource.clip = clip;
-        efxSource.Play ();
+        if (instance == null) { instance = this; }
+        else if (instance != this) { Destroy(gameObject); }
+        DontDestroyOnLoad(gameObject);
     }
 
-    public void RandomizeSfx (params AudioClip [] clips)
+
+    public void RandomizeSound(params AudioClip[] clips)
     {
         int randomIndex = Random.Range(0, clips.Length);
-        float randomPitch = Random.Range(lowPitchRange, highPitchRange);
-
-        efxSource.pitch = randomPitch;
-        efxSource.clip = clips[randomIndex];
-        efxSource.Play();
+        BS.clip = clips[randomIndex];
+        BS.Play();
     }
-
-    
+    public void PlaySound()
+    {
+        if (mute == false) { RandomizeSound(button1, button2, button3); }
+    }
+    public void SetMute(bool b)
+    {
+        mute = b;
+    }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class Data : MonoBehaviour {
@@ -13,6 +14,7 @@ public class Data : MonoBehaviour {
     private string mysteryWord = "";
     private bool playAgainInSameCat = false;
     private string currentCatName = "";
+    private bool verifExit = false;
 
     /******************************* Main Events *********************************/
         
@@ -226,5 +228,29 @@ public class Data : MonoBehaviour {
         playAgainInSameCat = false;
     }
 
+    public bool SetVerifExit
+    {
+        get { return verifExit; }
+
+        set { verifExit = value; }
+    }
+
+    void OnGUI()
+    {
+        if (Event.current.Equals(Event.KeyboardEvent("escape"))){
+            if (verifExit==false)
+            {
+                Time.timeScale = 0f;
+                SceneManager.LoadSceneAsync("Exit", LoadSceneMode.Additive);
+                verifExit = true;
+            }
+            else
+            {
+                verifExit = false;
+                Time.timeScale = 1.0f;
+                SceneManager.UnloadSceneAsync("Exit");
+            }
+        }
+    }
 
 }
