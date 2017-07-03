@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using Newtonsoft.Json;
-
+using System.Collections;
 
 namespace EchoMe.Controllers
 {
@@ -15,25 +15,25 @@ namespace EchoMe.Controllers
     {
         // GET: /WoGamUser/
         private EchoDBEntities woGameDb = new EchoDBEntities();
-        
+
         public string CreateUser(string username, string password)
         {
             if (!woGameDb.WoGamProfiles.Any(p => p.usr_name == username)) //if doesn't exist
             {
                 string csvFilePath = Server.MapPath("~/WoGam_CSV_Files/");
-                String[] tempString;                
+                String[] tempString;
 
                 //create pofile
                 WoGamProfile woGamProfile = new WoGamProfile
-                {                    
+                {
                     usr_name = username,
                     usr_pwd = password
                 };
 
                 woGameDb.WoGamProfiles.Add(woGamProfile);
-                woGameDb.SaveChanges();                
+                woGameDb.SaveChanges();
 
-                
+
                 //Add data
                 foreach (string fileName in Directory.GetFiles(csvFilePath))
                 {
@@ -70,12 +70,12 @@ namespace EchoMe.Controllers
                         woGameDb.WoGamCategories.Add(woGamCategoryEN);
                         woGameDb.SaveChanges();
 
-                        
-                        foreach (string s in System.IO.File.ReadAllLines(fileName,enc).Skip(1)) //skip the FirstLine
+
+                        foreach (string s in System.IO.File.ReadAllLines(fileName, enc).Skip(1)) //skip the FirstLine
                         {
                             //split
                             tempString = s.Split(';');
-                            
+
                             //Create Words
                             // [0] = french word / [1] = english word / [2] url word
                             WoGamWord woGamWordFR = new WoGamWord
@@ -98,34 +98,39 @@ namespace EchoMe.Controllers
                             woGameDb.WoGamWords.Add(woGamWordEN);
                             woGameDb.SaveChanges();
                         }//foreach
-                        
+
                     }//endif
 
                 }//end foreach
-                
+
                 return "Done";
             }
 
             return "error_3";
-           
+
         }
 
-        public string LoginUser(string username, string password)
+        public string LoginUser(string username, string password, string language)
         {
             if (woGameDb.WoGamProfiles.Any(p => p.usr_name == username && p.usr_pwd == password))
             {
-                return "Done";
+                if(woGameDb.WoGamProfiles.Any(p => p.usr_name == username && p.usr_pwd == password && p.usr_gameLangage == language))
+                {
+                    return "GoToHomepage";
+                }
+
+                return "GoToLanguageToPlay";
             }
             // user doesnt exist
-            return "Error_1";
+            return "Error";
         }
 
-        public string SetGameLanguage(string username, string password, string language)
+        public string SetGameLanguage(string username, string language)
         {
-            if (woGameDb.WoGamProfiles.Any(p => p.usr_name == username && p.usr_pwd == password))
+            if (woGameDb.WoGamProfiles.Any(p => p.usr_name == username))
             {
                 woGameDb.WoGamProfiles
-                    .First(p => p.usr_name == username && p.usr_pwd == password)
+                    .First(p => p.usr_name == username)
                     .usr_gameLangage = language;
                 woGameDb.SaveChanges();
                 return "Done";
@@ -134,31 +139,77 @@ namespace EchoMe.Controllers
             return "Error_2";
         }
 
-        public string GetGameLanguage(string username, string password, string language)
-        {
-            if (woGameDb.WoGamProfiles.Any(p => p.usr_name == username && p.usr_pwd == password))
-            {
-                return "Done";
-            }
-            // user doesnt exist
-            return "Error_3";
-        }
-
-
-        public List<string> GetCategories(string username, string langage)
+        public string GetCategories(string username, string language)
         {
             List<string> catList = new List<string>();
 
             if (woGameDb.WoGamProfiles.Any(p => p.usr_name == username))
             {
-                catList = woGameDb.WoGamCategories.Where(p => p.cat_usr == p.WoGamProfile.usr_id && p.cat_langage == langage).Select(p => p.cat_name).ToList();
-            }
+                catList = woGameDb.WoGamCategories.Where(p => p.cat_usr == p.WoGamProfile.usr_id && p.cat_langage == language).Select(p => p.cat_name).ToList();
+                var jsonString = JsonConvert.SerializeObject(catList);
+                Debug.WriteLine(jsonString);
+                catList = JsonConvert.DeserializeObject<List<string>>(jsonString); //catList == null => don't work
 
-             var jsonString= JsonConvert.SerializeObject(catList);      
-            Debug.WriteLine( jsonString);
-            catList = JsonConvert.DeserializeObject<List<string>>(jsonString); //catList == null => don't work
-            
-            return null;
+                return "Done";
+            }
+            return "Error";
+        }
+
+        public string GetWordsInCategory(string username, string language, string category)
+        {
+            List<string> wordList = new List<string>();
+            List<int> wordIncList = new List<int>();
+            Hashtable wordsInCat = new Hashtable();
+            int catID;
+
+            if (woGameDb.WoGamProfiles.Any(p => p.usr_name == username))
+            {
+                catID = woGameDb.WoGamCategories.Where(p => p.cat_usr == p.WoGamProfile.usr_id && p.cat_langage == language && p.cat_name == category ).Select(p => p.cat_id).First(); //First convert in int
+                //Debug.WriteLine(catID);
+                wordList = woGameDb.WoGamWords.Where(p => p.wd_cat == catID && p.WoGamCategory.cat_langage == language).Select(p => p.wd_value).ToList();
+                wordIncList = woGameDb.WoGamWords.Where(p => p.wd_cat == catID && p.WoGamCategory.cat_langage == language).Select(p => p.wd_nbtime).ToList();
+
+                for (int i = 0; i < wordList.Count; i++)
+                {
+                    wordsInCat.Add(wordList[i], wordIncList[i]);
+                }
+
+                var jsonString = JsonConvert.SerializeObject(wordsInCat);
+                //Debug.WriteLine(jsonString);
+                wordsInCat = JsonConvert.DeserializeObject<Hashtable>(jsonString);
+
+                return "Done";
+            }           
+
+            return "Error";
+        }
+
+        public string SendWordsDiscovered(string username, string language, string category, Hashtable wordsdiscovered)
+        {
+            int catID;
+            /*
+            wordsdiscovered = new Hashtable();
+            wordsdiscovered.Add("abricot", 1);
+            wordsdiscovered.Add("avocat", 2);
+            wordsdiscovered.Add("raisin", 3);
+            wordsdiscovered.Add("banane", 5);
+            */
+
+            if (woGameDb.WoGamProfiles.Any(p => p.usr_name == username))
+            {                
+                foreach (DictionaryEntry de in wordsdiscovered)
+                {
+                    catID = woGameDb.WoGamCategories.Where(p => p.cat_usr == p.WoGamProfile.usr_id && p.cat_langage == language && p.cat_name == category).Select(p => p.cat_id).First(); //First convert in int
+                    woGameDb.WoGamWords.First(p => p.wd_cat == catID && p.WoGamCategory.cat_langage == language && p.wd_value == (string)de.Key).wd_nbtime = (int)de.Value;
+                    
+                }
+
+               // /WoGamUser/SendWordsDiscovered?username=juju&language=Français&category=Fruits&wordsdiscovered=
+                woGameDb.SaveChanges();
+                return "Done";
+
+            }
+                return "Error";
         }
 
     }

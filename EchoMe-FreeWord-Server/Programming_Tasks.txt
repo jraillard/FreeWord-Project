@@ -1,0 +1,113 @@
+~ : mean task to do 
+x : mean task done 
+
+x First of all => comment all methods/properties/attributes 
+Must be done as often as possible 
+
+***********************************************************
+
+1- Main Game : 
+
+x Resolve the PlayedCard problem => after drag, mustn't be drop on his orginPlace but where there's place! 
+	=> could be improved (for now card return on his orginal Column, maybe can place where the user want) 
+	x still have some bugs ... for the last Words (wtf)	
+
+x For each PlacedCard to discover : must display a photo/definition
+x Add Bonus button : Word (show 1/3 of PlacedCard letter) & Replay (PlayedCard comes at their originPlace)
+~ Animations : when discover a PlacedWord => short animation to make the card disappear 
+	       when Discover Mysteryword => discover word, zoom to center, plan behind with photo/definition 
+x Replace replay button by "back button" (at the end)
+x Dimensions : adapt gameObjects size depending on the screen resolution
+~ Add options button which hide all the gamebackground! 
+
+***********************************************************
+
+2- Menu Category/Level Choice : 
+
+2 Scrollbar + 2 button (back & Play) + 2 GUIText (titleScene + titleCategory&Level)
+x First scrollbar for Category (which are button with texture on which is written the Category level) by default the first one is selected
+x Second scrollbar which display Words discover in this Category (show the words of the first category by default)
+x titleScene (easy)
+x titleCategory&Level => depending on the category button selected 
+
+***********************************************************
+
+3- LanguagetoLearn Scene : 
+
+x 2 Button Language + 2 ExpBar  + 1 button back
+x Onclic() => load CategoryScene_LanguageChoose
+~ Loading time => import all the information we need (category, word discovered etc..)
+
+***********************************************************
+
+4- Achievement Scene :
+
+x concept it first 
+x implemented 
+~ add image depending on the word
+***********************************************************
+
+5- Options Scene :
+
+x concept it first 
+ximplement 
+~sound management to end
+***********************************************************
+
+6- Tutorial Scene : 
+
+x concept it first (level 0 from each category => to discover the 5 first words)
+x finished
+***********************************************************
+
+7- MainMenu Scene
+
+x 2 buttons (3with tutorial if having enough time or made by S.)
+xPlay button => load scene 3-
+xAchievements button => load scene 4-
+
+***********************************************************
+
+8- LogIn Scene 
+
+x Concept it
+x implement
+~link to web
+***********************************************************
+
+9- DataBase&WebService 
+~ Finish the Database depending on all we need in 1-,2-,3- 
+~ Create the WebService
+~ Create the php/c# script which insert all the data in Database
+~ Replace in 1- the words choosen by request through the dataBase
+
+***********************************************************
+
+10- Textures 
+
+** MainGame **
+x PlayedCard (front)
+x PlacedCard (back) = MysteryCard
+x PlacedCard : => with letter (word Bonus)
+			=> without letter (default)
+			=> specific letter : " " , "'" , "-"
+x PlayGround  
+x Textures / definition for all words ! (damn ..)
+x Word & Replay button
+x Back button
+
+** Menu Category/Level choice ** 
+x Play button 
+x Category
+x ScrollBar ?
+
+** LanguageToLearn Scene ** 
+x Flags 
+
+** MainMenu Scene **
+~ Options button 
+~ Play , Achievement, tutorial button
+
+bonus : Character for the tutorial and everywhere in the App
+
+***********************************************************

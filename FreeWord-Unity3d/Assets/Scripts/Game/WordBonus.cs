@@ -57,7 +57,8 @@ public class WordBonus : MonoBehaviour
 
             foreach (GameObject obj in tempPlacedCards)
             {
-                if (obj.GetComponent<PlacingCard>().IsPlaceAvailable() == false)
+                //if no place or card is apostropha , space or dash
+                if (obj.GetComponent<PlacingCard>().IsPlaceAvailable() == false && obj.GetComponentInChildren<PlacedCard>().GetValue() != ' ' && obj.GetComponentInChildren<PlacedCard>().GetValue() != '\'' && obj.GetComponentInChildren<PlacedCard>().GetValue() != '-')
                 {
                     print("No card must be placed to use this bonus !");
                     return;

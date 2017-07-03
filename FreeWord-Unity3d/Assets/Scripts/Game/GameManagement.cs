@@ -369,10 +369,13 @@ public class GameManagement : MonoBehaviour
 
                 //Set the value of the Card 
                 placedCardSet[i].GetComponentInChildren<PlacedCard>().SetValue(letterList[j]);
+                print("******"+placedCardSet[i].GetComponentInChildren<PlacedCard>().GetValue()+"*****");
+                print("****" + letterList[j] + "*****");
 
                 //Set it placed
                 placedCardSet[i].GetComponentInChildren<PlacedCard>().SetWellPlaced(true);
-                
+                placedCardSet[i].GetComponent<PlacingCard>().SetPlaceAvailability(false);
+
 
                 //print(placedCardSet[i].GetComponentInChildren<PlacedCard>().GetValue());
 

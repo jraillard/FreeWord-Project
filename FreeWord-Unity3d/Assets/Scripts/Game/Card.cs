@@ -22,10 +22,13 @@ public abstract class Card : MonoBehaviour {
 
     public void SetValue(char c)
     {
+        /*
         if(char.IsLetter(c)) // https://msdn.microsoft.com/fr-fr/library/yyxz6h5w(v=vs.110).aspx => Notes 
         {
             value = c;
         }
+        */
+        value = c;
     }
 
     public bool IsVisible()
