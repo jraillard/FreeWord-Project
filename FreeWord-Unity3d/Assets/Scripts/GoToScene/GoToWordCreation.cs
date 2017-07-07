@@ -10,7 +10,12 @@ public class GoToWordCreation : MonoBehaviour {
     public float alpha = 0.0f; // Opacity
     public bool isFadeIn = false; // Fade In or Out
     private bool effect = true;
+    private Data data;
 
+    private void Start()
+    {
+        data = GameObject.Find("DataObject").GetComponent<Data>();
+    }
     // Start the effect
     public void Load()
     {
@@ -37,8 +42,16 @@ public class GoToWordCreation : MonoBehaviour {
         
         // Fade In
         if(alpha >= 1 && !isFadeIn && effect==true)
-        {
-            SceneManager.LoadSceneAsync("WordCreation");
+        {   
+            if(data.LanguageToPlay == "English")
+            {
+                SceneManager.LoadSceneAsync("WordCreation_EN");
+            }
+            else
+            {
+                SceneManager.LoadSceneAsync("WordCreation_FR");
+            }
+            
             DontDestroyOnLoad(gameObject);
             effect = false;
         // Fade Out

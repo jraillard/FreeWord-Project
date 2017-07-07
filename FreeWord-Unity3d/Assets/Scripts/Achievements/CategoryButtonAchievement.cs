@@ -40,7 +40,7 @@ public class CategoryButtonAchievement : MonoBehaviour
         Color c = wordImage.color;
         dropDown.ClearOptions();
 
-        data.GetWordListFromCategory(currentCatName, wordList, nbTimeWordDiscovered);
+        //data.GetWordListFromCategory(currentCatName, wordList, nbTimeWordDiscovered);
 
         if(wordList[0]=="No Words in this category")
         {

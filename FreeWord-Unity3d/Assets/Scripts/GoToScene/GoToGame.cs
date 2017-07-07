@@ -29,8 +29,9 @@ public class GoToGame : MonoBehaviour {
     public void Load()
     {
         labelText = obj.GetComponent<Text>().text;
-
-        if (labelText != "" && labelText != "\r\n(0) No Words in this category\r\n") //a category is selected (first cateogry character = capital letter)
+        //print(GameObject.Find("DataObject").GetComponent<Data>().GetWordListFromGame().Count);
+        
+        if (labelText != "" && labelText != "\r\nNo Words in this category\r\n") //a category is selected (first cateogry character = capital letter)
         {
             GameObject init = new GameObject();
             init.name = "GoToGame";
@@ -38,6 +39,7 @@ public class GoToGame : MonoBehaviour {
             GoToGame scr = init.GetComponent<GoToGame>();
             scr.start = true;
         } 
+        
     }
 
 	void OnGUI () {

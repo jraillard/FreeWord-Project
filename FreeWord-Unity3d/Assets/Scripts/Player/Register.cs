@@ -8,6 +8,8 @@ using System.IO;
 
 public class Register : MonoBehaviour {
 
+    /********************************* Variables *********************************/
+
     public GameObject username;
     public GameObject password;
     public GameObject confPassword;
@@ -17,9 +19,12 @@ public class Register : MonoBehaviour {
     private string Password;
     private string ConfPassword;
     private string form;
+    private bool US = false; //user used in DB
 
-	// Use this for initialization
-	void Start () {
+    /********************************* Main Events *********************************/
+
+    // Use this for initialization
+    void Start () {
         // Check the directory ID
         if (Directory.Exists(Application.persistentDataPath + "/ID")) { return; }
         print(Application.persistentDataPath);
@@ -29,18 +34,54 @@ public class Register : MonoBehaviour {
 
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+        Username = username.GetComponent<InputField>().text;
+        Password = password.GetComponent<InputField>().text;
+        ConfPassword = confPassword.GetComponent<InputField>().text;
+        // Go to the next Inputfield when press Tab
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (username.GetComponent<InputField>().isFocused) { password.GetComponent<InputField>().Select(); }
+            if (password.GetComponent<InputField>().isFocused) { confPassword.GetComponent<InputField>().Select(); }
+        }
+        // Press RegisterButton when all the Inputfield are completed
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            if (Username != "" && Password != "" && ConfPassword != "") { RegisterButton(); }
+
+        }
+    }
+
+    /********************************* Methods *********************************/
+
     public void RegisterButton()
     {
+        
         bool UN = false;
         bool PW = false;
         bool CPW = false;
+        string pattern = @"^[a-zA-Z0-9]{1,20}$";
+        
         
         // Check the Username
-        if (Username != "") {
-            if (!File.Exists(Application.persistentDataPath+ "/ID/"+Username+".txt")){
-                UN = true;
+        if (Username != "" )
+        {
+            Match m = Regex.Match(Username, pattern);
+            if (m.Success)
+            {
+                
+                if (!File.Exists(Application.persistentDataPath + "/ID/" + Username + ".txt"))
+                {
+                    UN = true;
+                }
+                else { informations.GetComponent<Text>().text = "Username already used"; }
+            }else 
+            {
+                informations.GetComponent<Text>().text = "Username must be alphanumeric and less than 20 characters";
             }
-            else{ informations.GetComponent<Text>().text="Username already used";}
+            
         }
         else{ informations.GetComponent<Text>().text = "Username field empty";}
 
@@ -62,8 +103,12 @@ public class Register : MonoBehaviour {
         }
         else { informations.GetComponent<Text>().text="Confirm Password field is empty"; }
 
+        //try to create user on DB
+        StartCoroutine(RegisterOnDB());
+        if(US==false) { informations.GetComponent<Text>().text = "Username already used"; }
+
         // Encrypting the password
-        if (UN==true && PW==true && CPW == true){
+        if (UN==true && PW==true && CPW == true && US == true){
             bool Clear = true;
             int i = 1;
             foreach(char c in Password){
@@ -84,25 +129,25 @@ public class Register : MonoBehaviour {
             informations.GetComponent<Text>().text = "Registration Complete";
             //fill the login field
             GameObject.Find("Login").GetComponent<Login>().FillLoginAfterRegister(Username);
-        }
-    }
-	
-	// Update is called once per frame
-	void Update () {
-        Username = username.GetComponent<InputField>().text;
-        Password = password.GetComponent<InputField>().text;
-        ConfPassword = confPassword.GetComponent<InputField>().text;
-        // Go to the next Inputfield when press Tab
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            if (username.GetComponent<InputField>().isFocused) { password.GetComponent<InputField>().Select(); }
-            if (password.GetComponent<InputField>().isFocused) { confPassword.GetComponent<InputField>().Select(); }
-        }
-        // Press RegisterButton when all the Inputfield are completed
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            if (Username != "" && Password !="" && ConfPassword !="") { RegisterButton(); }
 
         }
     }
+
+    public IEnumerator RegisterOnDB()
+    {
+        WWWForm webForm;
+        WWW w;
+
+        webForm = new WWWForm();
+        webForm.AddField("username", Username);
+        webForm.AddField("password", Password);
+        w = new WWW("http://localhost:60240/WoGamUser/CreateUser", webForm);
+        yield return w;
+
+        if(w.text == "Done") { US = true; }
+    }
+	
+	
+
+
 }

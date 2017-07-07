@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Newtonsoft.Json;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,6 +18,9 @@ public class GoToNextLevel : MonoBehaviour
     private bool effect = true;
     private GameObject obj;
     private string labelText;
+    private Data data;
+    private WWWForm form;
+    private WWW w;
 
     /********************************* Methods ***********************************/
 
@@ -27,7 +31,39 @@ public class GoToNextLevel : MonoBehaviour
         init.name = "GoToGame";
         init.AddComponent<GoToGame>();
         GoToGame scr = init.GetComponent<GoToGame>();
+        StartCoroutine(RefreshWordListFromCategory());
         scr.start = true;
+    }
+
+    public IEnumerator RefreshWordListFromCategory()
+    {
+        data = GameObject.Find("DataObject").GetComponent<Data>();
+        //Load the new list with updated nbtime values
+
+        print(data.Username);
+        form = new WWWForm();
+        form.AddField("username", data.Username);
+        form.AddField("language", data.LanguageToLearn);
+        form.AddField("category", data.CurrentCatName);
+        w = new WWW("http://localhost:60240/WoGamUser/GetWordsInCategory", form);
+        yield return w;
+
+        Dictionary<string, int> tempD = new Dictionary<string, int>();
+        Dictionary<string, int> words = new Dictionary<string, int>();
+        List<string> urls = new List<string>();
+        string[] tempS;
+
+        tempD = JsonConvert.DeserializeObject<Dictionary<string, int>>(w.text);
+
+        foreach (KeyValuePair<string, int> k in tempD)
+        {
+            tempS = k.Key.Split('|');
+            words.Add(tempS[0], k.Value);
+            urls.Add(tempS[1]);
+        }
+
+        //send lists to DataObject
+        data.SetWordListFromCategory(words, urls);
     }
 
     void OnGUI()

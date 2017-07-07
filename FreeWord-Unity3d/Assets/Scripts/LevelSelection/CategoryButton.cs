@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Newtonsoft.Json;
+using System.Linq;
 
 public class CategoryButton : MonoBehaviour
 {
@@ -15,8 +17,10 @@ public class CategoryButton : MonoBehaviour
     private GameObject wordLevelListLabel;
     private string currentCatName;
     private Data data;
-    private List<string> wordList;
-    private List<int> nbTimeWordDiscovered;
+    private Dictionary<string, int> wordList;
+    private List<string> pngUrlList;
+    private WWWForm form;
+    private WWW w;
 
 
     /********************************* Loops *********************************/
@@ -34,24 +38,99 @@ public class CategoryButton : MonoBehaviour
 
     /********************************* Methods *********************************/
 
-    public void SetCategorySelected_1()
+    public void SetCategorySelected()
     {
-        wordList = new List<string>();
-        nbTimeWordDiscovered = new List<int>();
-        wordLevelListLabel.GetComponent<Text>().text = "\r\n";
+       StartCoroutine(SetAllLabels());
+    }
 
-        catSelectedLabel1.GetComponent<Text>().text = currentCatName + " : Level 0";
-        data.GetWordListFromCategory(currentCatName, wordList, nbTimeWordDiscovered);
-       
-        for(int i=0; i<wordList.Count; i++)
+    public IEnumerator SetAllLabels()
+    {
+        int currentLevel;
+        int nbWordDiscovered;
+        wordLevelListLabel.GetComponent<Text>().text = "\r\n";
+        List<string> newWords = new List<string>();
+
+        Dictionary<string, int> tempWordList = new Dictionary<string, int>();
+        wordList = new Dictionary<string, int>();
+        pngUrlList = new List<string>();
+
+        string[] tempString;
+
+        //WB  request 
+        form = new WWWForm();
+        form.AddField("username", data.Username);
+        form.AddField("language", data.LanguageToLearn);
+        form.AddField("category", currentCatName);
+        w = new WWW("http://localhost:60240/WoGamUser/GetWordsInCategory", form);
+        yield return w;
+
+        tempWordList = JsonConvert.DeserializeObject<Dictionary<string, int>>(w.text);
+
+        //implement the list
+        foreach (KeyValuePair<string, int> k in tempWordList)
         {
-            wordLevelListLabel.GetComponent<Text>().text += "(" + nbTimeWordDiscovered[i] + ") " + wordList[i] + "\r\n";
+            tempString = k.Key.Split('|');
+            wordList.Add(tempString[0], k.Value);
+            pngUrlList.Add(tempString[1]);
         }
 
+        //send lists to DataObject
+        data.SetWordListFromCategory(wordList, pngUrlList);
+        data.CurrentCatName = currentCatName;
+
+
+        //Set list label
+        if (wordList.Count == 0)
+        {
+            wordLevelListLabel.GetComponent<Text>().text = "No Words in this category\r\n";
+        }
+        else
+        {
+            //first write the words discovered ordered by there value
+           // wordList.OrderBy(x => x.Value);
+
+            foreach (KeyValuePair<string, int> k in wordList.OrderByDescending(key => key.Value))
+            {
+                if(k.Value > 1)
+                {
+                    wordLevelListLabel.GetComponent<Text>().text +=  (k.Value - 1) + " | " + k.Key + "\r\n";
+                }else if(k.Value == 1)
+                {
+                    newWords.Add(k.Key);
+                    
+                }                                   
+            }
+
+            //then write the new one
+            foreach(string s in newWords)
+            {
+                wordLevelListLabel.GetComponent<Text>().text += "New | " + s + "\r\n";
+            }
+        }
+        
+        //Set selected label
+        nbWordDiscovered = wordList.Where(d => d.Value > 0).Count();
+
+        foreach (KeyValuePair<string, int> k in wordList)
+        {
+            //print(k.Key + "|" + k.Value);
+        }
+
+        if (nbWordDiscovered == 0)
+        {
+            currentLevel = 0;
+            data.CurrentLevel = 0;
+        }
+        else
+        {
+            //mean you already make one time the level0 where you discover 5word + 1 mystery
+            currentLevel = nbWordDiscovered - 5;
+            data.CurrentLevel = currentLevel;
+        }
+
+        catSelectedLabel1.GetComponent<Text>().text = currentCatName + " : Level " + currentLevel;
+        catSelectedLabel2.GetComponent<Text>().text = this.transform.Find("Text_Down").GetComponent<Text>().text;
+        
     }
 
-    public void SetCategorySelected_2()
-    {
-        catSelectedLabel2.GetComponent<Text>().text = this.transform.Find("Text_Down").GetComponent<Text>().text;
-    }
 }

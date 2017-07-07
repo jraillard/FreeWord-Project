@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class GameManagement : MonoBehaviour
@@ -18,7 +19,9 @@ public class GameManagement : MonoBehaviour
     private bool launchLevelDone = false;
     private int cpt; //counter for update loop
     private Data data;
-    private List<string> listWord;
+    private ImageDownLoader image;
+    private Dictionary<string, int> listWord = new Dictionary<string, int>();
+    private List<string> wordUrlList = new List<string> ();
     private List<char> splitWord;
 
     /********************************* Loops *********************************/
@@ -27,26 +30,122 @@ public class GameManagement : MonoBehaviour
     {
         //Get the Word List 
         data = GameObject.Find("DataObject").GetComponent<Data>();
-        listWord = data.GetWordListFromGame();
+        image = GameObject.Find("Image").GetComponent<ImageDownLoader>();
 
-        //Instantiate all the Card Sets
+        //InitWordList();
 
-        data.MysteryWord = listWord[0];
-        //splitWord = MySplitter(listWord[0]);
+        Dictionary<string, int> tempListWord = data.GetWordListFromCategory();
+        List<string> tempUrlList = data.GetWordUrlListFromCategory();
 
-        listWord.RemoveAt(0);
-        //InitMysteryCardSet(splitWord);
-        
-
-        foreach (string s in listWord)
+        //Separate possible mysteryword and word playable (if not level0)
+        if (data.CurrentLevel == 0)
         {
-            splitWord = MySplitter(s);
+            print("coucou");
+            int i = 0;
+            //implement wordlist
+            foreach (KeyValuePair<string, int> k in tempListWord)
+            {
+                if (i == 6) { break; }
+                listWord.Add(k.Key, k.Value);
+                i++;
+            }
+
+            print(listWord.Count);
+            //implement urlwordlist
+            for (int k = 0; k < 6; k++)
+            {
+                wordUrlList.Add(tempUrlList[k]);
+            }
+            //setmysteryword
+            data.MysteryWord = listWord.Keys.First();
+            data.MysteryWordUrl = wordUrlList[0];
+            listWord.Remove(data.MysteryWord);
+            wordUrlList.RemoveAt(0);
+        }
+        else
+        {
+            Dictionary<string, int> playableWordList = new Dictionary<string, int>();
+            List<string> playableWordUrlList = new List<string>();
+
+            bool mysteryWordFind = false;
+
+            //print(tempListWord["abricot"]);
+            //print(tempListWord[tempListWord.Keys.First()] + " | " + tempListWord.Keys.First());
+
+            int idx=0;
+            foreach (KeyValuePair<string, int> k in tempListWord)
+            {
+                if (k.Value == 0 && mysteryWordFind == false) //just need one mysteryword
+                {
+                    //Set mysteryWord
+
+                    //print(k.Key);                    
+                    //print(tempUrlList[tempListWord[k.Key]]);
+                    //mysteryWordList.Add(k.Key, k.Value);
+                    //idx = tempListWord[k.Key];
+                    //wordUrlList.Add(tempUrlList[idx]);
+                    data.MysteryWord = k.Key;
+                    data.MysteryWordUrl = tempUrlList[idx];
+
+                    mysteryWordFind = true;
+                }
+                else if(k.Value > 0)
+                {
+                    playableWordList.Add(k.Key, k.Value);
+                    playableWordUrlList.Add(tempUrlList[idx]);
+                }
+                idx++; //no indexor in dictionary
+            }
+            
+
+            //Add five random playword to the list
+            int nb = 0;
+            int i;
+            System.Random r = new System.Random();
+            do
+            {
+                i = 0;
+                string key = "";
+                int j = r.Next(0, playableWordList.Count);
+
+                foreach (KeyValuePair<string, int> k in playableWordList)
+                {
+                    if (i == j)
+                    {
+                        listWord.Add(k.Key, k.Value);
+                        wordUrlList.Add(playableWordUrlList[j]);
+                        key = k.Key;
+                        break;
+                    }
+                    i++;
+                }
+                //print(playableWordList.ContainsKey(key));
+                playableWordList.Remove(key);
+                playableWordUrlList.RemoveAt(j);
+
+                nb++;
+
+            } while (nb < 5);
+
+            
+        }
+
+        //Send playedwordlist to Data
+        data.SetWordListPlayed(listWord);
+        print(listWord.Count);
+
+        //Init the CardSet
+        //print(wordUrlList.Count());
+        foreach (KeyValuePair<string, int> k in listWord)
+        {
+            splitWord = MySplitter(k.Key);
             InitPlayedCardSet(splitWord);
         }
 
-        splitWord = MySplitter(listWord[listWord.Count - 1]);
-        InitPlacedCardSet(splitWord);
-        InitWordBonusButton();       
+        splitWord = MySplitter(listWord.Keys.Last());
+        InitPlacedCardSet(splitWord, wordUrlList.Last());
+        InitWordBonusButton();
+        StartCoroutine(image.LoadImage(listWord.Keys.Last(), wordUrlList.Last(), data.CurrentCatName));
 
     }
 
@@ -67,6 +166,8 @@ public class GameManagement : MonoBehaviour
 
         if (cpt == placedCardSet.Count) //if it is 
         {*/
+
+        
             if (VerifPlacedWord() == true && !launchLevelDone)
             {
                 RemovePlacedWord();
@@ -76,19 +177,117 @@ public class GameManagement : MonoBehaviour
                 }
                 else
                 {
-                    data.AddWordDiscover(listWord[listWord.Count - 1]);
-                    listWord.RemoveAt(listWord.Count - 1);
-                    splitWord = MySplitter(listWord[listWord.Count - 1]);
-                    InitPlacedCardSet(splitWord);
+                    listWord.Remove(listWord.Keys.Last());
+                    wordUrlList.Remove(wordUrlList.Last());
+                    StartCoroutine(image.LoadImage(listWord.Keys.Last(), wordUrlList.Last(), data.CurrentCatName));
+                    splitWord = MySplitter(listWord.Keys.Last());
+                    InitPlacedCardSet(splitWord,wordUrlList.Last());
+                    
                     InitWordBonusButton();
                 }
             }
+            
 //        }
 
 //        cpt = 0;
     }    
 
     /********************************* Methods *********************************/
+
+    public void InitWordList()
+    {
+        Dictionary<string, int> tempListWord = data.GetWordListFromCategory();
+        List<string> tempUrlList = data.GetWordUrlListFromCategory();
+
+        //Separate possible mysteryword and word playable (if not level0)
+        if (data.CurrentLevel == 0)
+        {
+            print("coucou");
+            int i = 0;
+            //implement wordlist
+            foreach (KeyValuePair<string, int> k in tempListWord)
+            {
+                if (i == 6) { break; }
+                listWord.Add(k.Key, k.Value);
+                i++;
+            }
+
+            print(listWord.Count);
+            //implement urlwordlist
+            for (int k = 0; k < 6; k++)
+            {
+                wordUrlList.Add(tempUrlList[k]);
+            }
+            //setmysteryword
+            data.MysteryWord = listWord.Keys.First();
+            listWord.Remove(data.MysteryWord);
+
+
+        }
+        else
+        {
+            Dictionary<string, int> mysteryWordList = new Dictionary<string, int>();
+            Dictionary<string, int> playableWordList = new Dictionary<string, int>();
+            List<string> playableWordUrlList = new List<string>();
+
+            bool mysteryWordFind = false;
+
+            //print(tempListWord["abricot"]);
+            //print(tempListWord[tempListWord.Keys.First()] + " | " + tempListWord.Keys.First());
+
+            foreach (KeyValuePair<string, int> k in tempListWord)
+            {
+                if (k.Value == 0 && mysteryWordFind == false) //just need one 
+                {
+                    print(k.Key);
+                    print(tempUrlList[tempListWord[k.Key] - 1]);
+                    mysteryWordList.Add(k.Key, k.Value);
+                    wordUrlList.Add(tempUrlList[tempListWord[k.Key]]);
+                    mysteryWordFind = true;
+                }
+                else
+                {
+                    playableWordList.Add(k.Key, k.Value);
+                    playableWordUrlList.Add(tempUrlList[tempListWord[k.Key]]);
+                }
+            }
+            //Add five random playword to the list
+            int nb = 0;
+            int i;
+            System.Random r = new System.Random();
+            do
+            {
+                i = 0;
+                string key = "";
+                int j = r.Next(0, playableWordList.Count);
+
+                foreach (KeyValuePair<string, int> k in playableWordList)
+                {
+                    if (i == j)
+                    {
+                        listWord.Add(k.Key, k.Value);
+                        wordUrlList.Add(playableWordUrlList[j]);
+                        key = k.Key;
+                        break;
+                    }
+                    i++;
+                }
+                //print(playableWordList.ContainsKey(key));
+                playableWordList.Remove(key);
+                playableWordUrlList.RemoveAt(j);
+
+                nb++;
+
+            } while (nb < 5);
+
+            //Set mysteryWord
+            data.MysteryWord = mysteryWordList.Keys.First();
+            //print(data.MysteryWord);
+            //mysterywordurl is in wordurlList[0]
+        }
+
+    }
+
 
     //Split a word into a list of char 
     private List<char> MySplitter(string word)
@@ -328,7 +527,7 @@ public class GameManagement : MonoBehaviour
     }
 
     //Instantiate all the PlacedCard to discover
-    private void InitPlacedCardSet(List<char> letterList)
+    private void InitPlacedCardSet(List<char> letterList, string url)
     {
         float posX = 1.55f, posY = -0.73f, posZ = 2f;
         int i = 0;
@@ -369,8 +568,8 @@ public class GameManagement : MonoBehaviour
 
                 //Set the value of the Card 
                 placedCardSet[i].GetComponentInChildren<PlacedCard>().SetValue(letterList[j]);
-                print("******"+placedCardSet[i].GetComponentInChildren<PlacedCard>().GetValue()+"*****");
-                print("****" + letterList[j] + "*****");
+                /*print("******"+placedCardSet[i].GetComponentInChildren<PlacedCard>().GetValue()+"*****");
+                print("****" + letterList[j] + "*****");*/
 
                 //Set it placed
                 placedCardSet[i].GetComponentInChildren<PlacedCard>().SetWellPlaced(true);
@@ -417,8 +616,7 @@ public class GameManagement : MonoBehaviour
 
                 i++;
                 posX -= 0.211f;
-            }
-                
+            }                
         }
     }
 
@@ -497,7 +695,6 @@ public class GameManagement : MonoBehaviour
     {
         if(!launchLevelDone)
         {
-            data.AddWordDiscover(listWord[0]); // add the last word 
             print("coucou");
             SceneManager.LoadSceneAsync("LevelDone", LoadSceneMode.Single);
             launchLevelDone = true;

@@ -14,6 +14,7 @@ public class GoToLevelSelectionbyPause : MonoBehaviour {
     // Start the effect
     public void Load()
     {
+        GameObject.Find("DataObject").GetComponent<Data>().FinishLevel();
         GameObject init = new GameObject();
         init.name = "GoToLevelSelection";
         init.AddComponent<GoToLevelSelection>();

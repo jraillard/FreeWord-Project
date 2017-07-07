@@ -10,16 +10,33 @@ public class Drag_Drop : MonoBehaviour
 {
 
     public GameObject next;
+    private Data data;
+    private string Username;
+    private string[] Lines;
+    private string[] Line;
 
     void Start()
     {
-        StartCoroutine(Time());
+        data = GameObject.Find("DataObject").GetComponent<Data>();
+        if (data.LanguageToPlay == "English")
+        {
+            StartCoroutine(CL_English());
+        }
+        else
+        {
+            StartCoroutine(CL_Français());
+        }
     }
 
-    IEnumerator Time()
+    IEnumerator CL_English()
     {
         yield return new WaitForSeconds(4);
         next.GetComponent<Text>().text = "Next";
+    }
+    IEnumerator CL_Français()
+    {
+        yield return new WaitForSeconds(4);
+        next.GetComponent<Text>().text = "Suivant";
     }
 }
 

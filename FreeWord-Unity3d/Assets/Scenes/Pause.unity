@@ -1074,6 +1074,7 @@ GameObject:
   - component: {fileID: 687378625}
   - component: {fileID: 687378624}
   - component: {fileID: 687378626}
+  - component: {fileID: 687378627}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1220,6 +1221,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Smute: 0
+--- !u!114 &687378627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 687378616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afd58f5f7fd177644b179157743b1402, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelSelection: {fileID: 1906363106}
+  resume: {fileID: 1484380372}
+  infos: {fileID: 633607818}
+  music: {fileID: 2101608686}
+  sound: {fileID: 1296545621}
 --- !u!1 &1042443586
 GameObject:
   m_ObjectHideFlags: 0
@@ -1958,7 +1975,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'The game is in pause :'
+  m_Text: Pause
 --- !u!222 &1755175716
 CanvasRenderer:
   m_ObjectHideFlags: 0

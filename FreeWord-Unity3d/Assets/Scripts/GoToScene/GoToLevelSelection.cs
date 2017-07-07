@@ -5,15 +5,45 @@ using UnityEngine.SceneManagement;
 
 public class GoToLevelSelection : MonoBehaviour {
 
+    /********************************* Variables *********************************/
+
     public bool start = false; // Variable for the beginning of the effect
     public float fadeDamp = 3f; // Duration of the effect
     public float alpha = 0.0f; // Opacity
     public bool isFadeIn = false; // Fade In or Out
     private bool effect = true;
+    private Data data;
 
-    // Start the effect
-    public void Load()
+    /********************************* Main Events *******************************/
+
+    private void Start()
     {
+        data = GameObject.Find("DataObject").GetComponent<Data>();
+    }
+    // Start the effect
+
+    public void LoadFromGame()
+    {
+        GameObject init = new GameObject();
+        init.name = "GoToLevelSelection";
+        init.AddComponent<GoToLevelSelection>();
+        GoToLevelSelection scr = init.GetComponent<GoToLevelSelection>();
+        scr.start = true;
+    }
+
+    public void LoadEN()
+    {
+        data.LanguageToLearn = "English";
+        GameObject init = new GameObject();
+        init.name = "GoToLevelSelection";
+        init.AddComponent<GoToLevelSelection>();
+        GoToLevelSelection scr = init.GetComponent<GoToLevelSelection>();
+        scr.start = true;
+    }
+
+    public void LoadFR()
+    {
+        data.LanguageToLearn = "Français";
         GameObject init = new GameObject();
         init.name = "GoToLevelSelection";
         init.AddComponent<GoToLevelSelection>();

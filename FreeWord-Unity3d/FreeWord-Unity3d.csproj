@@ -91,10 +91,26 @@
     <Reference Include="Facebook.Unity.Settings">
       <HintPath>Library\FacebookSDK\Facebook.Unity.Settings.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Assets\UnityPackages\JsonNet\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Achievements\CategoryButtonAchievement.cs" />
     <Compile Include="Assets\Scripts\Achievements\ChoiceCategoryManagementAchievement.cs" />
+    <Compile Include="Assets\Scripts\Change_Language\CL_Achievements.cs" />
+    <Compile Include="Assets\Scripts\Change_Language\CL_BonusExplainations.cs" />
+    <Compile Include="Assets\Scripts\Change_Language\CL_DDexplainations.cs" />
+    <Compile Include="Assets\Scripts\Change_Language\CL_DevelopersInformations.cs" />
+    <Compile Include="Assets\Scripts\Change_Language\CL_EasyLevel.cs" />
+    <Compile Include="Assets\Scripts\Change_Language\CL_Exit.cs" />
+    <Compile Include="Assets\Scripts\Change_Language\CL_Game.cs" />
+    <Compile Include="Assets\Scripts\Change_Language\CL_Homepage.cs" />
+    <Compile Include="Assets\Scripts\Change_Language\CL_Internet.cs" />
+    <Compile Include="Assets\Scripts\Change_Language\CL_LanguageToLearn.cs" />
+    <Compile Include="Assets\Scripts\Change_Language\CL_LevelSelection.cs" />
+    <Compile Include="Assets\Scripts\Change_Language\CL_Options.cs" />
+    <Compile Include="Assets\Scripts\Change_Language\CL_Pause.cs" />
     <Compile Include="Assets\Scripts\Data.cs" />
     <Compile Include="Assets\Scripts\Game\BackToLevelSelection.cs" />
     <Compile Include="Assets\Scripts\Game\CameraToDeviceResolution.cs" />
@@ -132,6 +148,8 @@
     <Compile Include="Assets\Scripts\GoToScene\Tempo.cs" />
     <Compile Include="Assets\Scripts\LevelSelection\CategoryButton.cs" />
     <Compile Include="Assets\Scripts\LevelSelection\ChoiceCategoryManagement.cs" />
+    <Compile Include="Assets\Scripts\Loading\Internet_Android.cs" />
+    <Compile Include="Assets\Scripts\Loading\Internet_Reachability.cs" />
     <Compile Include="Assets\Scripts\Player\Login.cs" />
     <Compile Include="Assets\Scripts\Player\LtP_Choice.cs" />
     <Compile Include="Assets\Scripts\Player\Register.cs" />
@@ -158,6 +176,8 @@
     <Compile Include="Assets\Scripts\Tuto\GameTuto\ReplayBonusTuto.cs" />
     <Compile Include="Assets\Scripts\Tuto\GameTuto\WordBonusTuto.cs" />
     <Compile Include="Assets\Scripts\Tuto\Word_Creation.cs" />
+    <Compile Include="Assets\Scripts\Tuto\Word_Creation_FR.cs" />
+    <Compile Include="Assets\UnityPackages\JsonNetSample\JsonNetSample.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

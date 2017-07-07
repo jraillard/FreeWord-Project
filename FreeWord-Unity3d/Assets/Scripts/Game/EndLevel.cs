@@ -5,6 +5,8 @@ using System.Text.RegularExpressions;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using System.Linq;
+using Newtonsoft.Json;
 
 public class EndLevel : MonoBehaviour {
 
@@ -27,18 +29,21 @@ public class EndLevel : MonoBehaviour {
         yield return new WaitForSeconds(5);
         congrats.GetComponent<Text>().text = "Congratulations !";
         newword.GetComponent<Text>().text = "You unlock the new word:";
-        word.GetComponent<Text>().text += data.MysteryWord;
-        /*test
-          word.GetComponent<Text>().text += "\r\n"+data.MysteryWord + "\r\n";
-        
-        foreach(string s in data.wordsDiscoveredDuringGame)
-        {
-            word.GetComponent<Text>().text += s + "\r\n";
-        }
-        */
+        word.GetComponent<Text>().text += data.MysteryWord;        
         def.GetComponent<Text>().text = "Not defined";
         back.GetComponent<Text>().text = "Back to category";
         next.GetComponent<Text>().text = "Next level";
+        StartCoroutine(GameObject.Find("Image").GetComponent<ImageDownLoader>().LoadImage(data.MysteryWord, data.MysteryWordUrl, data.CurrentCatName));
+
+        //Send list to WB 
+        WWWForm form = new WWWForm();
+        form.AddField("username", data.Username);
+        form.AddField("language", data.LanguageToLearn);
+        form.AddField("category", data.CurrentCatName);        
+        form.AddField("wordsdiscovered",  JsonConvert.SerializeObject(data.GetWordListPlayed()));
+        WWW w = new WWW("http://localhost:60240/WoGamUser/SendWordsDiscovered", form);
+        yield return w;
+
         data.FinishLevel();
     }
 }
