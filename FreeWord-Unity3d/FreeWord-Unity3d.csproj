@@ -98,6 +98,8 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Achievements\CategoryButtonAchievement.cs" />
     <Compile Include="Assets\Scripts\Achievements\ChoiceCategoryManagementAchievement.cs" />
+    <Compile Include="Assets\Scripts\Achievements\ImageDownLoaderAchievement.cs" />
+    <Compile Include="Assets\Scripts\Achievements\LngButton.cs" />
     <Compile Include="Assets\Scripts\Change_Language\CL_Achievements.cs" />
     <Compile Include="Assets\Scripts\Change_Language\CL_BonusExplainations.cs" />
     <Compile Include="Assets\Scripts\Change_Language\CL_DDexplainations.cs" />

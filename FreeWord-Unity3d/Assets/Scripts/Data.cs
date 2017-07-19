@@ -22,6 +22,7 @@ public class Data : MonoBehaviour {
     private string currentLngToPlay = "";
     private string currentUsername = "";
     private string currentLngToLearn = "";
+    private string currentLngAchievement = "";
     private int currentLevel;
     private bool verifExit = false;
 
@@ -77,6 +78,18 @@ public class Data : MonoBehaviour {
     }
 
     /********************************* Methods ***********************************/
+
+    public string LanguageForAchievement
+    {
+        get { return currentLngAchievement; }
+        set
+        {
+            if(value == "English" || value == "Français")
+            {
+                currentLngAchievement = value;
+            }
+        }
+    }
 
     public void SetLanguageToPlayAndUsrName()
     {
@@ -213,6 +226,7 @@ public class Data : MonoBehaviour {
     //receive the words usable for the level
     public Dictionary<string, int> GetWordListFromCategory()
     {
+        /*don't need anymore
         if (!playAgainInSameCat)
         {
             return wordLevelList;
@@ -223,7 +237,8 @@ public class Data : MonoBehaviour {
             //StartCoroutine(GetWordListFromCategory());
             return wordLevelList;
         }
-        
+        */
+        return wordLevelList;
     }
 
     //receive the words usable for the level

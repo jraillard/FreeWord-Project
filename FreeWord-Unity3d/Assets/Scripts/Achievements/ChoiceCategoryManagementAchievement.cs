@@ -47,21 +47,24 @@ public class ChoiceCategoryManagementAchievement : MonoBehaviour
         form = new WWWForm();
         //set opositelanguage to languageToLearn
         form.AddField("username", data.Username);
-        if(data.LanguageToPlay == "English")
+
+        if (data.LanguageToPlay == "English")
         {
-            data.LanguageToLearn = "Français";
+            data.LanguageForAchievement = "Français";
         }
         else
         {
-            data.LanguageToLearn = "English";
+            data.LanguageForAchievement = "English";
         }
-        form.AddField("language", data.LanguageToLearn);
+
+        //print(data.LanguageForAchievement);
+        form.AddField("language", data.LanguageForAchievement);
 
         //print(data.Username + "|" + data.LanguageToPlay);
 
         w = new WWW("http://localhost:60240/WoGamUser/GetCategories", form);
         yield return w;
-        print(w.text);
+        //print(w.text);
 
         tempCatList = JsonConvert.DeserializeObject<Dictionary<string, string>>(w.text);
 
@@ -84,7 +87,7 @@ public class ChoiceCategoryManagementAchievement : MonoBehaviour
         {
             Texture2D texture;
             //Load prefab
-            tempButton = Resources.Load("CategoryButton", typeof(Button)) as Button;
+            tempButton = Resources.Load("CategoryButtonAchievement", typeof(Button)) as Button;
 
             //Load Sprite
             if (!Directory.Exists(Application.persistentDataPath + "/CategoryTexture"))
@@ -159,5 +162,10 @@ public class ChoiceCategoryManagementAchievement : MonoBehaviour
         }
 
      }
+
+    public List<Button> GetCatButtonList()
+    {
+        return catbuttonList;
+    }
 
 }
