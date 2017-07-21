@@ -45,7 +45,7 @@ public class ChoiceCategoryManagement : MonoBehaviour
         form.AddField("username", data.Username);
         form.AddField("language", data.LanguageToLearn);
 
-        w = new WWW("http://localhost:60240/WoGamUser/GetCategories", form);
+        w = new WWW(data.GetDbURL+"GetCategories", form);
         yield return w;
 
         //print(w.text);

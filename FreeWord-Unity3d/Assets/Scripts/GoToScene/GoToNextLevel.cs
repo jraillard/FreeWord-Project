@@ -45,7 +45,7 @@ public class GoToNextLevel : MonoBehaviour
         form.AddField("username", data.Username);
         form.AddField("language", data.LanguageToLearn);
         form.AddField("category", data.CurrentCatName);
-        w = new WWW("http://localhost:60240/WoGamUser/GetWordsInCategory", form);
+        w = new WWW(data.GetDbURL+"GetWordsInCategory", form);
         yield return w;
 
         Dictionary<string, int> tempD = new Dictionary<string, int>();

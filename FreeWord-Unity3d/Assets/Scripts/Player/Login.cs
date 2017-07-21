@@ -24,7 +24,7 @@ public class Login : MonoBehaviour
     private string EncryptedPass;
 
     private int lng;
-    private string gameLanguage = "";
+    //private string gameLanguage = "";
 
     private bool UN = false;
     private bool PW = false;
@@ -32,8 +32,13 @@ public class Login : MonoBehaviour
     private WWWForm webForm;
     private WWW w;
     private WWW w2;
+    private Data data;
 
     // Update is called once per frame
+    private void Start()
+    {
+        data = GameObject.Find("DataObject").GetComponent<Data>();
+    }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -75,15 +80,15 @@ public class Login : MonoBehaviour
                     webForm = new WWWForm();
                     webForm.AddField("username", Username);
                     webForm.AddField("password", Password);
-                    w = new WWW("http://localhost:60240/WoGamUser/LoginUser", webForm);
+                    w = new WWW(data.GetDbURL+"LoginUser", webForm);
                     yield return w;
                     //print(w.text);
 
                     webForm = new WWWForm();
                     webForm.AddField("username", Username);
-                    w2 = new WWW("http://localhost:60240/WoGamUser/GetGameLanguage", webForm);
+                    w2 = new WWW(data.GetDbURL+"GetGameLanguage", webForm);
                     yield return w2;
-                    //print(w2.text);
+                    print(w2.text);
 
                     if (w.text == "Done")
                     {
@@ -162,6 +167,7 @@ public class Login : MonoBehaviour
         username.GetComponent<InputField>().text = usr;
     }
 
+/*
     public IEnumerator GetLanguageOnDB()
     {
         WWWForm webForm;
@@ -174,6 +180,7 @@ public class Login : MonoBehaviour
         
         if(w.text != "error") { gameLanguage = w.text; }
     }
+*/
 
     public void CreateIdFile()
     {

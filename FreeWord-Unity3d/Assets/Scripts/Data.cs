@@ -32,6 +32,7 @@ public class Data : MonoBehaviour {
 
     private WWWForm form;
     private WWW w;
+    private string dbURL = "http://localhost:60240/WoGamUser/";
 
 
     /******************************* Main Events *********************************/
@@ -133,6 +134,11 @@ public class Data : MonoBehaviour {
         set { currentLevel = value; }
     }
 
+    public string GetDbURL
+    {
+        get { return dbURL; }
+    }
+
     //set the words from the category selected => necessary because of coroutine
     public void SetWordListFromCategory(Dictionary<string, int> dWord, List<string> lUrl)
     {
@@ -226,7 +232,6 @@ public class Data : MonoBehaviour {
     //receive the words usable for the level
     public Dictionary<string, int> GetWordListFromCategory()
     {
-        /*don't need anymore
         if (!playAgainInSameCat)
         {
             return wordLevelList;
@@ -237,8 +242,7 @@ public class Data : MonoBehaviour {
             //StartCoroutine(GetWordListFromCategory());
             return wordLevelList;
         }
-        */
-        return wordLevelList;
+
     }
 
     //receive the words usable for the level
@@ -323,6 +327,7 @@ public class Data : MonoBehaviour {
         wordLevelList = new Dictionary<string, int>();
         wordPlayedList = new Dictionary<string, int>();
         pngWordUrlList = new List<string>();
+        currentLevel++;
         mysteryWord = "";
     }
 

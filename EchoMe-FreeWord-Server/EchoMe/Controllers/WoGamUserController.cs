@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using Newtonsoft.Json;
-using System.Collections;
 
 namespace EchoMe.Controllers
 {
@@ -139,8 +138,9 @@ namespace EchoMe.Controllers
         {
             string lng = "";
 
-            lng = woGameDb.WoGamProfiles.Where(p => p.usr_name == username).Select(p => p.usr_gameLangage).ToString();
-            if (lng != "English" || lng != "Français")
+            //warning don't forget "First()" , or it lng = SQL request
+            lng = woGameDb.WoGamProfiles.Where(p => p.usr_name == username).Select(p => p.usr_gameLangage).First();//.ToString();
+            if (lng == "English" || lng == "Français")
             {
                 return lng;
             }

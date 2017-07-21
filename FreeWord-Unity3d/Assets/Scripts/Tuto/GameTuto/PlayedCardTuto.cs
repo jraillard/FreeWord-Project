@@ -102,8 +102,8 @@ public class PlayedCardTuto : Card {
 
         if (flag == 0) //there's no more cards in the playedCardSet
         {
-            yMin = originPlace.y;
-            zMin = originPlace.z;
+            yMin = 0.35f;
+            zMin = 5f;
         }
         else
         {

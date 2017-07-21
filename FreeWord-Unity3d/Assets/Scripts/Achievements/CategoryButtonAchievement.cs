@@ -59,7 +59,7 @@ public class CategoryButtonAchievement : MonoBehaviour
         form.AddField("username", data.Username);
         form.AddField("language", data.LanguageForAchievement);
         form.AddField("category", currentCatName);
-        w = new WWW("http://localhost:60240/WoGamUser/GetWordsInCategory", form);
+        w = new WWW(data.GetDbURL+"GetWordsInCategory", form);
         yield return w;
 
         tempWordList = JsonConvert.DeserializeObject<Dictionary<string, int>>(w.text);

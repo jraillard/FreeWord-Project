@@ -45,7 +45,10 @@ public class GameManagement : MonoBehaviour
             //implement wordlist
             foreach (KeyValuePair<string, int> k in tempListWord)
             {
-                if (i == 6) { break; }
+                if (i == 6)
+                {
+                    break;
+                }
                 listWord.Add(k.Key, k.Value);
                 i++;
             }
@@ -57,10 +60,10 @@ public class GameManagement : MonoBehaviour
                 wordUrlList.Add(tempUrlList[k]);
             }
             //setmysteryword
-            data.MysteryWord = listWord.Keys.First();
-            data.MysteryWordUrl = wordUrlList[0];
+            data.MysteryWord = listWord.Keys.Last();
+            data.MysteryWordUrl = wordUrlList[5];
             listWord.Remove(data.MysteryWord);
-            wordUrlList.RemoveAt(0);
+            wordUrlList.RemoveAt(5);
         }
         else
         {

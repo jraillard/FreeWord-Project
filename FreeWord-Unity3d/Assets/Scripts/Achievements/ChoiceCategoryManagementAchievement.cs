@@ -62,7 +62,7 @@ public class ChoiceCategoryManagementAchievement : MonoBehaviour
 
         //print(data.Username + "|" + data.LanguageToPlay);
 
-        w = new WWW("http://localhost:60240/WoGamUser/GetCategories", form);
+        w = new WWW(data.GetDbURL+"GetCategories", form);
         yield return w;
         //print(w.text);
 
@@ -137,28 +137,6 @@ public class ChoiceCategoryManagementAchievement : MonoBehaviour
             {
                 posX += 165;
             }
-
-            /*
-            tempButton = Resources.Load("CategoryButtonAchievement", typeof(Button)) as Button;
-
-            catbuttonList.Add(Instantiate(tempButton, tParent));
-            catbuttonList[i].GetComponent<RectTransform>().position = new Vector3(posX, posY, 0);
-
-            //catbuttonList[i].GetComponent<Image>().sprite = tempSprite;
-             catbuttonList[i].transform.Find("Text_Up").GetComponent<Text>().text = "Category_" + i;
-             catbuttonList[i].transform.Find("Text_Down").GetComponent<Text>().text = "Categorie_" + i;
-
-             i++;
-             if (i % 4 == 0 && i != 0)
-             {
-                posX = 207f;
-                posY -= 110;
-             }
-             else
-             {
-                posX += 165;
-             }
-             */
         }
 
      }

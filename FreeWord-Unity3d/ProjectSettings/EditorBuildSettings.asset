@@ -22,7 +22,7 @@ EditorBuildSettings:
     guid: 6dd599645f99e764b8b65b1fa0ab1e53
   - enabled: 1
     path: Assets/Scenes/Internet.unity
-    guid: 00000000000000000000000000000000
+    guid: 75cad7d1380c0fc45a5f0cb26d133125
   - enabled: 1
     path: Assets/Scenes/Options.unity
     guid: 672f49fb1d99de7428982ca1b468f79e
@@ -50,9 +50,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Achievements.unity
     guid: c3b57a695fa1bc644893c3c3305861fb
-  - enabled: 0
-    path: Assets/Scenes/WordInformation.unity
-    guid: 127314baac7e17f448d5415d229a5035
   - enabled: 1
     path: Assets/Scenes/LanguageToLearn.unity
     guid: 4fa91e422356cc84c8720577b8e86324

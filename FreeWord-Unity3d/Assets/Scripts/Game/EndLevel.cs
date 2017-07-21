@@ -41,7 +41,7 @@ public class EndLevel : MonoBehaviour {
         form.AddField("language", data.LanguageToLearn);
         form.AddField("category", data.CurrentCatName);        
         form.AddField("wordsdiscovered",  JsonConvert.SerializeObject(data.GetWordListPlayed()));
-        WWW w = new WWW("http://localhost:60240/WoGamUser/SendWordsDiscovered", form);
+        WWW w = new WWW(data.GetDbURL+"SendWordsDiscovered", form);
         yield return w;
 
         data.FinishLevel();

@@ -15,7 +15,12 @@ public class LtP_Choice : MonoBehaviour {
     private string EncryptedPassword;
     private string[] Lines;
     private string[] Line;
+    private Data data;
 
+    private void Start()
+    {
+        data = GameObject.Find("DataObject").GetComponent<Data>();
+    }
 
     public void English()
     {
@@ -47,7 +52,7 @@ public class LtP_Choice : MonoBehaviour {
         webForm = new WWWForm();
         webForm.AddField("username", Username);
         webForm.AddField("Language", lng);
-        w = new WWW("http://localhost:60240/WoGamUser/SetGameLanguage", webForm);
+        w = new WWW(data.GetDbURL+"SetGameLanguage", webForm);
         yield return w;
         //print(w.text);
     }

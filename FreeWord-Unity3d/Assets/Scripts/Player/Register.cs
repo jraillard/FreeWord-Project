@@ -20,11 +20,17 @@ public class Register : MonoBehaviour {
     private string ConfPassword;
     private string form;
     private bool US = false; //user used in DB
+    private Data data;
+
+    private WWWForm webForm;
+    private WWW w;
 
     /********************************* Main Events *********************************/
 
     // Use this for initialization
     void Start () {
+
+        data = GameObject.Find("DataObject").GetComponent<Data>();
         // Check the directory ID
         if (Directory.Exists(Application.persistentDataPath + "/ID")) { return; }
         print(Application.persistentDataPath);
@@ -56,7 +62,12 @@ public class Register : MonoBehaviour {
 
     /********************************* Methods *********************************/
 
-    public void RegisterButton()
+    public void RegisterAccount()
+    {
+        StartCoroutine(RegisterButton());
+    }
+
+    public IEnumerator RegisterButton()
     {
         
         bool UN = false;
@@ -76,7 +87,8 @@ public class Register : MonoBehaviour {
                 {
                     UN = true;
                 }
-                else { informations.GetComponent<Text>().text = "Username already used"; }
+                else { informations.GetComponent<Text>().text = "Username already used1"; }
+
             }else 
             {
                 informations.GetComponent<Text>().text = "Username must be alphanumeric and less than 20 characters";
@@ -104,8 +116,14 @@ public class Register : MonoBehaviour {
         else { informations.GetComponent<Text>().text="Confirm Password field is empty"; }
 
         //try to create user on DB
-        StartCoroutine(RegisterOnDB());
-        if(US==false) { informations.GetComponent<Text>().text = "Username already used"; }
+        webForm = new WWWForm();
+        webForm.AddField("username", Username);
+        webForm.AddField("password", Password);
+        w = new WWW(data.GetDbURL + "CreateUser", webForm);
+        yield return w;
+
+        if (w.text == "Done") { US = true; }
+        if (US==false) { informations.GetComponent<Text>().text = "Username already used2"; }
 
         // Encrypting the password
         if (UN==true && PW==true && CPW == true && US == true){
@@ -141,13 +159,9 @@ public class Register : MonoBehaviour {
         webForm = new WWWForm();
         webForm.AddField("username", Username);
         webForm.AddField("password", Password);
-        w = new WWW("http://localhost:60240/WoGamUser/CreateUser", webForm);
+        w = new WWW(data.GetDbURL+"CreateUser", webForm);
         yield return w;
 
         if(w.text == "Done") { US = true; }
     }
-	
-	
-
-
 }
