@@ -73,8 +73,7 @@ public class Register : MonoBehaviour {
         bool UN = false;
         bool PW = false;
         bool CPW = false;
-        string pattern = @"^[a-zA-Z0-9]{1,20}$";
-        
+        string pattern = @"^[a-zA-Z0-9-_' ]{1,20}$";        
         
         // Check the Username
         if (Username != "" )
@@ -115,14 +114,21 @@ public class Register : MonoBehaviour {
         }
         else { informations.GetComponent<Text>().text="Confirm Password field is empty"; }
 
-        //try to create user on DB
-        webForm = new WWWForm();
-        webForm.AddField("username", Username);
-        webForm.AddField("password", Password);
-        w = new WWW(data.GetDbURL + "CreateUser", webForm);
-        yield return w;
+        if (UN == true && PW == true && CPW == true)
+        {
+            //try to create user on DB
+            informations.GetComponent<Text>().text = "Try to create the user";
+            webForm = new WWWForm();
+            webForm.AddField("username", Username);
+            webForm.AddField("password", Password);
+            w = new WWW(data.GetDbURL + "CreateUser", webForm);
+            yield return w;
 
-        if (w.text == "Done") { US = true; }
+            print(w.text);
+            if (w.isDone) { US = true; }
+            //if (w.text == "Done") { US = true; }
+        }        
+                
         if (US==false) { informations.GetComponent<Text>().text = "Username already used2"; }
 
         // Encrypting the password

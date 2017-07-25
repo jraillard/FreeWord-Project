@@ -85,28 +85,12 @@
     <EntitySetMapping Name="WoGamCategories">
       <EntityTypeMapping TypeName="EchoDBModel.WoGamCategory">
         <MappingFragment StoreEntitySet="WoGamCategory">
+          <ScalarProperty Name="cat_langage" ColumnName="cat_langage" />
+          <ScalarProperty Name="cat_usr" ColumnName="cat_usr" />
           <ScalarProperty Name="cat_url" ColumnName="cat_url" />
-          <ScalarProperty Name="cat_lng" ColumnName="cat_lng" />
           <ScalarProperty Name="cat_reached" ColumnName="cat_reached" />
           <ScalarProperty Name="cat_name" ColumnName="cat_name" />
           <ScalarProperty Name="cat_id" ColumnName="cat_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="WoGamChoices">
-      <EntityTypeMapping TypeName="EchoDBModel.WoGamChoice">
-        <MappingFragment StoreEntitySet="WoGamChoice">
-          <ScalarProperty Name="chc_langage" ColumnName="chc_langage" />
-          <ScalarProperty Name="chc_usr" ColumnName="chc_usr" />
-          <ScalarProperty Name="chc_id" ColumnName="chc_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="WoGamLangages">
-      <EntityTypeMapping TypeName="EchoDBModel.WoGamLangage">
-        <MappingFragment StoreEntitySet="WoGamLangage">
-          <ScalarProperty Name="lng_langage" ColumnName="lng_langage" />
-          <ScalarProperty Name="lng_id" ColumnName="lng_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

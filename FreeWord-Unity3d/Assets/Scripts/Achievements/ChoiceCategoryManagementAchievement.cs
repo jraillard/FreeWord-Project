@@ -118,11 +118,11 @@ public class ChoiceCategoryManagementAchievement : MonoBehaviour
             //Set button parameters
             catbuttonList[i].GetComponent<RectTransform>().position = new Vector3(posX, posY, 0);
             catbuttonList[i].GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-            catbuttonList[i].transform.Find("Text_Up").GetComponent<Text>().text = de.Key.ToString();
+            catbuttonList[i].transform.Find("Text_Up").GetComponent<Text>().text = de.Key.ToString().Split('_')[0];
             if (data.LanguageToPlay != data.LanguageToLearn)
             {
                 //if the same => just display one
-                catbuttonList[i].transform.Find("Text_Down").GetComponent<Text>().text = de.Value.ToString();
+                catbuttonList[i].transform.Find("Text_Down").GetComponent<Text>().text = de.Value.ToString().Split('_')[0];
             }
 
 

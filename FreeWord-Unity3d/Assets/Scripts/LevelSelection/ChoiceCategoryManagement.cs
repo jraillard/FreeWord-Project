@@ -45,10 +45,10 @@ public class ChoiceCategoryManagement : MonoBehaviour
         form.AddField("username", data.Username);
         form.AddField("language", data.LanguageToLearn);
 
-        w = new WWW(data.GetDbURL+"GetCategories", form);
+        w = new WWW(data.GetDbURL+"GetCategories", form);        
         yield return w;
 
-        //print(w.text);
+        print(w.text);
         tempCatList = JsonConvert.DeserializeObject<Dictionary<string, string>>(w.text);
 
         //Split url and 2cat name
@@ -101,11 +101,11 @@ public class ChoiceCategoryManagement : MonoBehaviour
             //Set button parameters
             catbuttonList[i].GetComponent<RectTransform>().position = new Vector3(posX, posY, 0);
             catbuttonList[i].GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-            catbuttonList[i].transform.Find("Text_Up").GetComponent<Text>().text = de.Key.ToString();
+            catbuttonList[i].transform.Find("Text_Up").GetComponent<Text>().text = de.Key.ToString().Split('_')[0];//get first part
             if (data.LanguageToPlay != data.LanguageToLearn)
             {
                 //if the same => just display one
-                catbuttonList[i].transform.Find("Text_Down").GetComponent<Text>().text = de.Value.ToString();
+                catbuttonList[i].transform.Find("Text_Down").GetComponent<Text>().text = de.Value.ToString().Split('_')[0];
             }
 
 

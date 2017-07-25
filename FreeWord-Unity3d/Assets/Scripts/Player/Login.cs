@@ -9,7 +9,6 @@ using System.IO;
 
 public class Login : MonoBehaviour
 {
-
     public GameObject username;
     public GameObject password;
     public GameObject informations;
@@ -90,7 +89,7 @@ public class Login : MonoBehaviour
                     yield return w2;
                     print(w2.text);
 
-                    if (w.text == "Done")
+                    if (w.isDone)//w.text == "Done")
                     {
                         CreateIdFile();
                     }

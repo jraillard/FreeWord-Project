@@ -127,7 +127,7 @@
     <Property Name="cat_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="cat_name" Type="nvarchar" MaxLength="32" Nullable="false" />
     <Property Name="cat_langage" Type="nvarchar" MaxLength="32" Nullable="false" />
-    <Property Name="cat_url" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="cat_url" Type="nvarchar" MaxLength="1000" Nullable="false" />
     <Property Name="cat_reached" Type="bit" Nullable="false" />
     <Property Name="cat_usr" Type="int" Nullable="false" />
   </EntityType>
@@ -147,7 +147,7 @@
     <Property Name="wd_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="wd_value" Type="nvarchar" MaxLength="30" Nullable="false" />
     <Property Name="wd_nbtime" Type="int" Nullable="false" />
-    <Property Name="wd_url" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="wd_url" Type="nvarchar" MaxLength="1000" Nullable="false" />
     <Property Name="wd_cat" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="fk_chc1">

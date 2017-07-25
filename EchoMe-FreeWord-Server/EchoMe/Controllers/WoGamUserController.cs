@@ -34,10 +34,12 @@ namespace EchoMe.Controllers
                     woGameDb.WoGamProfiles.Add(woGamProfile);
                     woGameDb.SaveChanges();
 
+                    string[] array = Directory.GetFiles(csvFilePath);                   
 
                     //Add data
-                    foreach (string fileName in Directory.GetFiles(csvFilePath))
+                    foreach (string fileName in array)
                     {
+                        //string sss = Path.GetExtension(fileName);
                         if (Path.GetExtension(fileName) == ".csv")
                         {
 
@@ -60,7 +62,6 @@ namespace EchoMe.Controllers
                             WoGamCategory woGamCategoryEN = new WoGamCategory
                             {
                                 cat_name = tempString[1],//catEN,
-
                                 cat_reached = false,
                                 cat_langage = "English",
                                 cat_url = tempString[2],
@@ -102,20 +103,23 @@ namespace EchoMe.Controllers
 
                                 woGameDb.WoGamWords.Add(woGamWordFR);
                                 woGameDb.WoGamWords.Add(woGamWordEN);
-                                woGameDb.SaveChanges();
+                                
                                 i++;
                             }//foreach
+                            woGameDb.SaveChanges();
 
-                        }//endif
+
+                    }//endif
 
                     }//end foreach
+                    
                 }
                 catch(Exception ex)
                 {
-                    Debug.WriteLine(ex.Message);
+                    return ex.Message;
                 }                
-
-                return "Done";
+                
+                //return "Done";
             }
 
             return "User already used";
@@ -187,9 +191,19 @@ namespace EchoMe.Controllers
                 catList2 = woGameDb.WoGamCategories.Where(p => p.cat_usr == p.WoGamProfile.usr_id && p.cat_langage == language2).Select(p => p.cat_name).ToList();
                 catUrlList = woGameDb.WoGamCategories.Where(p => p.cat_usr == p.WoGamProfile.usr_id && p.cat_langage == language).Select(p => p.cat_url).ToList();
 
-                for (int i = 0; i < catList1.Count; i++)
+                for(int i=0; i<catList1.Count; i++)
                 {
-                    catList.Add(catList1[i], catList2[i] +"|"+ catUrlList[i]);
+                    catList1[i] += "_" + language;
+                }
+
+                for (int j = 0; j < catList2.Count; j++)
+                {
+                    catList2[j] += "_" + language2;
+                }
+
+                for (int k = 0; k < catList1.Count; k++)
+                {
+                    catList.Add(catList1[k], catList2[k] +"|"+ catUrlList[k]);
                 }
 
                 var jsonString = JsonConvert.SerializeObject(catList);

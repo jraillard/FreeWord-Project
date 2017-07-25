@@ -125,78 +125,40 @@
       <PropertyRef Name="cat_id" />
     </Key>
     <Property Name="cat_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="cat_name" Type="varchar" MaxLength="32" Nullable="false" />
+    <Property Name="cat_name" Type="nvarchar" MaxLength="32" Nullable="false" />
+    <Property Name="cat_langage" Type="nvarchar" MaxLength="32" Nullable="false" />
+    <Property Name="cat_url" Type="nvarchar" MaxLength="1000" Nullable="false" />
     <Property Name="cat_reached" Type="bit" Nullable="false" />
-    <Property Name="cat_lng" Type="int" Nullable="false" />
-    <Property Name="cat_url" Type="varchar" MaxLength="200" Nullable="false" />
-  </EntityType>
-  <EntityType Name="WoGamChoice">
-    <Key>
-      <PropertyRef Name="chc_id" />
-    </Key>
-    <Property Name="chc_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="chc_usr" Type="int" Nullable="false" />
-    <Property Name="chc_langage" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="WoGamLangage">
-    <Key>
-      <PropertyRef Name="lng_id" />
-    </Key>
-    <Property Name="lng_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="lng_langage" Type="varchar" MaxLength="32" Nullable="false" />
+    <Property Name="cat_usr" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="WoGamProfile">
     <Key>
       <PropertyRef Name="usr_id" />
     </Key>
     <Property Name="usr_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="usr_name" Type="varchar" MaxLength="32" Nullable="false" />
-    <Property Name="usr_pwd" Type="varchar" MaxLength="32" Nullable="false" />
-    <Property Name="usr_gameLangage" Type="varchar" MaxLength="32" />
+    <Property Name="usr_name" Type="nvarchar" MaxLength="32" Nullable="false" />
+    <Property Name="usr_pwd" Type="nvarchar" MaxLength="32" Nullable="false" />
+    <Property Name="usr_gameLangage" Type="nvarchar" MaxLength="32" />
   </EntityType>
   <EntityType Name="WoGamWord">
     <Key>
       <PropertyRef Name="wd_id" />
     </Key>
     <Property Name="wd_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="wd_value" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="wd_value" Type="nvarchar" MaxLength="30" Nullable="false" />
     <Property Name="wd_nbtime" Type="int" Nullable="false" />
+    <Property Name="wd_url" Type="nvarchar" MaxLength="1000" Nullable="false" />
     <Property Name="wd_cat" Type="int" Nullable="false" />
-    <Property Name="wd_url" Type="varchar" MaxLength="200" Nullable="false" />
   </EntityType>
-  <Association Name="fk_catId">
-    <End Role="WoGamLangage" Type="Self.WoGamLangage" Multiplicity="1" />
-    <End Role="WoGamCategory" Type="Self.WoGamCategory" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="WoGamLangage">
-        <PropertyRef Name="lng_id" />
-      </Principal>
-      <Dependent Role="WoGamCategory">
-        <PropertyRef Name="cat_lng" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="fk_chc1">
     <End Role="WoGamProfile" Type="Self.WoGamProfile" Multiplicity="1" />
-    <End Role="WoGamChoice" Type="Self.WoGamChoice" Multiplicity="*" />
+    <End Role="WoGamCategory" Type="Self.WoGamCategory" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="WoGamProfile">
         <PropertyRef Name="usr_id" />
       </Principal>
-      <Dependent Role="WoGamChoice">
-        <PropertyRef Name="chc_usr" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_chc2">
-    <End Role="WoGamLangage" Type="Self.WoGamLangage" Multiplicity="1" />
-    <End Role="WoGamChoice" Type="Self.WoGamChoice" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="WoGamLangage">
-        <PropertyRef Name="lng_id" />
-      </Principal>
-      <Dependent Role="WoGamChoice">
-        <PropertyRef Name="chc_langage" />
+      <Dependent Role="WoGamCategory">
+        <PropertyRef Name="cat_usr" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -251,21 +213,11 @@
     <EntitySet Name="webpages_Roles" EntityType="Self.webpages_Roles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="webpages_UsersInRoles" EntityType="Self.webpages_UsersInRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="WoGamCategory" EntityType="Self.WoGamCategory" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="WoGamChoice" EntityType="Self.WoGamChoice" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="WoGamLangage" EntityType="Self.WoGamLangage" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="WoGamProfile" EntityType="Self.WoGamProfile" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="WoGamWord" EntityType="Self.WoGamWord" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="fk_catId" Association="Self.fk_catId">
-      <End Role="WoGamLangage" EntitySet="WoGamLangage" />
-      <End Role="WoGamCategory" EntitySet="WoGamCategory" />
-    </AssociationSet>
     <AssociationSet Name="fk_chc1" Association="Self.fk_chc1">
       <End Role="WoGamProfile" EntitySet="WoGamProfile" />
-      <End Role="WoGamChoice" EntitySet="WoGamChoice" />
-    </AssociationSet>
-    <AssociationSet Name="fk_chc2" Association="Self.fk_chc2">
-      <End Role="WoGamLangage" EntitySet="WoGamLangage" />
-      <End Role="WoGamChoice" EntitySet="WoGamChoice" />
+      <End Role="WoGamCategory" EntitySet="WoGamCategory" />
     </AssociationSet>
     <AssociationSet Name="fk_RoleId" Association="Self.fk_RoleId">
       <End Role="webpages_Roles" EntitySet="webpages_Roles" />

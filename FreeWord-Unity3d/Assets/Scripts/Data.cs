@@ -32,7 +32,7 @@ public class Data : MonoBehaviour {
 
     private WWWForm form;
     private WWW w;
-    private string dbURL = "http://localhost:60240/WoGamUser/";
+    private string dbURL = "http://crowd-multilogue.com/WoGamUser/"; //"http://localhost:60240/WoGamUser/";
 
 
     /******************************* Main Events *********************************/

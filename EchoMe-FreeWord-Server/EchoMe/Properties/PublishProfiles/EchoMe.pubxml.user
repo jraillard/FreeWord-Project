@@ -781,7 +781,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Controllers/WoGamUserController.cs">
-      <publishTime>06/28/2017 16:07:52</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -876,7 +876,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="LogFreeSpeechLoad.txt">
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
+    <File Include="Models/Comment.cs">
+      <publishTime>07/03/2017 14:47:32</publishTime>
+    </File>
+    <File Include="Models/EchoModel.Context.cs">
+      <publishTime>01/01/0001 00:00:00</publishTime>
+    </File>
     <File Include="Models/EchoModel.Context.tt">
+      <publishTime>01/01/0001 00:00:00</publishTime>
+    </File>
+    <File Include="Models/EchoModel.cs">
+      <publishTime>01/01/0001 00:00:00</publishTime>
+    </File>
+    <File Include="Models/EchoModel.Designer.cs">
+      <publishTime>01/01/0001 00:00:00</publishTime>
+    </File>
+    <File Include="Models/EchoModel.edmx">
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Models/EchoModel.edmx.diagram">
@@ -885,8 +900,50 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Models/EchoModel.tt">
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
+    <File Include="Models/FREECOMMENT.cs">
+      <publishTime>07/03/2017 14:47:32</publishTime>
+    </File>
+    <File Include="Models/FREEUSERNAME.cs">
+      <publishTime>07/03/2017 14:47:32</publishTime>
+    </File>
+    <File Include="Models/FREEVOTE.cs">
+      <publishTime>07/03/2017 14:47:32</publishTime>
+    </File>
+    <File Include="Models/Presentation.cs">
+      <publishTime>07/03/2017 14:47:32</publishTime>
+    </File>
+    <File Include="Models/RateVideo.cs">
+      <publishTime>07/03/2017 14:47:32</publishTime>
+    </File>
+    <File Include="Models/UpVote.cs">
+      <publishTime>07/03/2017 14:47:32</publishTime>
+    </File>
+    <File Include="Models/UserProfile.cs">
+      <publishTime>07/03/2017 14:47:32</publishTime>
+    </File>
+    <File Include="Models/WatchedPresentation.cs">
+      <publishTime>07/03/2017 14:47:32</publishTime>
+    </File>
+    <File Include="Models/webpages_Membership.cs">
+      <publishTime>07/03/2017 14:47:32</publishTime>
+    </File>
+    <File Include="Models/webpages_OAuthMembership.cs">
+      <publishTime>07/03/2017 14:47:32</publishTime>
+    </File>
+    <File Include="Models/webpages_Roles.cs">
+      <publishTime>07/03/2017 14:47:32</publishTime>
+    </File>
+    <File Include="Models/WoGamCategory.cs">
+      <publishTime>07/03/2017 14:47:32</publishTime>
+    </File>
     <File Include="Models/WoGamModel.edmx.diagram">
       <publishTime>01/01/0001 00:00:00</publishTime>
+    </File>
+    <File Include="Models/WoGamProfile.cs">
+      <publishTime>07/03/2017 14:47:32</publishTime>
+    </File>
+    <File Include="Models/WoGamWord.cs">
+      <publishTime>07/03/2017 14:47:32</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -952,7 +1009,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Videos/demo_2.mp4">
-      <publishTime>04/02/2015 11:45:23</publishTime>
+      <publishTime>02/04/2015 11:45:23</publishTime>
     </File>
     <File Include="Videos/Logo.png">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -1054,19 +1111,34 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="WoGam_CSV_Files/1.csv">
-      <publishTime>01/06/2017 17:45:18</publishTime>
+      <publishTime>06/01/2017 17:45:18</publishTime>
     </File>
     <File Include="WoGam_CSV_Files/2.csv">
-      <publishTime>01/06/2017 17:45:52</publishTime>
+      <publishTime>06/29/2017 15:07:54</publishTime>
+    </File>
+    <File Include="WoGam_CSV_Files/22.csv">
+      <publishTime>07/21/2017 17:43:18</publishTime>
     </File>
     <File Include="WoGam_CSV_Files/3.csv">
-      <publishTime>01/06/2017 17:46:10</publishTime>
+      <publishTime>07/06/2017 16:16:19</publishTime>
+    </File>
+    <File Include="WoGam_CSV_Files/30.csv">
+      <publishTime>07/22/2017 15:53:46</publishTime>
+    </File>
+    <File Include="WoGam_CSV_Files/33.csv">
+      <publishTime>07/21/2017 17:43:32</publishTime>
     </File>
     <File Include="WoGam_CSV_Files/4.csv">
-      <publishTime>01/06/2017 17:47:20</publishTime>
+      <publishTime>06/01/2017 17:47:20</publishTime>
+    </File>
+    <File Include="WoGam_CSV_Files/48.csv">
+      <publishTime>07/21/2017 17:43:26</publishTime>
     </File>
     <File Include="WoGam_CSV_Files/5.csv">
-      <publishTime>01/06/2017 17:48:04</publishTime>
+      <publishTime>06/01/2017 17:48:04</publishTime>
+    </File>
+    <File Include="WoGam_CSV_Files/7.csv">
+      <publishTime>06/29/2017 15:07:54</publishTime>
     </File>
   </ItemGroup>
 </Project>

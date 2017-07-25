@@ -13,13 +13,13 @@
         <EntityTypeShape EntityType="EchoDBModel.FREEVOTE" Width="1.5" PointX="5.375" PointY="3.75" />
         <EntityTypeShape EntityType="EchoDBModel.RateVideo" Width="1.5" PointX="0.75" PointY="6.75" />
         <EntityTypeShape EntityType="EchoDBModel.WatchedPresentation" Width="1.5" PointX="2.75" PointY="6.75" />
-        <EntityTypeShape EntityType="EchoDBModel.WoGamCategory" Width="1.5" PointX="7.625" PointY="10.75" />
-        <EntityTypeShape EntityType="EchoDBModel.WoGamProfile" Width="1.5" PointX="5.375" PointY="11.375" />
-        <EntityTypeShape EntityType="EchoDBModel.WoGamWord" Width="1.5" PointX="9.875" PointY="10.875" />
+        <EntityTypeShape EntityType="EchoDBModel.WoGamCategory" Width="1.5" PointX="12.75" PointY="4" />
+        <EntityTypeShape EntityType="EchoDBModel.WoGamProfile" Width="1.5" PointX="10.5" PointY="4.25" />
+        <EntityTypeShape EntityType="EchoDBModel.WoGamWord" Width="1.5" PointX="15" PointY="3.75" />
         <AssociationConnector Association="EchoDBModel.fk_wdId" />
         <EntityTypeShape EntityType="EchoDBModel.UserProfile" Width="1.5" PointX="10" PointY="0.875" />
         <EntityTypeShape EntityType="EchoDBModel.webpages_Membership" Width="1.5" PointX="7.75" PointY="3.75" />
-        <EntityTypeShape EntityType="EchoDBModel.webpages_OAuthMembership" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="EchoDBModel.webpages_OAuthMembership" Width="1.5" PointX="5.5" PointY="6.25" />
         <EntityTypeShape EntityType="EchoDBModel.webpages_Roles" Width="1.5" PointX="7.75" PointY="0.875" />
         <AssociationConnector Association="EchoDBModel.webpages_UsersInRoles" />
         <AssociationConnector Association="EchoDBModel.fk_chc11" />

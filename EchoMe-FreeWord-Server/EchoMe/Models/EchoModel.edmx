@@ -132,7 +132,7 @@
           <Property Name="cat_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="cat_name" Type="nvarchar" MaxLength="32" Nullable="false" />
           <Property Name="cat_langage" Type="nvarchar" MaxLength="32" Nullable="false" />
-          <Property Name="cat_url" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="cat_url" Type="nvarchar" MaxLength="1000" Nullable="false" />
           <Property Name="cat_reached" Type="bit" Nullable="false" />
           <Property Name="cat_usr" Type="int" Nullable="false" />
         </EntityType>
@@ -152,7 +152,7 @@
           <Property Name="wd_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="wd_value" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="wd_nbtime" Type="int" Nullable="false" />
-          <Property Name="wd_url" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="wd_url" Type="nvarchar" MaxLength="1000" Nullable="false" />
           <Property Name="wd_cat" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="fk_chc1">
@@ -351,7 +351,7 @@
           <Property Name="cat_name" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
           <Property Name="cat_reached" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="WoGamWords" Relationship="EchoDBModel.fk_wdId" FromRole="WoGamCategory" ToRole="WoGamWord" />
-          <Property Name="cat_url" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="cat_url" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="cat_usr" Type="Int32" Nullable="false" />
           <NavigationProperty Name="WoGamProfile" Relationship="EchoDBModel.fk_chc11" FromRole="WoGamCategory" ToRole="WoGamProfile" />
           <Property Name="cat_langage" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
@@ -375,7 +375,7 @@
           <Property Name="wd_nbtime" Type="Int32" Nullable="false" />
           <Property Name="wd_cat" Type="Int32" Nullable="false" />
           <NavigationProperty Name="WoGamCategory" Relationship="EchoDBModel.fk_wdId" FromRole="WoGamWord" ToRole="WoGamCategory" />
-          <Property Name="wd_url" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="wd_url" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="fk_wdId">
           <End Type="EchoDBModel.WoGamCategory" Role="WoGamCategory" Multiplicity="1" />
