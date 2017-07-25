@@ -23,6 +23,7 @@ public class GameManagement : MonoBehaviour
     private Dictionary<string, int> listWord = new Dictionary<string, int>();
     private List<string> wordUrlList = new List<string> ();
     private List<char> splitWord;
+    private bool firstpic = false;
 
     /********************************* Loops *********************************/
 
@@ -148,7 +149,7 @@ public class GameManagement : MonoBehaviour
         splitWord = MySplitter(listWord.Keys.Last());
         InitPlacedCardSet(splitWord, wordUrlList.Last());
         InitWordBonusButton();
-        StartCoroutine(image.LoadImage(listWord.Keys.Last(), wordUrlList.Last(), data.CurrentCatName));
+        //StartCoroutine(image.LoadImage(listWord.Keys.Last(), wordUrlList.Last(), data.CurrentCatName));
 
     }
 
@@ -169,7 +170,11 @@ public class GameManagement : MonoBehaviour
 
         if (cpt == placedCardSet.Count) //if it is 
         {*/
-
+            if(firstpic==false)
+            {
+                StartCoroutine(image.LoadImage(listWord.Keys.Last(), wordUrlList.Last(), data.CurrentCatName));
+            firstpic = true;
+            }
         
             if (VerifPlacedWord() == true && !launchLevelDone)
             {

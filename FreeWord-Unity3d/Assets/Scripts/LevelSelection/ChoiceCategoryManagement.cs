@@ -35,8 +35,8 @@ public class ChoiceCategoryManagement : MonoBehaviour
         Dictionary<string, string> tempCatList = new Dictionary<string, string>();
         Dictionary<string , string> catList = new Dictionary<string, string>(); //contain LngToLearn : LngToPlay
         List<string> pngUrlList = new List<string>(); //contain Url
-        float posX = 207f;
-        float posY = 495f;
+        float posX = Screen.width * 250 / 1280;
+        float posY = Screen.height * 480 / 720;
         int i = 0;
         string[] tempString;
 
@@ -48,7 +48,7 @@ public class ChoiceCategoryManagement : MonoBehaviour
         w = new WWW(data.GetDbURL+"GetCategories", form);        
         yield return w;
 
-        print(w.text);
+        //print(w.text);
         tempCatList = JsonConvert.DeserializeObject<Dictionary<string, string>>(w.text);
 
         //Split url and 2cat name
@@ -111,14 +111,14 @@ public class ChoiceCategoryManagement : MonoBehaviour
 
             //SetPosition
             i++;
-            if (i % 4 == 0 && i != 0)
+            if (i % 3 == 0 && i != 0)
             {
-                posX = 207f;
-                posY -= 110;
+                posX = Screen.width * 250 / 1280;
+                posY -= Screen.height * 140 / 720;
             }
             else
             {
-                posX += 165;
+                posX += Screen.width * 180 / 1280;
             }
 
         }

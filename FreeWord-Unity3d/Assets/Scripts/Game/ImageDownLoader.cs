@@ -16,8 +16,9 @@ public class ImageDownLoader : MonoBehaviour {
         data = GameObject.Find("DataObject").GetComponent<Data>();
     }
     public IEnumerator LoadImage(string word, string url, string catName)
-    { 
+    {
         // Check the directory ID
+
         if (!Directory.Exists(Application.persistentDataPath + "/WordTexture/" + catName))
         {
             Directory.CreateDirectory(Application.persistentDataPath + "/WordTexture/" + catName);
@@ -31,7 +32,7 @@ public class ImageDownLoader : MonoBehaviour {
             byte[] byteArray = File.ReadAllBytes(Application.persistentDataPath + "/WordTexture/" + catName + "/" + word + ".jpg");
             Texture2D texture = new Texture2D(1, 1);
             texture.LoadImage(byteArray);
-            this.GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            yield return this.GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         }
         else
         {
@@ -40,7 +41,7 @@ public class ImageDownLoader : MonoBehaviour {
             WWW www = new WWW(url);
             yield return www; //wait that the image is downloaded
             Texture2D texture = www.texture;
-            this.GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f)); 
+            yield return this.GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f)); 
             byte[] bytes = texture.EncodeToJPG();
             File.WriteAllBytes(Application.persistentDataPath + "/WordTexture/" + catName + "/" + word + ".jpg", bytes);
         }

@@ -36,8 +36,8 @@ public class ChoiceCategoryManagementAchievement : MonoBehaviour
         Dictionary<string, string> catList = new Dictionary<string, string>(); //contain LngToLearn : LngToPlay
         List<string> pngUrlList = new List<string>(); //contain Url
         string[] tempString;
-        float posX = 207f;
-        float posY = 495f;
+        float posX = Screen.width * 250 / 1280;
+        float posY = Screen.height * 480 / 720;
         int i = 0;
 
         tParent = GameObject.Find("Categories").GetComponent<Transform>();
@@ -128,14 +128,14 @@ public class ChoiceCategoryManagementAchievement : MonoBehaviour
 
             //SetPosition
             i++;
-            if (i % 4 == 0 && i != 0)
+            if (i % 3 == 0 && i != 0)
             {
-                posX = 207f;
-                posY -= 110;
+                posX = Screen.width * 250 / 1280;
+                posY -= Screen.height * 140 / 720;
             }
             else
             {
-                posX += 165;
+                posX += Screen.width * 180 / 1280;
             }
         }
 

@@ -128,7 +128,9 @@ public class CategoryButton : MonoBehaviour
             data.CurrentLevel = currentLevel;
         }
 
-        catSelectedLabel1.GetComponent<Text>().text = currentCatName + " : Level " + currentLevel;
+
+        if (data.LanguageToPlay == "English") { catSelectedLabel1.GetComponent<Text>().text = currentCatName + " : Level " + currentLevel + "/" + wordList.Count; }
+        else { catSelectedLabel1.GetComponent<Text>().text = currentCatName + " : Niveau " + currentLevel + "/" + wordList.Count; }
         catSelectedLabel2.GetComponent<Text>().text = this.transform.Find("Text_Down").GetComponent<Text>().text;
         
     }

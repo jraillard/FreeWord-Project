@@ -28,7 +28,7 @@ public class CL_LevelSelection : MonoBehaviour
 
     private void CL_English()
     {
-        title.GetComponent<Text>().text = " Which Category do you want to pratice ?";
+        title.GetComponent<Text>().text = " Which category do you want to pratice ?";
         back.GetComponent<Text>().text = "Back";
         play.GetComponent<Text>().text = "Play";
     }
