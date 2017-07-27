@@ -2,8 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ChoiceCategoryManagementAchievement : MonoBehaviour
@@ -23,7 +23,7 @@ public class ChoiceCategoryManagementAchievement : MonoBehaviour
 
     private void Start()
     {
-
+        SceneManager.LoadSceneAsync("Transition", LoadSceneMode.Additive);
         data = GameObject.Find("DataObject").GetComponent<Data>();
         StartCoroutine(InitCategoriesButton());
         //InitCategoriesButton();
@@ -138,8 +138,8 @@ public class ChoiceCategoryManagementAchievement : MonoBehaviour
                 posX += Screen.width * 180 / 1280;
             }
         }
-
-     }
+        SceneManager.UnloadSceneAsync("Transition");
+    }
 
     public List<Button> GetCatButtonList()
     {

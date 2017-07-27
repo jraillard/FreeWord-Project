@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using UnityEngine.UI;
 using UnityEngine;
 using System.IO;
+using Newtonsoft.Json;
 
 public class Register : MonoBehaviour {
 
@@ -86,7 +87,7 @@ public class Register : MonoBehaviour {
                 {
                     UN = true;
                 }
-                else { informations.GetComponent<Text>().text = "Username already used1"; }
+                else { informations.GetComponent<Text>().text = "Username already used"; }
 
             }else 
             {
@@ -124,12 +125,12 @@ public class Register : MonoBehaviour {
             w = new WWW(data.GetDbURL + "CreateUser", webForm);
             yield return w;
 
-            print(w.text);
-            if (w.isDone) { US = true; }
-            //if (w.text == "Done") { US = true; }
+            string tempString = JsonConvert.DeserializeObject<string>(w.text);
+            if (tempString == "Done") { US = true; }
+            else { US = false; }            
         }        
                 
-        if (US==false) { informations.GetComponent<Text>().text = "Username already used2"; }
+        if (US==false) { informations.GetComponent<Text>().text = "Username already used"; }
 
         // Encrypting the password
         if (UN==true && PW==true && CPW == true && US == true){

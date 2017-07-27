@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using System.IO;
+using Newtonsoft.Json;
 
 public class Login : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class Login : MonoBehaviour
 
     private bool UN = false;
     private bool PW = false;
+    private bool DB = false;
 
     private WWWForm webForm;
     private WWW w;
@@ -74,7 +76,7 @@ public class Login : MonoBehaviour
             {
                 if(Password!="")
                 {
-                    //trytologin in db                   
+                    //trytologin in db                 
 
                     webForm = new WWWForm();
                     webForm.AddField("username", Username);
@@ -87,14 +89,18 @@ public class Login : MonoBehaviour
                     webForm.AddField("username", Username);
                     w2 = new WWW(data.GetDbURL+"GetGameLanguage", webForm);
                     yield return w2;
-                    print(w2.text);
 
-                    if (w.isDone)//w.text == "Done")
+                    string tempString = JsonConvert.DeserializeObject<string>(w.text);
+
+                    if (tempString == "Done")
                     {
+                        informations.GetComponent<Text>().text = "Connecting to the account";
                         CreateIdFile();
+                        DB = true;
                     }
                     else
                     {
+                        DB = false;
                         informations.GetComponent<Text>().text = "Username or Password Invalid";
                     }
                 }
@@ -128,7 +134,7 @@ public class Login : MonoBehaviour
         }
         else { informations.GetComponent<Text>().text="Password filed is empty"; }
 
-        if (UN == true && PW == true) {
+        if (UN == true && PW == true || DB == true) {
             Lines = System.IO.File.ReadAllLines(Application.persistentDataPath + "/ID/" + Username + ".txt");
             lng = Lines.Length;
             theSM = FindObjectOfType<SoundManager>();
@@ -198,7 +204,8 @@ public class Login : MonoBehaviour
             char Encrypted = (char)(c * i);
             Password += Encrypted.ToString();
         }
-        if(w2.text != "Error") { form=(Username + Environment.NewLine + Password + Environment.NewLine + w2.text); }
+        string tempString = JsonConvert.DeserializeObject<string>(w2.text);
+        if (tempString!= "Error") { form=(Username + Environment.NewLine + Password + Environment.NewLine + w2.text); }
         else { form = (Username + Environment.NewLine + Password); }
         
         File.WriteAllText(Application.persistentDataPath + "/ID/" + Username + ".txt", form);

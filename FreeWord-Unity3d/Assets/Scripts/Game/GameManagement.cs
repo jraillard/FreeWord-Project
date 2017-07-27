@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -68,13 +69,11 @@ public class GameManagement : MonoBehaviour
         }
         else
         {
+            Dictionary<string, string> shuffledList = new Dictionary<string, string>();
             Dictionary<string, int> playableWordList = new Dictionary<string, int>();
-            List<string> playableWordUrlList = new List<string>();
+            Dictionary<string, string> playableWordUrlList = new Dictionary<string, string>();
 
             bool mysteryWordFind = false;
-
-            //print(tempListWord["abricot"]);
-            //print(tempListWord[tempListWord.Keys.First()] + " | " + tempListWord.Keys.First());
 
             int idx=0;
             foreach (KeyValuePair<string, int> k in tempListWord)
@@ -82,12 +81,6 @@ public class GameManagement : MonoBehaviour
                 if (k.Value == 0 && mysteryWordFind == false) //just need one mysteryword
                 {
                     //Set mysteryWord
-
-                    //print(k.Key);                    
-                    //print(tempUrlList[tempListWord[k.Key]]);
-                    //mysteryWordList.Add(k.Key, k.Value);
-                    //idx = tempListWord[k.Key];
-                    //wordUrlList.Add(tempUrlList[idx]);
                     data.MysteryWord = k.Key;
                     data.MysteryWordUrl = tempUrlList[idx];
 
@@ -95,43 +88,112 @@ public class GameManagement : MonoBehaviour
                 }
                 else if(k.Value > 0)
                 {
+
                     playableWordList.Add(k.Key, k.Value);
-                    playableWordUrlList.Add(tempUrlList[idx]);
+                    playableWordUrlList.Add(k.Key, tempUrlList[idx]);
                 }
                 idx++; //no indexor in dictionary
             }
-            
 
             //Add five random playword to the list
-            int nb = 0;
-            int i;
+            int nbword = 0;
+            int nbtime = 1; //nbtime discovered
+            int i = 0; 
+            int j = 0;
+            bool flag = false;
+            bool flagFirstdTemp = false;
+            //int r = 0;
             System.Random r = new System.Random();
+            //int nbWordInStep;
+            int nbWordChosenInStep;
+            Dictionary<string, int> dTemp = new Dictionary<string, int>();
+            List<int> index;
+            List<string> keys = new List<string>();
+
             do
             {
-                i = 0;
-                string key = "";
-                int j = r.Next(0, playableWordList.Count);
+                index = new List<int>();
+                dTemp = new Dictionary<string, int>();
+                //nbWordInStep = playableWordList.Where(p => p.Value == nbtime).ToList().Count;
+                nbWordChosenInStep = 0;
 
-                foreach (KeyValuePair<string, int> k in playableWordList)
+                //fill the first temporary list
+                do
                 {
-                    if (i == j)
+                    dTemp = playableWordList.Where(p => p.Value == nbtime).ToDictionary(p => p.Key, p => p.Value);
+                    nbtime++;
+                } while (dTemp.Count <= 0);
+
+                nbtime--; //we finish the loop after the right step               
+
+                do
+                {
+                    i = 0;
+                    //choose index randomly                    
+                    do
                     {
-                        listWord.Add(k.Key, k.Value);
-                        wordUrlList.Add(playableWordUrlList[j]);
-                        key = k.Key;
-                        break;
+                        j = -1;
+                        j = r.Next(0, dTemp.Count);
+                        if (!index.Contains(j))
+                        {
+                            index.Add(j);
+                        }
+                        else
+                        {
+                            j = -1;
+                        }
+
+                    } while (j == -1);
+                    
+                    string key = "";                  
+
+                    foreach (KeyValuePair<string, int> k in dTemp)
+                    {
+                        if (i == j)
+                        {
+                            string x = playableWordUrlList.Where(p => p.Key == k.Key).Select(p => p.Value).First();
+                            shuffledList.Add(k.Key, k.Value  + "|" + x);
+                            key = k.Key;
+                            //keys.Add(k.Key);
+                            flag = true;
+                            break;
+                        }
+                        i++;
                     }
-                    i++;
-                }
-                //print(playableWordList.ContainsKey(key));
-                playableWordList.Remove(key);
-                playableWordUrlList.RemoveAt(j);
+                    //print(playableWordList.ContainsKey(key));
+                    if(flag == true)
+                    {
+                        //playableWordList.Remove(key);
+                        //playableWordUrlList.Remove(key);
+                        nbword++;
+                        nbWordChosenInStep++;
+                        flag = false;
+                    }
+                    else
+                    {
+                        break;
+                    }                   
+                    
+                 } while (nbword < 5 && nbWordChosenInStep < dTemp.Count);
 
-                nb++;
+                nbtime++; //go to next step              
 
-            } while (nb < 5);
+            } while (nbword < 5);
 
-            
+            playableWordList = null;
+            playableWordUrlList = null;
+
+            //shuffle the list
+            System.Random rand = new System.Random();
+            shuffledList = shuffledList.OrderBy(x => rand.Next()).ToDictionary(item => item.Key, item => item.Value);
+
+            //split lists
+            foreach(KeyValuePair<string, string> k in shuffledList)
+            {
+                listWord.Add(k.Key, int.Parse(k.Value.Split('|')[0]));
+                wordUrlList.Add(shuffledList.Where(p => p.Key == k.Key).Select(p => p.Value).First().Split('|')[1]);
+            }
+
         }
 
         //Send playedwordlist to Data
@@ -173,7 +235,7 @@ public class GameManagement : MonoBehaviour
             if(firstpic==false)
             {
                 StartCoroutine(image.LoadImage(listWord.Keys.Last(), wordUrlList.Last(), data.CurrentCatName));
-            firstpic = true;
+                firstpic = true;
             }
         
             if (VerifPlacedWord() == true && !launchLevelDone)

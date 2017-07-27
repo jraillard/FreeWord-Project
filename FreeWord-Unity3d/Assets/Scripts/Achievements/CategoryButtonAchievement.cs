@@ -46,7 +46,6 @@ public class CategoryButtonAchievement : MonoBehaviour
     {
         dropDownItems = new List<Dropdown.OptionData>();
         Color c = wordImage.color;
-        dropDown.ClearOptions();
         Dictionary<string, int> tempWordList = new Dictionary<string, int>();
         wordList = new Dictionary<string, int>();
         pngUrlList = new List<string>();
@@ -76,6 +75,7 @@ public class CategoryButtonAchievement : MonoBehaviour
         data.SetWordListFromCategory(wordList, pngUrlList);
         data.CurrentCatName = currentCatName;
 
+        dropDown.ClearOptions();
         if (wordList.Count != 0)
         {
             foreach (KeyValuePair<string, int> k in wordList.OrderByDescending(key => key.Value))

@@ -113,6 +113,7 @@
     <Compile Include="Assets\Scripts\Change_Language\CL_LevelSelection.cs" />
     <Compile Include="Assets\Scripts\Change_Language\CL_Options.cs" />
     <Compile Include="Assets\Scripts\Change_Language\CL_Pause.cs" />
+    <Compile Include="Assets\Scripts\Change_Language\CL_Transition.cs" />
     <Compile Include="Assets\Scripts\Data.cs" />
     <Compile Include="Assets\Scripts\Game\BackToLevelSelection.cs" />
     <Compile Include="Assets\Scripts\Game\CameraToDeviceResolution.cs" />

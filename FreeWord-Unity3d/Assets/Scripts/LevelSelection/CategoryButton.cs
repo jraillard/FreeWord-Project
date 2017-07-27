@@ -78,7 +78,7 @@ public class CategoryButton : MonoBehaviour
         data.SetWordListFromCategory(wordList, pngUrlList);
         data.CurrentCatName = currentCatName;
 
-
+        wordLevelListLabel.GetComponent<Text>().text = "\r\n";
         //Set list label
         if (wordList.Count == 0)
         {

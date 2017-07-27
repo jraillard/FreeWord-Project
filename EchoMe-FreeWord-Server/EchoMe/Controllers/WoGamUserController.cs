@@ -19,8 +19,7 @@ namespace EchoMe.Controllers
         {
             if (!woGameDb.WoGamProfiles.Any(p => p.usr_name == username)) //if doesn't exist
             {
-                try
-                {
+
                     string csvFilePath = Server.MapPath("~/WoGam_CSV_Files/");
                     String[] tempString;
                     
@@ -112,30 +111,24 @@ namespace EchoMe.Controllers
                     }//endif
 
                     }//end foreach
-                    
-                }
-                catch(Exception ex)
-                {
-                    return ex.Message;
-                }                
-                
-                //return "Done";
+
+
+                return JsonConvert.SerializeObject("Done");
             }
 
-            return "User already used";
+            return JsonConvert.SerializeObject("User already used");
 
         }
 
         public string LoginUser(string username, string password)
         {
-
             if (woGameDb.WoGamProfiles.Any(p => p.usr_name == username && p.usr_pwd == password))
-            {
-                return "Done";
+            {               
+                return JsonConvert.SerializeObject("Done");
             }
             // user doesnt exist
 
-            return "Error";
+            return JsonConvert.SerializeObject("Error"); ;
         }
 
         public string GetGameLanguage(string username)
@@ -146,10 +139,11 @@ namespace EchoMe.Controllers
             lng = woGameDb.WoGamProfiles.Where(p => p.usr_name == username).Select(p => p.usr_gameLangage).First();//.ToString();
             if (lng == "English" || lng == "Français")
             {
-                return lng;
+                return JsonConvert.SerializeObject(lng);
+                
             }
 
-            return "Error";
+            return JsonConvert.SerializeObject("Error");
         }
 
         public string SetGameLanguage(string username, string language)
@@ -160,10 +154,10 @@ namespace EchoMe.Controllers
                     .First(p => p.usr_name == username)
                     .usr_gameLangage = language;
                 woGameDb.SaveChanges();
-                return "Done";
+                return JsonConvert.SerializeObject("Done");
             }
             // user doesnt exist
-            return "Error";
+            return JsonConvert.SerializeObject("Error");
         }
 
         public string GetCategories(string username, string language)
@@ -210,8 +204,8 @@ namespace EchoMe.Controllers
 
                 return jsonString;
             }
-            return "Error";
-            
+            return JsonConvert.SerializeObject("Error");
+
         }
 
         public string GetWordsInCategory(string username, string language, string category)
@@ -239,9 +233,9 @@ namespace EchoMe.Controllers
                 var jsonString = JsonConvert.SerializeObject(wordsInCat);         
 
                 return jsonString;
-            }           
+            }
 
-            return "Error";
+            return JsonConvert.SerializeObject("Error");
         }
 
         public string SendWordsDiscovered(string username, string language, string category, string wordsdiscovered)
@@ -268,10 +262,10 @@ namespace EchoMe.Controllers
                 }
 
                 woGameDb.SaveChanges();
-                return "Done";
+                return JsonConvert.SerializeObject("Done");
 
             }
-                return "Error";
+            return JsonConvert.SerializeObject("Error");
         }
 
     }

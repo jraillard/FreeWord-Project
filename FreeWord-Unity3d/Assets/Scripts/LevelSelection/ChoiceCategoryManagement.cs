@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ChoiceCategoryManagement : MonoBehaviour
 {
@@ -17,17 +18,20 @@ public class ChoiceCategoryManagement : MonoBehaviour
     private Data data;
     private WWWForm form;
     private WWW w;
+    //private bool endTransition = false;
 
-    /********************************* Loop *********************************/
+    /********************************* Main Events *********************************/
 
     private void Start()
     {
-
+        SceneManager.LoadSceneAsync("Transition", LoadSceneMode.Additive);
         data = GameObject.Find("DataObject").GetComponent<Data>();
         data.ChangeCategory();
         StartCoroutine(InitCategoriesButton());
-
+        
     }
+
+    /********************************* Methods *********************************/
 
     //Instantiate and set up all category button in scrollList
     private IEnumerator InitCategoriesButton()
@@ -123,6 +127,7 @@ public class ChoiceCategoryManagement : MonoBehaviour
 
         }
 
+        SceneManager.UnloadSceneAsync("Transition");
     }
 }
 
