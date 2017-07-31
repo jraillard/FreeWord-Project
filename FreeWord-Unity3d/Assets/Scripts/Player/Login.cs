@@ -77,13 +77,15 @@ public class Login : MonoBehaviour
                 if(Password!="")
                 {
                     //trytologin in db                 
-
+                    informations.GetComponent<Text>().text = "Try to connect user";
                     webForm = new WWWForm();
                     webForm.AddField("username", Username);
                     webForm.AddField("password", Password);
                     w = new WWW(data.GetDbURL+"LoginUser", webForm);
                     yield return w;
                     //print(w.text);
+
+                    
 
                     webForm = new WWWForm();
                     webForm.AddField("username", Username);
@@ -97,6 +99,7 @@ public class Login : MonoBehaviour
                         informations.GetComponent<Text>().text = "Connecting to the account";
                         CreateIdFile();
                         DB = true;
+                        
                     }
                     else
                     {

@@ -101,14 +101,14 @@ public class GameManagement : MonoBehaviour
             int i = 0; 
             int j = 0;
             bool flag = false;
-            bool flagFirstdTemp = false;
+            //bool flagFirstdTemp = false;
             //int r = 0;
             System.Random r = new System.Random();
             //int nbWordInStep;
             int nbWordChosenInStep;
             Dictionary<string, int> dTemp = new Dictionary<string, int>();
             List<int> index;
-            List<string> keys = new List<string>();
+            //List<string> keys = new List<string>();
 
             do
             {
@@ -145,7 +145,7 @@ public class GameManagement : MonoBehaviour
 
                     } while (j == -1);
                     
-                    string key = "";                  
+                    //string key = "";                  
 
                     foreach (KeyValuePair<string, int> k in dTemp)
                     {
@@ -153,7 +153,7 @@ public class GameManagement : MonoBehaviour
                         {
                             string x = playableWordUrlList.Where(p => p.Key == k.Key).Select(p => p.Value).First();
                             shuffledList.Add(k.Key, k.Value  + "|" + x);
-                            key = k.Key;
+                            //key = k.Key;
                             //keys.Add(k.Key);
                             flag = true;
                             break;
