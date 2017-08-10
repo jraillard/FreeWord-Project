@@ -42,7 +42,7 @@ public class GameManagement : MonoBehaviour
         //Separate possible mysteryword and word playable (if not level0)
         if (data.CurrentLevel == 0)
         {
-            print("coucou");
+            //print("coucou");
             int i = 0;
             //implement wordlist
             foreach (KeyValuePair<string, int> k in tempListWord)
@@ -55,7 +55,7 @@ public class GameManagement : MonoBehaviour
                 i++;
             }
 
-            print(listWord.Count);
+            //print(listWord.Count);
             //implement urlwordlist
             for (int k = 0; k < 6; k++)
             {
@@ -93,6 +93,11 @@ public class GameManagement : MonoBehaviour
                     playableWordUrlList.Add(k.Key, tempUrlList[idx]);
                 }
                 idx++; //no indexor in dictionary
+            }
+
+            if(mysteryWordFind == false)
+            {
+                data.MysteryWord = "";
             }
 
             //Add five random playword to the list
@@ -198,7 +203,7 @@ public class GameManagement : MonoBehaviour
 
         //Send playedwordlist to Data
         data.SetWordListPlayed(listWord);
-        print(listWord.Count);
+        //print(listWord.Count);
 
         //Init the CardSet
         //print(wordUrlList.Count());
@@ -765,7 +770,7 @@ public class GameManagement : MonoBehaviour
     {
         if(!launchLevelDone)
         {
-            print("coucou");
+            //print("coucou");
             SceneManager.LoadSceneAsync("LevelDone", LoadSceneMode.Single);
             launchLevelDone = true;
         }

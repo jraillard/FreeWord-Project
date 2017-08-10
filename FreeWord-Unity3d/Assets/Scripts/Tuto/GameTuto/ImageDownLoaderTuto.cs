@@ -42,10 +42,10 @@ public class ImageDownLoaderTuto : MonoBehaviour
 
         if (File.Exists(Application.persistentDataPath + "/Tuto_Texture/" + textureName + ".jpg"))
         {
-            downloadText.text = "coucou";
+            //downloadText.text = "coucou";
             if (data.LanguageToPlay == "Français") { downloadText.text = "Chargement de l'image depuis l'appareil"; }
             else if (data.LanguageToPlay == "English") { downloadText.text = "Loading image from the device"; }
-            print("Loading from the device");
+            //print("Loading from the device");
             byte[] byteArray = File.ReadAllBytes(Application.persistentDataPath + "/Tuto_Texture/" + textureName + ".jpg");            
             Texture2D texture = new Texture2D(1, 1);
             texture.LoadImage(byteArray);
@@ -54,12 +54,12 @@ public class ImageDownLoaderTuto : MonoBehaviour
         }
         else
         {
-            downloadText.text = "coucou2";
-            print(data.LanguageToPlay);
+            //downloadText.text = "coucou2";
+            //print(data.LanguageToPlay);
             if (data.LanguageToPlay == "Français") { downloadText.text = "Chargement de l'image depuis internet"; }
             else if (data.LanguageToPlay == "English") { downloadText.text = "Loading image from the web"; }
 
-            print("Downloading from the web");
+            //print("Downloading from the web");
             WWW www = new WWW(url);
             yield return www; //wait that the image is downloaded
             Texture2D texture = www.texture;

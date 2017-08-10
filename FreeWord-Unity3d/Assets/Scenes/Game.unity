@@ -233,7 +233,7 @@ Prefab:
     - target: {fileID: 114846325930893152, guid: 7ba112cbc59428242ae1daf95576e8a1,
         type: 2}
       propertyPath: m_Text
-      value: "Tel\xE9chargement depuis l'appareil"
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7ba112cbc59428242ae1daf95576e8a1, type: 2}

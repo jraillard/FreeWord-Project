@@ -40,7 +40,7 @@ public class GoToNextLevel : MonoBehaviour
         data = GameObject.Find("DataObject").GetComponent<Data>();
         //Load the new list with updated nbtime values
 
-        print(data.Username);
+        //print(data.Username);
         form = new WWWForm();
         form.AddField("username", data.Username);
         form.AddField("language", data.LanguageToLearn);

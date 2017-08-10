@@ -47,12 +47,12 @@ public class PlacingCardTuto: MonoBehaviour
             if (other.GetComponent<PlayedCardTuto>().GetValue() == myscript.GetValue())
             {
                 myscript.SetWellPlaced(true);
-                print("well Placed");
+                //print("well Placed");
 
             }
             else
             {
-                print("not well placed");
+                //print("not well placed");
             }
 
             //Allow placed attributes of PlayedCard to be true while it's placed
@@ -63,13 +63,13 @@ public class PlacingCardTuto: MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-            print("Not Placed Anymore !");
+            //print("Not Placed Anymore !");
             SetPlaceAvailability(true);
             //gameObject.GetComponent<BoxCollider>().size = new Vector3(1, 1, 1);
             myscript = gameObject.GetComponentInChildren<PlacedCardTuto>();
             //myscript.SetPlaced();
             myscript.SetWellPlaced(false);
-            print(myscript.IsWellPlaced());
+            //print(myscript.IsWellPlaced());
 
             //Allow placed attributes of PlayedCard to be true while it's placed
             other.GetComponent<PlayedCardTuto>().SetPlaced(false);
